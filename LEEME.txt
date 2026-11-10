@@ -1,14 +1,7 @@
-ALAIN RASTROLLO · TRIATLÓN 2027 — ACTUALIZACIÓN V6
+TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 9
 
-Esta versión amplía el calendario con pruebas adultas publicadas en calendarios oficiales FETRI y federaciones autonómicas: Galicia, Región de Murcia, Castilla-La Mancha y Canarias, además de las pruebas nacionales FETRI.
+Novedades: cabecera fija con modo compacto al desplazarse; botones y filtros más pequeños; mapa ampliado con localizaciones europeas; calendario europeo IRONMAN, IRONMAN 70.3 y Challenge; filtro por franquicia.
 
-IMPORTANTE: no todas las federaciones han publicado todavía un calendario 2027 completo. Las pruebas nuevas aparecen como provisionales y con enlace a la fuente federativa. Se excluyen eventos identificados como escolares/menores.
+Actualización: sustituye los archivos de GitHub Pages por todos los archivos de este ZIP. No borres los datos del navegador ni el almacenamiento local. La aplicación conserva la clave triathlon2027_data_v1 y añade los nuevos eventos sin eliminar tus marcas.
 
-Para actualizar: sustituye en la raíz de GitHub Pages los archivos del ZIP. Mantén el mismo repositorio y no borres datos del navegador. La aplicación añade las nuevas pruebas a instalaciones existentes sin borrar favoritos, inscripciones ni pruebas personalizadas.
-
-
-VERSION 7 - CAMBIOS VISUALES
-- Foto personal como fondo principal de la cabecera.
-- Navegación movida a la parte superior, debajo de los contadores.
-- Diseño aclarado con fondos blancos/gris claro y acentos azules y naranjas.
-- Se mantiene el almacenamiento local y la estructura de datos de la versión anterior.
+Importante: las fechas de eventos se marcan como provisionales o pendientes y deben confirmarse con la organización. Algunas pruebas sin coordenadas exactas pueden aparecer en el listado del mapa sin marcador.
