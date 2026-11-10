@@ -7,28 +7,29 @@
 <meta name="description" content="Tu calendario personal de triatlón y duatlón 2027">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>TRIATLÓN 2027</title>
+<title>ALAIN RASTROLLO · TRIATLÓN 2027</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
-:root{--navy:#10283f;--navy2:#1d3c56;--teal:#20a582;--bg:#f3f6f8;--card:#fff;--ink:#172b3a;--muted:#687987;--line:#e1e8ed;--amber:#e5a33b;--red:#c85d5d}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:24px 18px 20px;border-radius:0 0 24px 24px}
-.top{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#214b62;display:grid;place-items:center;font-size:24px}
+:root{--navy:#071827;--navy2:#102c43;--teal:#20a582;--bg:#071522;--card:#10263a;--ink:#f2f7fb;--muted:#a8bdcc;--line:#29445a;--amber:#f39a24;--red:#e05b5b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#102b42 0,#071522 58%);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:76px}
+header{background:linear-gradient(180deg,rgba(4,17,29,.05) 0%,rgba(4,17,29,.35) 55%,#071522 100%),url("hero-triatlon.jpg") center 42%/cover no-repeat;color:#fff;padding:205px 14px 16px;border-radius:0 0 25px 25px;box-shadow:0 10px 28px #0006;position:relative;overflow:hidden}
+.top{display:none;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#214b62;display:grid;place-items:center;font-size:24px}
 h1{font-size:22px;line-height:1.1;margin:0;letter-spacing:.4px}header p{margin:5px 0 0;color:#c6d7e2;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:19px}.stat{background:#ffffff17;border:1px solid #ffffff20;border-radius:13px;padding:10px}.stat b{display:block;font-size:23px}.stat span{font-size:11px;color:#d5e2e9}
-nav{display:flex;gap:7px;padding:13px 12px 3px;overflow:auto;position:sticky;top:0;background:var(--bg);z-index:4}
-nav button{border:0;background:#e5ebef;color:#415463;border-radius:999px;padding:10px 14px;white-space:nowrap;font-weight:650}
-nav button.active{background:var(--navy);color:#fff}
+.brand-lockup{position:absolute;top:122px;left:18px;right:18px;text-align:center;text-shadow:0 2px 12px #000;font-weight:900;letter-spacing:1.2px}.brand-lockup .athlete-name{font-size:clamp(19px,5.5vw,29px);line-height:1.05;color:#fff}.brand-lockup .season-name{font-size:14px;letter-spacing:3px;color:#ff9a25;margin-top:5px;font-weight:850}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:0}.stat{background:#071827d9;border:1px solid #ffffff35;border-radius:15px;padding:10px;backdrop-filter:blur(8px)}.stat b{display:block;font-size:23px}.stat span{font-size:11px;color:#d5e2e9}
+nav{display:flex;gap:7px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));overflow:auto;position:fixed;bottom:0;left:0;right:0;background:#061522f2;border-top:1px solid #29445a;z-index:8;backdrop-filter:blur(14px);box-shadow:0 -8px 24px #0005}
+nav button{border:1px solid #29445a;background:#10283d;color:#d8e6ef;border-radius:13px;padding:10px 13px;white-space:nowrap;font-weight:650;flex:1}
+nav button.active{background:#f28b19;border-color:#ffad3c;color:#fff;box-shadow:0 3px 12px #f28b1940}
 main{max-width:820px;margin:auto;padding:12px 13px 95px}.panel{display:none}.panel.active{display:block}
 h2{font-size:19px;margin:10px 0 12px}.sub{color:var(--muted);font-size:13px;margin-top:-6px;margin-bottom:13px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;margin:10px 0;box-shadow:0 2px 8px #18324708}
+.card{background:linear-gradient(145deg,#142f46,#0d2032);border:1px solid var(--line);border-radius:17px;padding:14px;margin:10px 0;box-shadow:0 5px 16px #0003}
 .event-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.event-title{font-weight:750;font-size:16px}.meta{color:var(--muted);font-size:12px;margin-top:5px}
 .pill{font-size:11px;border-radius:99px;padding:5px 8px;background:#edf1f4;color:#50616e;white-space:normal;font-weight:750;display:inline-flex;align-items:center;gap:4px}.pill.green{background:#e1f4ed;color:#167657}.pill.blue{background:#e6eff9;color:#285e91}.pill.amber{background:#fff2d9;color:#936017}.pill.red{background:#fbe6e6;color:#a43d3d}.pill.grey{background:#edf1f4;color:#5c6d79}
-.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.status-tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px}.status-tile b{display:block;font-size:20px}.status-tile span{font-size:10px;color:var(--muted);font-weight:700}.status-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.checked-note{font-size:11px;color:var(--muted);margin-top:9px}.event-card{border-top:3px solid #dfe8ed}.event-card.open{border-top-color:#20a582}.event-card.sold{border-top-color:#c85d5d}.event-card.wait{border-top-color:#e5a33b}.refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#e8f1f4;border-radius:13px;padding:10px 12px;margin:10px 0}.refresh-bar .small{flex:1}.section-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin-top:12px}
+.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.status-tile{background:#10263a;border:1px solid var(--line);border-radius:14px;padding:11px}.status-tile b{display:block;font-size:20px}.status-tile span{font-size:10px;color:var(--muted);font-weight:700}.status-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.checked-note{font-size:11px;color:var(--muted);margin-top:9px}.event-card{border-top:3px solid #dfe8ed}.event-card.open{border-top-color:#20a582}.event-card.sold{border-top-color:#c85d5d}.event-card.wait{border-top-color:#e5a33b}.refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#15334a;border:1px solid #29445a;border-radius:13px;padding:10px 12px;margin:10px 0}.refresh-bar .small{flex:1}.section-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin-top:12px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.check{display:flex;align-items:center;gap:7px;font-size:13px;color:#354957}.check input{accent-color:var(--teal);width:17px;height:17px}
-button,.btn{cursor:pointer}.primary,.secondary,.danger{border:0;border-radius:11px;padding:11px 14px;font-weight:700}.primary{background:var(--teal);color:white}.secondary{background:#e9eef2;color:#304656}.danger{background:#f9e8e8;color:#9c3f3f}
-input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d6e0e6;border-radius:11px;background:#fff;color:var(--ink);font:inherit;margin:5px 0 10px}
+button,.btn{cursor:pointer}.primary,.secondary,.danger{border:0;border-radius:11px;padding:11px 14px;font-weight:700}.primary{background:#f28b19;color:white}.secondary{background:#203c52;color:#e5f0f6}.danger{background:#f9e8e8;color:#9c3f3f}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #36536a;border-radius:11px;background:#10283d;color:var(--ink);font:inherit;margin:5px 0 10px}
 label{font-size:12px;font-weight:700;color:#50616e;display:block}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar>*{flex:1;min-width:125px}
 .empty{text-align:center;padding:25px;color:var(--muted)}.small{font-size:12px;color:var(--muted)}
@@ -43,6 +44,7 @@ footer{text-align:center;color:#7b8992;font-size:11px;padding:15px}
 </head>
 <body>
 <header>
+ <div class="brand-lockup"><div class="athlete-name">ALAIN RASTROLLO</div><div class="season-name">TRIATLÓN · TEMPORADA 2027</div></div>
  <div class="top"><div class="logo"><img src="icon.svg" alt="Triatlón" style="width:44px;height:44px;border-radius:14px"></div><div><h1>TRIATLÓN 2027</h1><p>Tu temporada. Tus carreras. Tu planificación.</p></div></div>
  <div class="stats">
   <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
@@ -121,7 +123,7 @@ footer{text-align:center;color:#7b8992;font-size:11px;padding:15px}
   <button class="danger" id="resetData">Borrar todos mis datos</button>
  </div>
 </section>
-<footer>TRIATLÓN 2027 · Aplicación personal · Datos guardados en este dispositivo</footer>
+<footer>ALAIN RASTROLLO · TRIATLÓN 2027 · Aplicación personal · Datos guardados en este dispositivo</footer>
 </main>
 <div class="modal" id="eventModal"><div class="sheet">
  <div class="sheet-head"><h2 id="eventModalTitle">Añadir prueba</h2><button class="close" data-close="eventModal">×</button></div>

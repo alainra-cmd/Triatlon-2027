@@ -1,26 +1,19 @@
-TRIATLÓN 2027 — versión 3 (PWA)
+TRIATLÓN 2027 - VERSIÓN 4
 
-NOVEDADES
-- Nuevo icono de aplicación con referencias a natación, ciclismo y carrera a pie.
-- Nueva pestaña «Mapa» con ubicaciones aproximadas de las pruebas en España y Portugal; toca los marcadores para ver fecha y estado.
-- El mapa utiliza OpenStreetMap y necesita conexión a Internet.
+Novedades:
+- Cabecera deportiva con imagen de natación, ciclismo y carrera.
+- Diseño oscuro más parecido a una aplicación móvil.
+- Navegación inferior fija para facilitar el uso en Android.
+- Caché renovada (v4) para forzar la descarga de los nuevos recursos.
 
-- Tarjetas visuales con dos estados separados: confirmación de fecha y disponibilidad de dorsales.
-- Resumen de fechas confirmadas, plazas abiertas y pruebas agotadas.
-- Filtro por disponibilidad.
-- Fuente y fecha de última comprobación en cada prueba.
-- Archivo status-feed.json descargado automáticamente al abrir la app y al pulsar «Actualizar estados».
-- Tus favoritos e inscripciones locales se conservan al sustituir los archivos web, siempre que no borres los datos del navegador.
+Actualización:
+1. Descomprime el ZIP.
+2. Sube TODOS los archivos a la raíz del repositorio GitHub Pages, sustituyendo los anteriores.
+3. Haz Commit changes.
+4. Espera a que GitHub Pages publique los cambios.
+5. Cierra completamente la aplicación y vuelve a abrirla con conexión.
 
-PUBLICACIÓN
-Sube/sustituye en la raíz del repositorio de GitHub los archivos incluidos, en especial index.html, sw.js y status-feed.json. Conserva manifest.webmanifest y los iconos.
-Después de publicar, abre la PWA con conexión a Internet y pulsa «Actualizar estados». Si Android conserva la versión anterior, cierra completamente la app y vuelve a abrirla.
+No borres los datos del navegador: favoritos y marcas se guardan localmente.
+La imagen de cabecera se sirve desde hero-triatlon.jpg, por lo que debe subirse junto con el resto.
 
-IMPORTANTE SOBRE LA ACTUALIZACIÓN
-GitHub Pages es alojamiento estático. La app puede descargar un status-feed.json actualizado, pero no puede consultar de forma fiable las webs de terceros por sí sola ni detectar cambios automáticos de dorsales. Para actualizar los datos hay que publicar una nueva versión de status-feed.json tras revisar las fuentes. Los estados del feed corresponden a la revisión del 10/11/2026; cada ficha enlaza la fuente utilizada cuando existe. «Por verificar» significa que no se ha confirmado, no que la fecha o la inscripción sean falsas.
-
-NOTIFICACIONES
-Los avisos locales se comprueban al abrir la app o volver a primer plano. Para notificaciones automáticas con la PWA cerrada se requiere un servicio push externo.
-
-DATOS PERSONALES
-Favoritos, inscripción y notas se almacenan localmente en este navegador. Exporta copias desde Datos y ajustes.
+Identidad visual personalizada: ALAIN RASTROLLO · TRIATLON 2027. Nombre de la app: Alain Triatlon.

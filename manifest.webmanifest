@@ -1,7 +1,7 @@
 {
-  "name": "TRIATLÓN 2027",
-  "short_name": "Triatlón 2027",
-  "description": "Calendario de triatlón y duatlón en España y Portugal",
+  "name": "ALAIN RASTROLLO · TRIATLÓN 2027",
+  "short_name": "Alain Triatlón",
+  "description": "Calendario personal de triatlón de Alain Rastrollo · España y Portugal 2027",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
