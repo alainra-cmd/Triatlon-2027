@@ -1,0 +1,175 @@
+{
+  "checkedAt": "2026-11-10",
+  "description": "Estados revisados con fuentes disponibles a 10 de noviembre de 2026. Los estados no confirmados se indican expresamente.",
+  "updates": {
+    "seed0": {
+      "dateStatus": "Confirmada",
+      "availability": "Agotadas",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://transicionestriatlon.com/seis-de-las-siete-pruebas-ironman-de-2027-en-espana-ya-estan-agotadas/",
+      "note": "Dorsales agotados según seguimiento publicado; revisar posibles bajas."
+    },
+    "seed1": {
+      "dateStatus": "Publicada, falta confirmación",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://livetotriathlon.com/calendario-de-triatlones-espana/",
+      "note": "Directorio especializado indica dorsales disponibles; confirmar en la web del organizador."
+    },
+    "seed2": {
+      "dateStatus": "Confirmada",
+      "availability": "Consultar organizador",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://infinitri.es/peniscola/inscripciones/",
+      "note": "La organización publica 25/04/2027; la página muestra “inscripciones próximamente”, pese a indicar apertura anterior. Estado de plazas no concluyente."
+    },
+    "seed3": {
+      "dateStatus": "Confirmada",
+      "availability": "Agotadas",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://ebs.publicnow.com/view/C625A10B18347A797499D6057EEBB7EDD6CF68EF",
+      "note": "IRONMAN 70.3 Alcúdia-Mallorca figura agotado en el seguimiento de 2027."
+    },
+    "seed4": {
+      "dateStatus": "Confirmada",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://challenge-salou.com/",
+      "note": "Web oficial muestra “Inscríbete ahora”; 2 km natación, 80 km bici, 18 km carrera."
+    },
+    "seed5": {
+      "dateStatus": "Confirmada",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://transicionestriatlon.com/seis-de-las-siete-pruebas-ironman-de-2027-en-espana-ya-estan-agotadas/",
+      "note": "El seguimiento consultado mantiene Lanzarote como prueba con inscripción abierta."
+    },
+    "seed6": {
+      "dateStatus": "Por verificar",
+      "availability": "Por verificar",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "",
+      "note": "No se ha localizado confirmación suficiente de fecha y dorsales para esta edición."
+    },
+    "seed7": {
+      "dateStatus": "Confirmada",
+      "availability": "Agotadas",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://livetotriathlon.com/calendario-de-triatlones-espana/",
+      "note": "Calendario de pruebas indica agotado; fecha 5/06 también aparece en el calendario federativo vasco."
+    },
+    "seed8": {
+      "dateStatus": "Publicada, falta confirmación",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://livetotriathlon.com/calendario-de-triatlones-espana/",
+      "note": "Directorio especializado indica dorsales disponibles; comprobar organizador."
+    },
+    "seed9": {
+      "dateStatus": "Confirmada",
+      "availability": "Consultar organizador",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/events",
+      "note": "Fecha 12/06/2027 publicada por la Federación Vasca; listado muestra preinscripción y evento, no acredita disponibilidad de dorsal."
+    },
+    "seed10": {
+      "dateStatus": "Publicada, falta confirmación",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://livetotriathlon.com/calendario-de-triatlones-espana/",
+      "note": "Directorio especializado indica dorsales disponibles; verificar con Club La Santa."
+    },
+    "seed11": {
+      "dateStatus": "Confirmada",
+      "availability": "Agotadas",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://transicionestriatlon.com/seis-de-las-siete-pruebas-ironman-de-2027-en-espana-ya-estan-agotadas/",
+      "note": "IRONMAN Vitoria-Gasteiz figura agotado en el seguimiento de 2027."
+    },
+    "seed12": {
+      "dateStatus": "Confirmada",
+      "availability": "Agotadas",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://transicionestriatlon.com/seis-de-las-siete-pruebas-ironman-de-2027-en-espana-ya-estan-agotadas/",
+      "note": "IRONMAN 70.3 Vitoria-Gasteiz figura agotado en el seguimiento de 2027."
+    },
+    "seed13": {
+      "dateStatus": "Publicada, falta confirmación",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://triathlonatlas.com/es/countries/spain",
+      "note": "Calendario especializado indica 18/09/2027 y registro abierto; confirmar con el organizador.",
+      "date": "2027-09-18"
+    },
+    "seed14": {
+      "dateStatus": "Publicada, falta confirmación",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://triathlonatlas.com/es/countries/spain",
+      "note": "Calendario especializado indica 16/10/2027 y registro abierto; confirmar con el organizador."
+    },
+    "seed15": {
+      "dateStatus": "Confirmada",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/evento/zuia-duatloia-27-duatlon-zuia-27",
+      "note": "Inscripción general abierta; fecha 17/04/2027 y cierre previsto 12/04/2027 o al completar plazas."
+    },
+    "seed16": {
+      "dateStatus": "Publicada, falta confirmación",
+      "availability": "Por verificar",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://triathlonsignal.com/en/calendar/pt/",
+      "note": "Calendario especializado recoge 03/04/2027; la apertura de inscripciones se anunció, pero falta confirmación actual en fuente oficial consultada."
+    },
+    "seed17": {
+      "dateStatus": "Confirmada",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://www.federacao-triatlo.pt/ftp2015/events/v-triatlo-de-moura/",
+      "note": "Federación Portuguesa publica 25/04/2027 e indica inscripciones abiertas."
+    },
+    "seed18": {
+      "dateStatus": "Confirmada",
+      "availability": "Consultar organizador",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://setubaltriathlon.pt/site/",
+      "note": "La inscripción individual está agotada; la web oficial indica que relevos permanecen abiertos. Confirma la modalidad antes de decidir."
+    },
+    "seed19": {
+      "dateStatus": "Confirmada",
+      "availability": "Plazas disponibles",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "https://web.rockthesport.com/es/event/starman-portugal-2027",
+      "note": "Inscripciones abiertas hasta 11/07/2027; 18/07/2027 en Beja."
+    },
+    "seed20": {
+      "dateStatus": "Por verificar",
+      "availability": "Por verificar",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "",
+      "note": "No se ha podido confirmar con fuente oficial la fecha y disponibilidad 2027 de TRITON Lisboa."
+    },
+    "seed21": {
+      "dateStatus": "Por verificar",
+      "availability": "Por verificar",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "",
+      "note": "Fecha y disponibilidad de IRONMAN Portugal 2027 pendientes de comprobación oficial."
+    },
+    "seed22": {
+      "dateStatus": "Por verificar",
+      "availability": "Por verificar",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "",
+      "note": "Fecha y disponibilidad de IRONMAN 70.3 Cascais 2027 pendientes de comprobación oficial."
+    },
+    "seed23": {
+      "dateStatus": "Por verificar",
+      "availability": "Por verificar",
+      "checkedAt": "2026-11-10",
+      "sourceUrl": "",
+      "note": "No se ha localizado una ficha oficial 2027 suficientemente concluyente."
+    }
+  }
+}

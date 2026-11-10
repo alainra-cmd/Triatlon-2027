@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10283f">
+<meta name="description" content="Tu calendario personal de triatlón y duatlón 2027">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>TRIATLÓN 2027</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+:root{--navy:#10283f;--navy2:#1d3c56;--teal:#20a582;--bg:#f3f6f8;--card:#fff;--ink:#172b3a;--muted:#687987;--line:#e1e8ed;--amber:#e5a33b;--red:#c85d5d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:24px 18px 20px;border-radius:0 0 24px 24px}
+.top{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#214b62;display:grid;place-items:center;font-size:24px}
+h1{font-size:22px;line-height:1.1;margin:0;letter-spacing:.4px}header p{margin:5px 0 0;color:#c6d7e2;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:19px}.stat{background:#ffffff17;border:1px solid #ffffff20;border-radius:13px;padding:10px}.stat b{display:block;font-size:23px}.stat span{font-size:11px;color:#d5e2e9}
+nav{display:flex;gap:7px;padding:13px 12px 3px;overflow:auto;position:sticky;top:0;background:var(--bg);z-index:4}
+nav button{border:0;background:#e5ebef;color:#415463;border-radius:999px;padding:10px 14px;white-space:nowrap;font-weight:650}
+nav button.active{background:var(--navy);color:#fff}
+main{max-width:820px;margin:auto;padding:12px 13px 95px}.panel{display:none}.panel.active{display:block}
+h2{font-size:19px;margin:10px 0 12px}.sub{color:var(--muted);font-size:13px;margin-top:-6px;margin-bottom:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;margin:10px 0;box-shadow:0 2px 8px #18324708}
+.event-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.event-title{font-weight:750;font-size:16px}.meta{color:var(--muted);font-size:12px;margin-top:5px}
+.pill{font-size:11px;border-radius:99px;padding:5px 8px;background:#edf1f4;color:#50616e;white-space:normal;font-weight:750;display:inline-flex;align-items:center;gap:4px}.pill.green{background:#e1f4ed;color:#167657}.pill.blue{background:#e6eff9;color:#285e91}.pill.amber{background:#fff2d9;color:#936017}.pill.red{background:#fbe6e6;color:#a43d3d}.pill.grey{background:#edf1f4;color:#5c6d79}
+.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.status-tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px}.status-tile b{display:block;font-size:20px}.status-tile span{font-size:10px;color:var(--muted);font-weight:700}.status-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.checked-note{font-size:11px;color:var(--muted);margin-top:9px}.event-card{border-top:3px solid #dfe8ed}.event-card.open{border-top-color:#20a582}.event-card.sold{border-top-color:#c85d5d}.event-card.wait{border-top-color:#e5a33b}.refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#e8f1f4;border-radius:13px;padding:10px 12px;margin:10px 0}.refresh-bar .small{flex:1}.section-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin-top:12px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.check{display:flex;align-items:center;gap:7px;font-size:13px;color:#354957}.check input{accent-color:var(--teal);width:17px;height:17px}
+button,.btn{cursor:pointer}.primary,.secondary,.danger{border:0;border-radius:11px;padding:11px 14px;font-weight:700}.primary{background:var(--teal);color:white}.secondary{background:#e9eef2;color:#304656}.danger{background:#f9e8e8;color:#9c3f3f}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d6e0e6;border-radius:11px;background:#fff;color:var(--ink);font:inherit;margin:5px 0 10px}
+label{font-size:12px;font-weight:700;color:#50616e;display:block}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar>*{flex:1;min-width:125px}
+.empty{text-align:center;padding:25px;color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+.progress{height:8px;background:#e4eaee;border-radius:99px;overflow:hidden;margin-top:7px}.progress i{display:block;height:100%;background:var(--teal);width:0}
+footer{text-align:center;color:#7b8992;font-size:11px;padding:15px}
+.modal{position:fixed;inset:0;background:#07182799;z-index:10;display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{background:var(--bg);width:100%;max-width:650px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#e3e9ed;border-radius:50%;width:34px;height:34px;font-size:20px}
+.reminder{border-left:4px solid var(--amber)}.hidden{display:none!important}
+#raceMap{height:62vh;min-height:390px;border-radius:16px;border:1px solid var(--line);z-index:1}.map-legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.map-key{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}.map-dot{width:11px;height:11px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 0 0 1px #647482}.map-help{font-size:12px;color:var(--muted);margin:8px 0 12px}
+@media(min-width:650px){.modal{align-items:center}.sheet{border-radius:22px}.stats{max-width:520px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="logo"><img src="icon.svg" alt="Triatlón" style="width:44px;height:44px;border-radius:14px"></div><div><h1>TRIATLÓN 2027</h1><p>Tu temporada. Tus carreras. Tu planificación.</p></div></div>
+ <div class="stats">
+  <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
+  <div class="stat"><b id="countRegistered">0</b><span>INSCRITO</span></div>
+  <div class="stat"><b id="countReminders">0</b><span>AVISOS ACTIVOS</span></div>
+ </div>
+</header>
+<nav>
+ <button class="active" data-tab="calendar">Calendario</button>
+ <button data-tab="map">🗺️ Mapa</button>
+ <button data-tab="myraces">Mi temporada</button>
+ <button data-tab="reminders">Avisos</button>
+ <button data-tab="settings">Datos y ajustes</button>
+</nav>
+<main>
+<section id="calendar" class="panel active">
+ <h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p>
+ <div class="status-grid">
+  <div class="status-tile"><b id="dateConfirmedCount">0</b><span>FECHA CONFIRMADA</span></div>
+  <div class="status-tile"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></div>
+  <div class="status-tile"><b id="soldOutCount">0</b><span>AGOTADAS</span></div>
+ </div>
+ <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div><button class="primary" id="refreshStatuses">Actualizar estados</button></div>
+ <div class="toolbar">
+  <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
+  <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
+  <select id="interestFilter"><option value="">Todas las pruebas</option><option value="interested">Me interesan</option><option value="registered">Inscrito</option></select>
+  <select id="availabilityFilter"><option value="">Cualquier estado</option><option value="Plazas disponibles">Con plazas</option><option value="Agotadas">Agotadas</option><option value="Lista de espera">Lista de espera</option><option value="Por verificar">Sin verificar</option></select>
+ </div>
+ <input id="search" placeholder="Buscar prueba, localidad o distancia…">
+ <div id="eventList"></div>
+ <button class="primary" style="width:100%;margin-top:8px" id="addEvent">＋ Añadir una prueba</button>
+ <p class="small">Las pruebas iniciales son una base editable de planificación. Verifica fechas, distancias y disponibilidad con el organizador antes de inscribirte.</p>
+</section>
+<section id="map" class="panel">
+ <h2>Mapa de pruebas 2027</h2><p class="sub">Ubicación aproximada de las competiciones en España y Portugal.</p>
+ <div class="toolbar"><select id="mapCountry"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select><select id="mapAvailability"><option value="">Todos los estados</option><option value="Plazas disponibles">Plazas disponibles</option><option value="Agotadas">Agotadas</option><option value="Lista de espera">Lista de espera</option></select></div>
+ <div class="map-legend"><span class="map-key"><i class="map-dot" style="background:#20a582"></i> Plazas disponibles</span><span class="map-key"><i class="map-dot" style="background:#c85d5d"></i> Agotadas</span><span class="map-key"><i class="map-dot" style="background:#e5a33b"></i> Pendiente / consultar</span></div>
+ <div id="raceMap"></div><p class="map-help">Toca un marcador para ver la prueba, fecha y estado. Las ubicaciones son aproximadas a la localidad del evento.</p>
+ <div id="mapEventList"></div>
+</section>
+<section id="myraces" class="panel">
+ <h2>Mi temporada</h2><p class="sub">Tu selección personal de competiciones.</p>
+ <div class="card"><b>Presupuesto estimado</b><div style="font-size:25px;font-weight:800;margin-top:5px" id="budgetTotal">0 €</div><span class="small">Suma de costes de pruebas marcadas como inscrito.</span></div>
+ <h3>Pruebas que me interesan</h3><div id="interestedList"></div>
+ <h3>Inscripciones realizadas</h3><div id="registeredList"></div>
+</section>
+<section id="reminders" class="panel">
+ <h2>Avisos y recordatorios</h2><p class="sub">Crea avisos para aperturas, cierres de inscripción y días de carrera.</p>
+ <div class="card">
+  <b>Notificaciones del dispositivo</b>
+  <p class="small">Permite que TRIATLÓN 2027 muestre avisos cuando abras la aplicación y haya recordatorios vencidos. Para alertas garantizadas con la app cerrada se necesitaría un servicio de notificaciones adicional.</p>
+  <button class="primary" id="enableNotifications">Activar notificaciones</button>
+  <p class="small" id="permissionStatus">Estado: sin comprobar</p>
+ </div>
+ <button class="primary" id="addReminder">＋ Crear recordatorio</button>
+ <div id="reminderList"></div>
+</section>
+<section id="settings" class="panel">
+ <h2>Datos y ajustes</h2>
+ <div class="card">
+  <b>Guardar una copia de seguridad</b><p class="small">Exporta tus pruebas, marcas y recordatorios a un archivo JSON. Guárdalo en Drive o en tus archivos.</p>
+  <button class="primary" id="exportData">Exportar mis datos</button>
+ </div>
+ <div class="card">
+  <b>Recuperar una copia</b><p class="small">Importa un archivo JSON exportado previamente. Sustituirá los datos actuales.</p>
+  <input type="file" id="importFile" accept=".json,application/json">
+ </div>
+ <div class="card">
+  <b>Instalar en Android</b><p class="small">Abre esta web desde Chrome, pulsa el menú ⋮ y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio».</p>
+  <button class="secondary" id="installBtn" disabled>Instalar aplicación</button><p id="installHelp" class="small">La opción aparecerá cuando abras la versión publicada mediante HTTPS en Chrome.</p>
+ </div>
+ <div class="card"><b>Actualización de fechas y dorsales</b><p class="small">La aplicación descarga status-feed.json al abrirse y cuando pulsas «Actualizar estados». Para cambiar la información revisada, hay que publicar la nueva versión de ese archivo en GitHub. Las webs de organizadores no permiten una consulta automática fiable desde una PWA estática.</p><p class="small" id="statusSettingsLabel">Última sincronización: pendiente.</p></div>
+ <div class="card">
+  <b>Privacidad y almacenamiento</b><p class="small">Los datos se guardan en el almacenamiento local del navegador de este dispositivo. Si borras los datos de Chrome o cambias de móvil, necesitarás restaurar una copia de seguridad.</p>
+  <button class="danger" id="resetData">Borrar todos mis datos</button>
+ </div>
+</section>
+<footer>TRIATLÓN 2027 · Aplicación personal · Datos guardados en este dispositivo</footer>
+</main>
+<div class="modal" id="eventModal"><div class="sheet">
+ <div class="sheet-head"><h2 id="eventModalTitle">Añadir prueba</h2><button class="close" data-close="eventModal">×</button></div>
+ <form id="eventForm">
+  <input type="hidden" id="eventId">
+  <label>Nombre de la prueba</label><input id="fName" required>
+  <div class="grid2"><div><label>País</label><select id="fCountry"><option>España</option><option>Portugal</option></select></div><div><label>Tipo</label><select id="fType"><option>Triatlón</option><option>Duatlón</option></select></div></div>
+  <div class="grid2"><div><label>Fecha (2027)</label><input id="fDate" placeholder="2027-06-05" required></div><div><label>Localidad</label><input id="fPlace"></div></div>
+  <div class="grid2"><div><label>Distancia</label><input id="fDistance" placeholder="Media, olímpica…"></div><div><label>Coste (€)</label><input id="fCost" type="number" min="0" step="0.01"></div></div>
+  <div class="grid2"><div><label>Confirmación de fecha</label><select id="fDateStatus"><option>Confirmada</option><option>Publicada, falta confirmación</option><option>Provisional</option><option>Por verificar</option></select></div><div><label>Estado de plazas</label><select id="fAvailability"><option>Por verificar</option><option>Plazas disponibles</option><option>Agotadas</option><option>Lista de espera</option><option>Inscripción aún no abierta</option><option>Inscripción cerrada</option><option>Consultar organizador</option></select></div></div>
+  <label>Última comprobación</label><input id="fCheckedAt" type="date">
+  <label>Estado antiguo / nota (opcional)</label><input id="fStatus" placeholder="Ej. individual agotado, relevos abiertos">
+  <label>Enlace de inscripción</label><input id="fUrl" type="url" placeholder="https://…">
+  <label>Notas</label><textarea id="fNotes" rows="2"></textarea>
+  <div class="actions"><button class="primary" type="submit">Guardar prueba</button><button class="secondary" type="button" id="deleteEvent">Eliminar</button></div>
+ </form>
+</div></div>
+<div class="modal" id="reminderModal"><div class="sheet">
+ <div class="sheet-head"><h2>Crear recordatorio</h2><button class="close" data-close="reminderModal">×</button></div>
+ <form id="reminderForm">
+  <label>Descripción</label><input id="rTitle" required placeholder="Ej. Se abre inscripción de…">
+  <label>Fecha y hora del aviso</label><input id="rDate" type="datetime-local" required>
+  <label>Prueba relacionada (opcional)</label><select id="rEvent"><option value="">Sin prueba asociada</option></select>
+  <div class="actions"><button class="primary" type="submit">Guardar aviso</button></div>
+ </form>
+</div></div>
+<script>
+const KEY='triathlon2027_data_v1';
+const seed=[
+['IRONMAN 70.3 Valencia','España','Triatlón','2027-04-18','Valencia','Media'],
+['Volcano Triathlon','España','Triatlón','2027-04-24','Lanzarote','Varias'],
+['Infinitri 113 Peñíscola','España','Triatlón','2027-04-25','Peñíscola','Media'],
+['IRONMAN 70.3 Mallorca','España','Triatlón','2027-05-08','Alcúdia','Media'],
+['Challenge Salou','España','Triatlón','2027-05-09','Salou','Media'],
+['IRONMAN Lanzarote','España','Triatlón','2027-05-15','Lanzarote','Larga'],
+['Mediterranean Epic Triathlon','España','Triatlón','2027-05-29','Oropesa','Larga'],
+['Half Gasteiz','España','Triatlón','2027-06-05','Vitoria-Gasteiz','Media'],
+['Infinitri Burriana','España','Triatlón','2027-06-05','Burriana','Media'],
+['Zarauzko Triatloia','España','Triatlón','2027-06-12','Zarautz','Media'],
+['Volcano Triathlon Half','España','Triatlón','2027-06-26','Lanzarote','Media'],
+['IRONMAN Vitoria','España','Triatlón','2027-07-11','Vitoria-Gasteiz','Larga'],
+['IRONMAN 70.3 Vitoria','España','Triatlón','2027-07-11','Vitoria-Gasteiz','Media'],
+['T100 Marbella','España','Triatlón','2027-09-18','Marbella','T100'],
+['Challenge Peguera Mallorca','España','Triatlón','2027-10-16','Peguera','Media'],
+['Zuia Duatloia','España','Duatlón','2027-04-17','Murgia','Media'],
+['IRONMAN 70.3 Vilamoura','Portugal','Triatlón','2027-04-03','Vilamoura','Media'],
+['Triatlo de Moura','Portugal','Triatlón','2027-04-25','Moura','T100'],
+['Lidl Setúbal Triathlon','Portugal','Triatlón','2027-05-02','Setúbal','Media'],
+['STARMAN Portugal','Portugal','Triatlón','2027-07-18','Beja','Olímpica / Media'],
+['TRITON 1 Lisboa','Portugal','Triatlón','2027-09-11','Lisboa','Varias'],
+['IRONMAN Portugal Cascais','Portugal','Triatlón','2027-10-23','Cascais','Larga'],
+['IRONMAN 70.3 Cascais','Portugal','Triatlón','2027-10-23','Cascais','Media'],
+['Duatlo de Famalicão','Portugal','Duatlón','2027-03-21','Famalicão','Sprint']
+].map((a,i)=>({id:'seed'+i,name:a[0],country:a[1],type:a[2],date:a[3],place:a[4],distance:a[5],interested:false,registered:false,cost:'',status:'Por verificar',dateStatus:'Por verificar',availability:'Por verificar',checkedAt:'',sourceUrl:'',url:'',notes:'Fecha y datos de referencia pendientes de confirmar con la organización.'}));
+let data=load();
+function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.events))return d}catch(e){}return {events:seed,reminders:[],fired:[]}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function dateLabel(s){if(!s)return 'Fecha pendiente';let d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}
+function statusPill(s,kind='availability'){
+ let cls='grey'; if(s==='Plazas disponibles'||s==='Confirmada')cls='green';
+ if(s==='Agotadas')cls='red'; if(s==='Lista de espera'||s==='Publicada, falta confirmación'||s==='Provisional'||s==='Consultar organizador')cls='amber';
+ if(s==='Inscripción aún no abierta')cls='blue';
+ return `<span class="pill ${cls}">${esc(s||'Por verificar')}</span>`;
+}
+function render(){
+ document.getElementById('countInterested').textContent=data.events.filter(e=>e.interested).length;
+ document.getElementById('countRegistered').textContent=data.events.filter(e=>e.registered).length;
+ document.getElementById('countReminders').textContent=data.reminders.filter(r=>!r.done).length;
+ document.getElementById('dateConfirmedCount').textContent=data.events.filter(e=>e.dateStatus==='Confirmada').length;
+ document.getElementById('placesOpenCount').textContent=data.events.filter(e=>e.availability==='Plazas disponibles').length;
+ document.getElementById('soldOutCount').textContent=data.events.filter(e=>e.availability==='Agotadas').length;
+ let country=document.getElementById('countryFilter').value,type=document.getElementById('typeFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase();
+ let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
+ <div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div>
+ <div class="status-row"><span class="section-label">Fecha</span>${statusPill(e.dateStatus||'Por verificar','date')}<span class="section-label">Dorsales</span>${statusPill(e.availability||'Por verificar')}</div>
+ ${e.status&&e.status!=='Por verificar'?`<div class="meta">${esc(e.status)}</div>`:''}
+ ${e.cost?`<div class="meta">Coste indicado: ${esc(e.cost)} €</div>`:''}
+ <div class="checked-note">${e.checkedAt?'Comprobado: '+dateLabel(e.checkedAt):'Sin fecha de comprobación'} ${e.sourceUrl?`· <a href="${esc(e.sourceUrl)}" target="_blank" rel="noopener">Fuente del estado ↗</a>`:''}</div>
+ <div class="actions"><label class="check"><input type="checkbox" data-mark="interested" data-id="${esc(e.id)}" ${e.interested?'checked':''}> Me interesa</label><label class="check"><input type="checkbox" data-mark="registered" data-id="${esc(e.id)}" ${e.registered?'checked':''}> Estoy inscrito</label><button class="secondary" data-edit="${esc(e.id)}">Editar</button>${e.url?`<a class="btn secondary" href="${esc(e.url)}" target="_blank" rel="noopener">Inscripción ↗</a>`:''}</div></article>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
+ const list=(arr)=>arr.length?arr.map(e=>`<div class="card"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)}</div></div>`).join(''):'<div class="empty">Todavía no has añadido pruebas aquí.</div>';
+ document.getElementById('interestedList').innerHTML=list(data.events.filter(e=>e.interested));
+ document.getElementById('registeredList').innerHTML=list(data.events.filter(e=>e.registered));
+ let total=data.events.filter(e=>e.registered).reduce((s,e)=>s+(Number(e.cost)||0),0);
+ document.getElementById('budgetTotal').textContent=total.toLocaleString('es-ES',{style:'currency',currency:'EUR'});
+ document.getElementById('reminderList').innerHTML=data.reminders.length?data.reminders.slice().sort((a,b)=>a.when.localeCompare(b.when)).map(r=>`<div class="card reminder"><div class="event-head"><b>${esc(r.title)}</b><span class="pill ${r.done?'green':'amber'}">${r.done?'Avisado':'Pendiente'}</span></div><div class="meta">${new Date(r.when).toLocaleString('es-ES')}</div><div class="actions"><button class="secondary" data-done="${esc(r.id)}">${r.done?'Reactivar':'Marcar hecho'}</button><button class="danger" data-rdelete="${esc(r.id)}">Eliminar</button></div></div>`).join(''):'<div class="empty">No tienes recordatorios creados.</div>';
+ const opts=data.events.map(e=>`<option value="${esc(e.id)}">${esc(e.name)}</option>`).join('');
+ document.getElementById('rEvent').innerHTML='<option value="">Sin prueba asociada</option>'+opts;
+}
+
+async function refreshStatusFeed(showMessage=true){
+ const label=document.getElementById('statusSyncLabel');
+ if(label)label.textContent='Consultando el archivo de estados…';
+ try{
+  const res=await fetch('./status-feed.json?refresh='+Date.now(),{cache:'no-store'});
+  if(!res.ok)throw new Error('No se pudo descargar status-feed.json');
+  const feed=await res.json();
+  if(!feed||!feed.updates)throw new Error('Formato de estados no válido');
+  let changed=0;
+  data.events=data.events.map(ev=>{
+   const u=feed.updates[ev.id]; if(!u)return ev; changed++;
+   return {...ev,date:u.date??ev.date,dateStatus:u.dateStatus??ev.dateStatus,availability:u.availability??ev.availability,checkedAt:u.checkedAt??feed.checkedAt??ev.checkedAt,sourceUrl:u.sourceUrl??ev.sourceUrl,status:u.note??ev.status};
+  });
+  data.statusFeedCheckedAt=feed.checkedAt||new Date().toISOString().slice(0,10);
+  localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map').classList.contains('active'))renderMap();
+  if(label)label.textContent=`Estados sincronizados: ${data.statusFeedCheckedAt} · ${changed} pruebas con información revisada.`;const sl=document.getElementById('statusSettingsLabel');if(sl)sl.textContent='Última sincronización: '+data.statusFeedCheckedAt;
+  if(showMessage)alert(`Estados actualizados. ${changed} pruebas recibieron información revisada.`);
+ }catch(err){
+  const cached=data.statusFeedCheckedAt;
+  if(label)label.textContent=cached?`No se pudo conectar. Se mantienen los últimos datos (${cached}).`:'No se pudo actualizar. Comprueba que status-feed.json esté subido a GitHub.';const sl=document.getElementById('statusSettingsLabel');if(sl)sl.textContent='Última sincronización: '+(cached||'pendiente');
+  if(showMessage)alert('No se han podido actualizar los estados. Comprueba que status-feed.json esté publicado junto a index.html.');
+ }
+}
+document.getElementById('refreshStatuses').addEventListener('click',()=>refreshStatusFeed(true));
+
+const placeCoords={
+ 'Valencia':[39.4699,-0.3763],'Lanzarote':[29.0469,-13.5899],'Peñíscola':[40.3573,0.4068],'Alcúdia':[39.853,-3.121],'Salou':[41.076,-1.131],'Oropesa':[40.091,-0.141],'Vitoria-Gasteiz':[42.8467,-2.6727],'Burriana':[39.889,-0.085],'Zarautz':[43.284,-2.169],'Marbella':[36.510,-4.886],'Peguera':[39.538,2.448],'Murgia':[42.956,-2.82],'Vilamoura':[37.076,-8.118],'Moura':[38.14,-7.45],'Setúbal':[38.524,-8.888],'Beja':[38.015,-7.863],'Lisboa':[38.722,-9.139],'Cascais':[38.697,-9.421],'Famalicão':[41.407,-8.52]
+};
+let raceMap=null,mapMarkers=[];
+function markerColor(e){return e.availability==='Plazas disponibles'?'#20a582':e.availability==='Agotadas'?'#c85d5d':'#e5a33b'}
+function renderMap(){
+ const box=document.getElementById('raceMap');if(!box)return;
+ if(!window.L){box.innerHTML='<div class="empty">No se ha podido cargar el mapa. Comprueba tu conexión a Internet y vuelve a entrar.</div>';return;}
+ if(!raceMap){raceMap=L.map(box).setView([39.4,-3.8],5);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap'}).addTo(raceMap)}
+ setTimeout(()=>raceMap.invalidateSize(),100);
+ mapMarkers.forEach(m=>raceMap.removeLayer(m));mapMarkers=[];
+ const country=document.getElementById('mapCountry').value,avail=document.getElementById('mapAvailability').value;
+ const events=data.events.filter(e=>(!country||e.country===country)&&(!avail||e.availability===avail));
+ const groups={};events.forEach(e=>{let c=placeCoords[e.place];if(!c)return;let key=e.place+'|'+e.country;(groups[key] ||= {coord:c,events:[]}).events.push(e)});
+ Object.values(groups).forEach(g=>{const first=g.events[0],color=markerColor(first);const icon=L.divIcon({className:'',html:`<div style="width:18px;height:18px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 1px 5px #0008"></div>`,iconSize:[18,18],iconAnchor:[9,9]});const content=g.events.map(e=>`<b>${esc(e.name)}</b><br>${dateLabel(e.date)}<br>${esc(e.place)} · ${esc(e.availability||'Por verificar')}`).join('<hr style="border:0;border-top:1px solid #ddd">');const m=L.marker(g.coord,{icon}).addTo(raceMap).bindPopup(content);mapMarkers.push(m)});
+ const pts=Object.values(groups).map(g=>g.coord);if(pts.length>1)raceMap.fitBounds(pts,{padding:[25,25],maxZoom:7});else if(pts.length===1)raceMap.setView(pts[0],8);
+ document.getElementById('mapEventList').innerHTML=events.length?events.map(e=>`<div class="card"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · ${esc(e.country)}</div><div class="status-row">${statusPill(e.dateStatus,'date')}${statusPill(e.availability)}</div></div>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
+}
+document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap()}));
+['countryFilter','typeFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
+document.addEventListener('click',e=>{
+ let edit=e.target.closest('[data-edit]');if(edit)openEvent(edit.dataset.edit);
+ let done=e.target.closest('[data-done]');if(done){let r=data.reminders.find(x=>x.id===done.dataset.done);r.done=!r.done;save()}
+ let del=e.target.closest('[data-rdelete]');if(del){data.reminders=data.reminders.filter(x=>x.id!==del.dataset.rdelete);save()}
+});
+function showModal(id){document.getElementById(id).classList.add('show')}function hideModal(id){document.getElementById(id).classList.remove('show')}
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>hideModal(b.dataset.close));
+document.getElementById('addEvent').onclick=()=>openEvent();
+function openEvent(id){let e=data.events.find(x=>x.id===id)||{};document.getElementById('eventModalTitle').textContent=id?'Editar prueba':'Añadir prueba';document.getElementById('eventId').value=id||'';for(let [field,key] of [['fName','name'],['fCountry','country'],['fType','type'],['fDate','date'],['fPlace','place'],['fDistance','distance'],['fCost','cost'],['fStatus','status'],['fDateStatus','dateStatus'],['fAvailability','availability'],['fCheckedAt','checkedAt'],['fUrl','url'],['fNotes','notes']])document.getElementById(field).value=e[key]|| ((key==='status'||key==='dateStatus'||key==='availability')?'Por verificar':'');document.getElementById('deleteEvent').style.display=id?'inline-block':'none';showModal('eventModal')}
+document.getElementById('eventForm').onsubmit=e=>{e.preventDefault();let id=document.getElementById('eventId').value;let obj={id:id||'custom'+Date.now(),name:fName.value,country:fCountry.value,type:fType.value,date:fDate.value,place:fPlace.value,distance:fDistance.value,cost:fCost.value,status:fStatus.value,dateStatus:fDateStatus.value,availability:fAvailability.value,checkedAt:fCheckedAt.value,sourceUrl:(data.events.find(x=>x.id===id)||{}).sourceUrl||'',url:fUrl.value,notes:fNotes.value,interested:false,registered:false};if(id){let old=data.events.find(x=>x.id===id);obj.interested=old.interested;obj.registered=old.registered;data.events=data.events.map(x=>x.id===id?obj:x)}else data.events.push(obj);hideModal('eventModal');save()};
+document.getElementById('deleteEvent').onclick=()=>{let id=eventId.value;if(confirm('¿Eliminar esta prueba?')){data.events=data.events.filter(x=>x.id!==id);save();hideModal('eventModal')}};
+document.getElementById('addReminder').onclick=()=>{rTitle.value='';rDate.value='';rEvent.value='';showModal('reminderModal')};
+document.getElementById('reminderForm').onsubmit=e=>{e.preventDefault();let linked=data.events.find(x=>x.id===rEvent.value);data.reminders.push({id:'r'+Date.now(),title:rTitle.value+(linked?' · '+linked.name:''),when:new Date(rDate.value).toISOString(),done:false});hideModal('reminderModal');save();checkReminders()};
+async function askPermission(){if(!('Notification'in window)){alert('Este navegador no admite notificaciones.');return}let p=await Notification.requestPermission();permissionStatus.textContent='Estado: '+p;if(p==='granted')checkReminders()}
+document.getElementById('enableNotifications').onclick=askPermission;
+function checkReminders(){if(!('Notification'in window)||Notification.permission!=='granted')return;let now=Date.now();data.reminders.forEach(r=>{if(!r.done&&!data.fired.includes(r.id)&&new Date(r.when).getTime()<=now){try{new Notification('TRIATLÓN 2027',{body:r.title,icon:'icon.svg',tag:r.id})}catch(e){}data.fired.push(r.id);r.done=true}});localStorage.setItem(KEY,JSON.stringify(data));render()}
+document.getElementById('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mi-temporada-triatlon-2027.json';a.click();URL.revokeObjectURL(a.href)};
+document.getElementById('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.events)||!Array.isArray(d.reminders))throw 0;if(confirm('¿Sustituir los datos actuales por esta copia?')){data=d;save();alert('Copia restaurada.')}}catch(err){alert('El archivo no parece una copia válida.')}e.target.value=''};
+document.getElementById('resetData').onclick=()=>{if(confirm('Se borrarán tus cambios, favoritos y recordatorios. ¿Continuar?')){data={events:seed.map(x=>({...x})),reminders:[],fired:[]};save()}};
+let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.disabled=false;installHelp.textContent='Pulsa para instalar la aplicación.'});
+installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.disabled=true}else installHelp.textContent='En Chrome, abre ⋮ y elige «Instalar aplicación». '};
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('Notification'in window)permissionStatus.textContent='Estado: '+Notification.permission;
+render();checkReminders();refreshStatusFeed(false);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});window.addEventListener('focus',checkReminders);
+</script>
+</body></html>
