@@ -1,4 +1,4 @@
-TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 12 PRO
+TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 14 PRO
 
 Novedades:
 - Rediseño global Competición PRO: negro/azul marino, azul eléctrico, turquesa y naranja.
@@ -14,4 +14,10 @@ ACTUALIZACIÓN: sustituye los archivos del sitio por todos los archivos del ZIP.
 NOTA: la PWA estática no rastrea automáticamente webs externas. Las fuentes quedan enlazadas para consulta y detección de eventos; fechas, distancias y disponibilidad deben verificarse con organizadores/federaciones. Las pruebas sin fecha o con fecha provisional se identifican en la ficha.
 
 
-VERSIÓN 12: cabecera aprobada y barra de navegación fijas en la parte superior. Se mantiene intacta la sección «Mis fuentes». El botón «Actualizar estado» queda junto al título del calendario. Caché actualizada a v12. No borres los datos del navegador: se conserva triathlon2027_data_v1.
+VERSIÓN 14: cabecera aprobada y barra de navegación fijas en la parte superior. Se mantiene intacta la sección «Mis fuentes». El botón «Actualizar estado» queda junto al título del calendario. Caché actualizada a v12. No borres los datos del navegador: se conserva triathlon2027_data_v1.
+
+
+VERSIÓN 14: corregido el anclaje superior con position:fixed al viewport (no sticky). Se reserva espacio superior en el documento para evitar solapamientos. Cabecera y barra de navegación permanecen visibles al desplazarse.
+
+
+VERSIÓN 14: eliminado de Datos y ajustes el apartado de fuentes/directorio. Se mantienen la cabecera fotográfica, la navegación fija, el calendario, los datos locales y el resto de funciones. La clave de almacenamiento triathlon2027_data_v1 no cambia.
