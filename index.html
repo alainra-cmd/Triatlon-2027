@@ -44,7 +44,7 @@ footer{text-align:center;color:#7b8992;font-size:11px;padding:15px}
 /* v7: interfaz clara, navegación superior y foto personal */
 :root{--navy:#123b5a;--navy2:#eaf2f8;--teal:#159875;--bg:#f3f7fa;--card:#ffffff;--ink:#193247;--muted:#647989;--line:#d8e3eb;--amber:#ed8b1b;--red:#c84f50}
 body{background:#f3f7fa;color:#193247;padding-bottom:12px}
-header{background:linear-gradient(180deg,rgba(7,24,39,.02) 0%,rgba(7,24,39,.10) 48%,rgba(7,24,39,.78) 100%),url("fondo-alain.jpg") center 48%/cover no-repeat;padding:174px 14px 14px;border-radius:0 0 22px 22px;box-shadow:0 5px 18px #17364b24;min-height:270px;position:sticky;top:0;z-index:20;transition:min-height .2s,padding .2s}
+header{background:linear-gradient(180deg,rgba(7,24,39,.02) 0%,rgba(7,24,39,.10) 48%,rgba(7,24,39,.78) 100%),url("cabecera-alain-triatlon-2027.jpg") center 48%/cover no-repeat;padding:174px 14px 14px;border-radius:0 0 22px 22px;box-shadow:0 5px 18px #17364b24;min-height:270px;position:sticky;top:0;z-index:20;transition:min-height .2s,padding .2s}
 .brand-lockup{top:14px;text-shadow:0 1px 2px #ffffffaa;color:#050505;font-size:inherit}.athlete-name,.season-name{color:#050505;text-shadow:0 1px 2px #ffffffaa}
 .stats{gap:8px}.stat{background:#ffffffeb;color:#18364c;border:1px solid #ffffff;backdrop-filter:blur(8px);box-shadow:0 2px 9px #102c431c}.stat span{color:#536c7d}.stat b{color:#123b5a}
 nav{position:sticky;top:104px;left:auto;right:auto;bottom:auto;padding:9px 10px;background:#ffffffed;border-bottom:1px solid #d8e3eb;border-top:0;box-shadow:0 3px 12px #17364b12;z-index:8;backdrop-filter:blur(14px)}
@@ -75,7 +75,7 @@ header.scrolled .stat span{font-size:8px;line-height:1.1}
 :root{color-scheme:dark;--navy:#050b14;--navy2:#0b1b2c;--teal:#00e5e7;--bg:#050b14;--card:#0c1a2a;--ink:#f3f8ff;--muted:#9bb0c4;--line:#20384f;--amber:#ff941f;--red:#ff4568}
 html{background:#050b14;scroll-padding-top:255px}
 body{background:radial-gradient(ellipse at 50% -12%,#12314b 0,#07111e 43%,#040910 100%);color:#f3f8ff;padding-bottom:92px}
-header{position:sticky;top:0;z-index:30;height:248px;min-height:248px;max-height:248px;padding:112px 13px 12px;border-radius:0 0 22px 22px;overflow:hidden;transition:none!important;transform:none!important;will-change:auto;background-image:linear-gradient(180deg,rgba(3,9,17,.02) 0%,rgba(3,9,17,.12) 38%,rgba(3,9,17,.92) 100%),url("fondo-alain.jpg");background-position:center,center 55%;background-size:cover;background-repeat:no-repeat;box-shadow:0 8px 26px #0009}
+header{position:relative;top:auto;z-index:2;height:248px;min-height:248px;max-height:248px;padding:112px 13px 12px;border-radius:0 0 22px 22px;overflow:hidden;transition:none!important;transform:none!important;will-change:auto;background-image:linear-gradient(180deg,rgba(3,9,17,.02) 0%,rgba(3,9,17,.12) 38%,rgba(3,9,17,.92) 100%),url("cabecera-alain-triatlon-2027.jpg");background-position:center,center 55%;background-size:cover;background-repeat:no-repeat;box-shadow:0 8px 26px #0009}
 .brand-lockup{top:14px;left:15px;right:auto;text-align:left;text-shadow:0 2px 10px #000!important;max-width:70%}
 .brand-lockup .athlete-name{font-size:clamp(20px,5.4vw,29px);color:#fff!important;text-shadow:0 2px 9px #000!important}
 .brand-lockup .season-name{font-size:13px;color:#ff982b!important;text-shadow:0 2px 8px #000!important;letter-spacing:2px}
@@ -111,6 +111,35 @@ a{color:#35dff0}
 @media(max-width:430px){header{height:236px;min-height:236px;max-height:236px;padding-top:108px;background-position:center,center 55%}.brand-lockup{top:12px;max-width:78%}.brand-lockup .athlete-name{font-size:21px}.brand-lockup .season-name{font-size:11px}nav button{font-size:10px!important;padding:8px 6px!important}main{padding-left:10px;padding-right:10px}.status-grid{gap:6px}.status-tile{padding:9px 7px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+
+/* v11 · PRO compact: cabecera collage, navegación superior y controles estables */
+html{scroll-padding-top:62px}
+body{padding-bottom:18px!important}
+header{position:relative!important;top:auto!important;height:248px!important;min-height:248px!important;max-height:248px!important;padding:0 12px 10px!important;background-image:linear-gradient(180deg,rgba(3,9,17,.02),rgba(3,9,17,.02)),url("cabecera-alain-triatlon-2027.jpg")!important;background-position:center!important;background-size:cover!important;transition:none!important;transform:none!important}
+.brand-lockup{display:none!important}
+header .stats{bottom:10px!important}
+nav{position:sticky!important;top:0!important;bottom:auto!important;left:auto!important;right:auto!important;z-index:25!important;display:flex!important;gap:5px!important;overflow-x:auto!important;overflow-y:hidden!important;padding:7px 8px!important;margin:0!important;background:rgba(4,10,18,.97)!important;border-top:0!important;border-bottom:1px solid #24415b!important;border-radius:0 0 13px 13px!important;box-shadow:0 5px 16px #0008!important}
+nav button{flex:1 0 auto!important;padding:8px 9px!important;font-size:11px!important;min-height:36px!important}
+main{padding:10px 12px 24px!important}
+.calendar-title-row{display:flex;align-items:center;justify-content:space-between;gap:9px;margin:2px 0 8px}
+.calendar-title-row h2{margin:4px 0 7px!important;font-size:19px!important}
+.calendar-title-row .sub{margin:0!important;font-size:11px!important}
+.refresh-title-btn{flex:0 0 auto;white-space:nowrap;padding:8px 10px!important;font-size:11px!important;border-radius:9px!important}
+.refresh-bar{margin:4px 0 8px!important;padding:6px 9px!important;min-height:30px!important}
+#calendar>.toolbar{gap:4px!important;margin:4px 0!important}
+#calendar>.toolbar select{min-width:0!important;flex:1 1 30%!important;padding:6px 7px!important;margin:1px 0!important;font-size:11px!important;border-radius:8px!important}
+.event-card .actions{align-items:center;gap:6px!important;margin-top:9px!important}
+.event-card .check{font-size:11px!important;gap:4px!important;padding:4px 7px;border:1px solid #29465f;border-radius:9px;background:#0b1b2b}
+.event-card .check input{width:15px!important;height:15px!important;margin:0!important}
+.event-card .actions button,.event-card .actions .btn{padding:7px 9px!important;font-size:11px!important;border-radius:8px!important}
+.source-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+.source-gallery figure{margin:0;min-width:0;background:#071522;border:1px solid #25435d;border-radius:12px;overflow:hidden}
+.source-gallery img{display:block;width:100%;height:135px;object-fit:cover}
+.source-gallery figcaption{padding:7px 9px;color:#dceaf5;font-size:11px;font-weight:700}
+.source-gallery .source-featured{grid-column:1/-1}
+.source-gallery .source-featured img{height:auto;aspect-ratio:2/1;object-fit:cover}
+@media(max-width:430px){header{height:218px!important;min-height:218px!important;max-height:218px!important}.stats{gap:5px!important}.stat{padding:6px!important}.stat b{font-size:17px!important}nav button{font-size:10px!important;padding:7px 8px!important}.calendar-title-row h2{font-size:17px!important}.refresh-title-btn{padding:7px 8px!important;font-size:10px!important}.source-gallery img{height:112px}}
+
 </style>
 </head>
 <body>
@@ -132,13 +161,13 @@ a{color:#35dff0}
 </nav>
 <main>
 <section id="calendar" class="panel active">
- <h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p>
+ <div class="calendar-title-row"><div><h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p></div><button class="primary refresh-title-btn" id="refreshStatuses">Actualizar estado</button></div>
  <div class="status-grid">
   <div class="status-tile"><b id="dateConfirmedCount">0</b><span>FECHA CONFIRMADA</span></div>
   <div class="status-tile"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></div>
   <div class="status-tile"><b id="soldOutCount">0</b><span>AGOTADAS</span></div>
  </div>
- <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div><button class="primary" id="refreshStatuses">Actualizar estados</button></div>
+ <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div></div>
  <div class="toolbar">
   <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
   <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
@@ -193,6 +222,12 @@ a{color:#35dff0}
   <b>Instalar en Android</b><p class="small">Abre esta web desde Chrome, pulsa el menú ⋮ y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio».</p>
   <button class="secondary" id="installBtn" disabled>Instalar aplicación</button><p id="installHelp" class="small">La opción aparecerá cuando abras la versión publicada mediante HTTPS en Chrome.</p>
  </div>
+ <div class="card personal-sources"><b>Mis fuentes</b><p class="small">Tus fotografías personales y la composición de cabecera de la temporada 2027.</p><div class="source-gallery">
+  <figure><img src="fuente-natacion.jpg" alt="Fotografía personal de natación"><figcaption>Natación</figcaption></figure>
+  <figure><img src="fuente-ciclismo.jpg" alt="Fotografía personal de ciclismo"><figcaption>Ciclismo</figcaption></figure>
+  <figure><img src="fuente-carrera.png" alt="Fotografía personal de carrera"><figcaption>Carrera</figcaption></figure>
+  <figure class="source-featured"><img src="cabecera-alain-triatlon-2027.jpg" alt="Cabecera ALAIN RASTROLLO · TRIATLÓN 2027"><figcaption>Cabecera · Triatlón 2027</figcaption></figure>
+ </div></div>
  <div class="card"><b>Fuentes para localizar nuevas pruebas</b><p class="small">Directorio de consulta para ampliar el calendario. Estas páginas sirven para detectar eventos; las fechas y condiciones deben contrastarse con el organizador o la federación.</p><div class="actions"><a class="btn secondary" href="https://planetatriatlon.com/" target="_blank" rel="noopener">Planeta Triatlón ↗</a><a class="btn secondary" href="https://www.kirolprobak.com/" target="_blank" rel="noopener">Kirolprobak ↗</a><a class="btn secondary" href="https://www.rockthesport.com/" target="_blank" rel="noopener">RockTheSport ↗</a><a class="btn secondary" href="https://triatlon.org/" target="_blank" rel="noopener">FETRI ↗</a><a class="btn secondary" href="https://www.ironman.com/races" target="_blank" rel="noopener">IRONMAN ↗</a><a class="btn secondary" href="https://challenge-family.com/races/" target="_blank" rel="noopener">Challenge Family ↗</a></div></div>
  <div class="card"><b>Actualización de fechas y dorsales</b><p class="small">La aplicación descarga status-feed.json al abrirse y cuando pulsas «Actualizar estados». Para cambiar la información revisada, hay que publicar la nueva versión de ese archivo en GitHub. Las webs de organizadores no permiten una consulta automática fiable desde una PWA estática.</p><p class="small" id="statusSettingsLabel">Última sincronización: pendiente.</p></div>
  <div class="card">
