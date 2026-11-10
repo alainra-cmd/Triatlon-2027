@@ -45,17 +45,17 @@ footer{text-align:center;color:#7b8992;font-size:11px;padding:15px}
 :root{--navy:#123b5a;--navy2:#eaf2f8;--teal:#159875;--bg:#f3f7fa;--card:#ffffff;--ink:#193247;--muted:#647989;--line:#d8e3eb;--amber:#ed8b1b;--red:#c84f50}
 body{background:#f3f7fa;color:#193247;padding-bottom:12px}
 header{background:linear-gradient(180deg,rgba(7,24,39,.02) 0%,rgba(7,24,39,.10) 48%,rgba(7,24,39,.78) 100%),url("fondo-alain.jpg") center 48%/cover no-repeat;padding:174px 14px 14px;border-radius:0 0 22px 22px;box-shadow:0 5px 18px #17364b24;min-height:270px}
-.brand-lockup{top:102px;text-shadow:0 2px 12px #071827;font-size:inherit}
+.brand-lockup{top:38px;text-shadow:0 1px 2px #ffffffaa;color:#050505;font-size:inherit}.athlete-name,.season-name{color:#050505;text-shadow:0 1px 2px #ffffffaa}
 .stats{gap:8px}.stat{background:#ffffffeb;color:#18364c;border:1px solid #ffffff;backdrop-filter:blur(8px);box-shadow:0 2px 9px #102c431c}.stat span{color:#536c7d}.stat b{color:#123b5a}
 nav{position:sticky;top:0;left:auto;right:auto;bottom:auto;padding:9px 10px;background:#ffffffed;border-bottom:1px solid #d8e3eb;border-top:0;box-shadow:0 3px 12px #17364b12;z-index:8;backdrop-filter:blur(14px)}
 nav button{background:#eef3f7;border:1px solid #d8e3eb;color:#29485e;padding:10px 12px;flex:0 0 auto}
 nav button.active{background:#176b9b;border-color:#176b9b;color:#fff;box-shadow:0 3px 10px #176b9b30}
 main{padding:12px 13px 32px}.card{background:#fff;border:1px solid #dce6ed;box-shadow:0 3px 12px #18384d0c;color:#193247}
 .status-tile{background:#fff;border:1px solid #dce6ed}.status-tile span,.sub,.meta,.small,.checked-note,.section-label,.map-key,.map-help{color:#647989}
-.refresh-bar{background:#eaf2f8;border:1px solid #d5e3ec}.secondary{background:#e8eff4;color:#29485e}.primary{background:#ed8b1b;color:#fff}
+.total-counter{display:flex;justify-content:space-between;align-items:center;background:#eaf2f8;border:1px solid #cbdfea;border-radius:14px;padding:12px 14px;margin:10px 0;color:#193247}.total-counter strong{font-size:24px;color:#176b9b}.refresh-bar{background:#eaf2f8;border:1px solid #d5e3ec}.secondary{background:#e8eff4;color:#29485e}.primary{background:#ed8b1b;color:#fff}
 input,select,textarea{background:#fff;color:#193247;border:1px solid #cad9e3}label,.check{color:#435d70}
 .sheet{background:#f5f8fa;color:#193247}.modal{background:#102c4388}
-@media(max-width:430px){header{min-height:260px;padding-top:166px}.brand-lockup{top:91px}.stats{gap:6px}.stat{padding:8px 6px}.stat b{font-size:21px}nav{gap:6px}nav button{padding:9px 10px;font-size:12px}}
+@media(max-width:430px){header{min-height:260px;padding-top:166px}.brand-lockup{top:28px}.stats{gap:6px}.stat{padding:8px 6px}.stat b{font-size:21px}nav{gap:6px}nav button{padding:9px 10px;font-size:12px}}
 
 </style>
 </head>
@@ -88,9 +88,12 @@ input,select,textarea{background:#fff;color:#193247;border:1px solid #cad9e3}lab
  <div class="toolbar">
   <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
   <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
+  <select id="distanceFilter"><option value="">Todas las distancias</option><option value="Supersprint">Supersprint</option><option value="Sprint">Sprint</option><option value="Olímpica">Olímpica</option><option value="Media distancia">Media distancia</option><option value="Larga distancia">Larga distancia</option><option value="Cross">Cross</option><option value="Otras">Otras</option></select>
+  <select id="communityFilter"><option value="">Todas las comunidades</option><option>Andalucía</option><option>Aragón</option><option>Asturias</option><option>Illes Balears</option><option>Canarias</option><option>Cantabria</option><option>Castilla-La Mancha</option><option>Castilla y León</option><option>Cataluña</option><option>Comunitat Valenciana</option><option>Extremadura</option><option>Galicia</option><option>Comunidad de Madrid</option><option>Región de Murcia</option><option>Navarra</option><option>País Vasco</option><option>La Rioja</option><option>Portugal</option><option>Sin determinar</option></select>
   <select id="interestFilter"><option value="">Todas las pruebas</option><option value="interested">Me interesan</option><option value="registered">Inscrito</option></select>
   <select id="availabilityFilter"><option value="">Cualquier estado</option><option value="Plazas disponibles">Con plazas</option><option value="Agotadas">Agotadas</option><option value="Lista de espera">Lista de espera</option><option value="Por verificar">Sin verificar</option></select>
  </div>
+ <div class="total-counter"><span><b>Total de pruebas en el listado</b><br><small id="filteredCountLabel">Mostrando todas las pruebas</small></span><strong id="eventCount">0</strong></div>
  <input id="search" placeholder="Buscar prueba, localidad o distancia…">
  <div id="eventList"></div>
  <button class="primary" style="width:100%;margin-top:8px" id="addEvent">＋ Añadir una prueba</button>
@@ -105,9 +108,9 @@ input,select,textarea{background:#fff;color:#193247;border:1px solid #cad9e3}lab
 </section>
 <section id="myraces" class="panel">
  <h2>Mi temporada</h2><p class="sub">Tu selección personal de competiciones.</p>
+ <h3>Mis pruebas inscritas</h3><div id="registeredList"></div>
  <div class="card"><b>Presupuesto estimado</b><div style="font-size:25px;font-weight:800;margin-top:5px" id="budgetTotal">0 €</div><span class="small">Suma de costes de pruebas marcadas como inscrito.</span></div>
  <h3>Pruebas que me interesan</h3><div id="interestedList"></div>
- <h3>Inscripciones realizadas</h3><div id="registeredList"></div>
 </section>
 <section id="reminders" class="panel">
  <h2>Avisos y recordatorios</h2><p class="sub">Crea avisos para aperturas, cierres de inscripción y días de carrera.</p>
@@ -207,6 +210,25 @@ function statusPill(s,kind='availability'){
  if(s==='Inscripción aún no abierta')cls='blue';
  return `<span class="pill ${cls}">${esc(s||'Por verificar')}</span>`;
 }
+function communityFor(e){
+ const t=((e.place||'')+' '+(e.name||'')).toLowerCase();
+ const groups={
+ 'País Vasco':['vitoria','gasteiz','zarautz','zuia','bilbao','donost','san sebastian','getxo','gipuzkoa','bizkaia','álava','alava'],
+ 'Navarra':['pamplona','iruña','navarra','tudela'], 'La Rioja':['calahorra','logroño','rioja'],
+ 'Aragón':['zaragoza','huesca','teruel','alcañiz'], 'Cataluña':['banyoles','barcelona','tarragona','girona','lleida','salou','catalu'],
+ 'Comunitat Valenciana':['peñíscola','peniscola','la nucía','nucia','alicante','valencia','castellón','castellon','orihuela','águilas'],
+ 'Región de Murcia':['murcia','archena','yecla','calasparra','lorca','cartagena','águilas','fuente álamo','portmán','pacheco'],
+ 'Andalucía':['almería','roquetas','sevilla','málaga','cadiz','cádiz','granada','huelva','jaén','cordoba','córdoba'],
+ 'Castilla-La Mancha':['albacete','hellín','tomelloso','alcázar','riopar','riópar','cuenca','pálmaces','criptana','júcar','ciudad real'],
+ 'Castilla y León':['vinuesa','valladolid','burgos','león','salamanca','segovia','soria','zamora','ávila','palencia'],
+ 'Galicia':['vimianzo','vilalba','vedra','santiago','muros','porriño','porriño','naron','narón','lugo','allariz','as pontes','ourense','pontevedra','a coruña'],
+ 'Comunidad de Madrid':['madrid','casa de campo'], 'Extremadura':['mérida','merida','cáceres','badajoz'],
+ 'Asturias':['gijón','oviedo','asturias'], 'Cantabria':['santander','cantabria'],
+ 'Illes Balears':['mallorca','menorca','ibiza','palma'], 'Canarias':['tenerife','gran canaria','lanzarote','fuerteventura','canarias']};
+ for(const [region,terms] of Object.entries(groups))if(terms.some(x=>t.includes(x)))return region;
+ if(e.country==='Portugal')return 'Portugal'; return 'Sin determinar';
+}
+function distanceGroup(e){const d=(e.distance||'').toLowerCase();if(d.includes('super'))return 'Supersprint';if(d.includes('sprint'))return 'Sprint';if(d.includes('olímp')||d.includes('olimp'))return 'Olímpica';if(d.includes('media')||d.includes('70.3')||d.includes('half'))return 'Media distancia';if(d.includes('larga')||d.includes('ironman')||d.includes('full'))return 'Larga distancia';if(d.includes('cross')||d.includes('gravel'))return 'Cross';return 'Otras'}
 function render(){
  document.getElementById('countInterested').textContent=data.events.filter(e=>e.interested).length;
  document.getElementById('countRegistered').textContent=data.events.filter(e=>e.registered).length;
@@ -214,8 +236,9 @@ function render(){
  document.getElementById('dateConfirmedCount').textContent=data.events.filter(e=>e.dateStatus==='Confirmada').length;
  document.getElementById('placesOpenCount').textContent=data.events.filter(e=>e.availability==='Plazas disponibles').length;
  document.getElementById('soldOutCount').textContent=data.events.filter(e=>e.availability==='Agotadas').length;
- let country=document.getElementById('countryFilter').value,type=document.getElementById('typeFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase();
- let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ let country=document.getElementById('countryFilter').value,type=document.getElementById('typeFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase(),dist=document.getElementById('distanceFilter').value,region=document.getElementById('communityFilter').value;
+ let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
  <div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div>
  <div class="status-row"><span class="section-label">Fecha</span>${statusPill(e.dateStatus||'Por verificar','date')}<span class="section-label">Dorsales</span>${statusPill(e.availability||'Por verificar')}</div>
@@ -278,7 +301,7 @@ function renderMap(){
 }
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap()}));
-['countryFilter','typeFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+['countryFilter','typeFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
 document.addEventListener('click',e=>{
  let edit=e.target.closest('[data-edit]');if(edit)openEvent(edit.dataset.edit);
