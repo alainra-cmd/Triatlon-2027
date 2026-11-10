@@ -1,19 +1,14 @@
-TRIATLÓN 2027 - VERSIÓN 4
+ALAIN RASTROLLO · TRIATLÓN 2027 — ACTUALIZACIÓN V6
 
-Novedades:
-- Cabecera deportiva con imagen de natación, ciclismo y carrera.
-- Diseño oscuro más parecido a una aplicación móvil.
-- Navegación inferior fija para facilitar el uso en Android.
-- Caché renovada (v4) para forzar la descarga de los nuevos recursos.
+Esta versión amplía el calendario con pruebas adultas publicadas en calendarios oficiales FETRI y federaciones autonómicas: Galicia, Región de Murcia, Castilla-La Mancha y Canarias, además de las pruebas nacionales FETRI.
 
-Actualización:
-1. Descomprime el ZIP.
-2. Sube TODOS los archivos a la raíz del repositorio GitHub Pages, sustituyendo los anteriores.
-3. Haz Commit changes.
-4. Espera a que GitHub Pages publique los cambios.
-5. Cierra completamente la aplicación y vuelve a abrirla con conexión.
+IMPORTANTE: no todas las federaciones han publicado todavía un calendario 2027 completo. Las pruebas nuevas aparecen como provisionales y con enlace a la fuente federativa. Se excluyen eventos identificados como escolares/menores.
 
-No borres los datos del navegador: favoritos y marcas se guardan localmente.
-La imagen de cabecera se sirve desde hero-triatlon.jpg, por lo que debe subirse junto con el resto.
+Para actualizar: sustituye en la raíz de GitHub Pages los archivos del ZIP. Mantén el mismo repositorio y no borres datos del navegador. La aplicación añade las nuevas pruebas a instalaciones existentes sin borrar favoritos, inscripciones ni pruebas personalizadas.
 
-Identidad visual personalizada: ALAIN RASTROLLO · TRIATLON 2027. Nombre de la app: Alain Triatlon.
+
+VERSION 7 - CAMBIOS VISUALES
+- Foto personal como fondo principal de la cabecera.
+- Navegación movida a la parte superior, debajo de los contadores.
+- Diseño aclarado con fondos blancos/gris claro y acentos azules y naranjas.
+- Se mantiene el almacenamiento local y la estructura de datos de la versión anterior.
