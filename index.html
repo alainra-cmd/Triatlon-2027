@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#10283f">
+<meta name="theme-color" content="#050b14">
 <meta name="description" content="Tu calendario personal de triatlón y duatlón 2027">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>ALAIN RASTROLLO · TRIATLÓN 2027</title>
+<title>ALAIN RASTROLLO · TRIATLÓN 2027 PRO</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
@@ -70,6 +70,47 @@ header.scrolled .stat span{font-size:8px;line-height:1.1}
 #countInterested,#countRegistered,#countReminders{font-variant-numeric:tabular-nums}
 @media(max-width:430px){header{min-height:260px;padding-top:166px}.brand-lockup{top:12px}.stats{gap:6px}.stat{padding:6px 5px}.stat b{font-size:18px}nav{gap:6px}nav button{padding:9px 10px;font-size:12px}}
 
+
+/* VERSION 10 · COMPETICIÓN PRO: tema global oscuro y cabecera estable */
+:root{color-scheme:dark;--navy:#050b14;--navy2:#0b1b2c;--teal:#00e5e7;--bg:#050b14;--card:#0c1a2a;--ink:#f3f8ff;--muted:#9bb0c4;--line:#20384f;--amber:#ff941f;--red:#ff4568}
+html{background:#050b14;scroll-padding-top:255px}
+body{background:radial-gradient(ellipse at 50% -12%,#12314b 0,#07111e 43%,#040910 100%);color:#f3f8ff;padding-bottom:92px}
+header{position:sticky;top:0;z-index:30;height:248px;min-height:248px;max-height:248px;padding:112px 13px 12px;border-radius:0 0 22px 22px;overflow:hidden;transition:none!important;transform:none!important;will-change:auto;background-image:linear-gradient(180deg,rgba(3,9,17,.02) 0%,rgba(3,9,17,.12) 38%,rgba(3,9,17,.92) 100%),url("fondo-alain.jpg");background-position:center,center 55%;background-size:cover;background-repeat:no-repeat;box-shadow:0 8px 26px #0009}
+.brand-lockup{top:14px;left:15px;right:auto;text-align:left;text-shadow:0 2px 10px #000!important;max-width:70%}
+.brand-lockup .athlete-name{font-size:clamp(20px,5.4vw,29px);color:#fff!important;text-shadow:0 2px 9px #000!important}
+.brand-lockup .season-name{font-size:13px;color:#ff982b!important;text-shadow:0 2px 8px #000!important;letter-spacing:2px}
+.stats{position:absolute;left:12px;right:12px;bottom:12px;gap:7px;margin:0}
+.stat{background:rgba(4,13,24,.82)!important;border:1px solid rgba(0,229,231,.35)!important;color:#fff!important;border-radius:12px;padding:7px 8px;backdrop-filter:blur(10px);box-shadow:0 4px 14px #0007}
+.stat b{font-size:19px;color:#00e5e7!important}.stat span{font-size:9px;color:#d1e2f0!important;letter-spacing:.45px}
+nav{position:fixed!important;top:auto!important;bottom:0!important;left:0!important;right:0!important;z-index:40;display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;padding:8px 7px calc(8px + env(safe-area-inset-bottom));background:rgba(4,10,18,.96)!important;border-top:1px solid #24415b!important;border-bottom:0!important;box-shadow:0 -8px 28px #0009!important;backdrop-filter:blur(18px)}
+nav button{flex:1 0 auto!important;min-width:0;background:#0d1d2e!important;border:1px solid #20384f!important;color:#b8cadd!important;border-radius:12px!important;padding:9px 8px!important;font-size:11px!important;font-weight:750}
+nav button.active{background:linear-gradient(135deg,#00dce5,#0788c8)!important;border-color:#00e5e7!important;color:#00121d!important;box-shadow:0 0 18px #00dce555!important}
+main{max-width:900px;padding:12px 12px 24px;color:#f3f8ff}
+h2,h3{color:#f6faff}h2{font-size:20px;letter-spacing:.2px}h3{font-size:16px}
+.card,.status-tile,.sheet{background:linear-gradient(145deg,#10243a,#091522)!important;border:1px solid #203b54!important;color:#f1f7ff!important;box-shadow:0 7px 18px #0005!important}
+.event-card{border-top:2px solid #00dce5!important;border-left:3px solid #00dce5!important}
+.event-card.open{border-top-color:#00e5a8!important;border-left-color:#00e5a8!important}.event-card.sold{border-top-color:#ff4568!important;border-left-color:#ff4568!important}.event-card.wait{border-top-color:#ff982b!important;border-left-color:#ff982b!important}
+.meta,.small,.sub,.checked-note,.section-label,.map-key,.map-help,.status-tile span{color:#9bb0c4!important}
+.total-counter,.refresh-bar{background:linear-gradient(110deg,#102940,#0b1a2b)!important;border:1px solid #24516b!important;color:#f5faff!important;border-radius:14px}
+.total-counter strong{color:#00e5e7!important;font-size:26px}
+.primary{background:linear-gradient(110deg,#00dce5,#087fc2)!important;color:#00121b!important;border:1px solid #39f1f0!important;box-shadow:0 4px 14px #00dce533}
+.secondary{background:#142b41!important;color:#e7f5ff!important;border:1px solid #31516c!important}
+.danger{background:#421c2a!important;color:#ffdce4!important}
+input,select,textarea{background:#0b1a29!important;color:#f3f8ff!important;border:1px solid #29465f!important;border-radius:11px!important}
+input::placeholder,textarea::placeholder{color:#8299ad}
+label,.check{color:#c5d7e7!important}.check input{accent-color:#00e5e7}
+.pill{background:#1b344a!important;color:#dcecff!important}.pill.green{background:#0d443a!important;color:#7bffce!important}.pill.blue{background:#123c60!important;color:#8fd2ff!important}.pill.amber{background:#503316!important;color:#ffd08a!important}.pill.red{background:#4c1b2a!important;color:#ff9caf!important}.pill.grey{background:#1c2b3a!important;color:#bdcad6!important}
+.progress{background:#1d3449}.progress i{background:#00e5e7}
+#raceMap{border:1px solid #29465f;box-shadow:0 8px 22px #0006}
+.map-legend{background:#0a1826;border:1px solid #20384f;border-radius:12px;padding:9px}
+.sheet{background:#071321!important}.modal{background:#000b!important}.close{background:#173149!important;color:#fff!important}
+footer{color:#6f879d}
+a{color:#35dff0}
+.toolbar{gap:6px}.toolbar select{font-size:12px;padding:9px 10px}
+#calendar>.toolbar select{background:#0b1b2b!important;border-color:#28506a!important}
+@media(max-width:430px){header{height:236px;min-height:236px;max-height:236px;padding-top:108px;background-position:center,center 55%}.brand-lockup{top:12px;max-width:78%}.brand-lockup .athlete-name{font-size:21px}.brand-lockup .season-name{font-size:11px}nav button{font-size:10px!important;padding:8px 6px!important}main{padding-left:10px;padding-right:10px}.status-grid{gap:6px}.status-tile{padding:9px 7px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -104,6 +145,7 @@ header.scrolled .stat span{font-size:8px;line-height:1.1}
   <select id="distanceFilter"><option value="">Todas las distancias</option><option value="Supersprint">Supersprint</option><option value="Sprint">Sprint</option><option value="Olímpica">Olímpica</option><option value="Media distancia">Media distancia</option><option value="Larga distancia">Larga distancia</option><option value="Cross">Cross</option><option value="Otras">Otras</option></select>
   <select id="communityFilter"><option value="">Todas las comunidades</option><option>Andalucía</option><option>Aragón</option><option>Asturias</option><option>Illes Balears</option><option>Canarias</option><option>Cantabria</option><option>Castilla-La Mancha</option><option>Castilla y León</option><option>Cataluña</option><option>Comunitat Valenciana</option><option>Extremadura</option><option>Galicia</option><option>Comunidad de Madrid</option><option>Región de Murcia</option><option>Navarra</option><option>País Vasco</option><option>La Rioja</option><option>Portugal</option><option>Sin determinar</option></select>
   <select id="franchiseFilter"><option value="">Todas las organizaciones</option><option value="IRONMAN">IRONMAN</option><option value="Challenge">Challenge</option></select>
+  <select id="monthFilter"><option value="">Todos los meses</option><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option></select>
   <select id="interestFilter"><option value="">Todas las pruebas</option><option value="interested">Me interesan</option><option value="registered">Inscrito</option></select>
   <select id="availabilityFilter"><option value="">Cualquier estado</option><option value="Plazas disponibles">Con plazas</option><option value="Agotadas">Agotadas</option><option value="Lista de espera">Lista de espera</option><option value="Por verificar">Sin verificar</option></select>
  </div>
@@ -151,6 +193,7 @@ header.scrolled .stat span{font-size:8px;line-height:1.1}
   <b>Instalar en Android</b><p class="small">Abre esta web desde Chrome, pulsa el menú ⋮ y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio».</p>
   <button class="secondary" id="installBtn" disabled>Instalar aplicación</button><p id="installHelp" class="small">La opción aparecerá cuando abras la versión publicada mediante HTTPS en Chrome.</p>
  </div>
+ <div class="card"><b>Fuentes para localizar nuevas pruebas</b><p class="small">Directorio de consulta para ampliar el calendario. Estas páginas sirven para detectar eventos; las fechas y condiciones deben contrastarse con el organizador o la federación.</p><div class="actions"><a class="btn secondary" href="https://planetatriatlon.com/" target="_blank" rel="noopener">Planeta Triatlón ↗</a><a class="btn secondary" href="https://www.kirolprobak.com/" target="_blank" rel="noopener">Kirolprobak ↗</a><a class="btn secondary" href="https://www.rockthesport.com/" target="_blank" rel="noopener">RockTheSport ↗</a><a class="btn secondary" href="https://triatlon.org/" target="_blank" rel="noopener">FETRI ↗</a><a class="btn secondary" href="https://www.ironman.com/races" target="_blank" rel="noopener">IRONMAN ↗</a><a class="btn secondary" href="https://challenge-family.com/races/" target="_blank" rel="noopener">Challenge Family ↗</a></div></div>
  <div class="card"><b>Actualización de fechas y dorsales</b><p class="small">La aplicación descarga status-feed.json al abrirse y cuando pulsas «Actualizar estados». Para cambiar la información revisada, hay que publicar la nueva versión de ese archivo en GitHub. Las webs de organizadores no permiten una consulta automática fiable desde una PWA estática.</p><p class="small" id="statusSettingsLabel">Última sincronización: pendiente.</p></div>
  <div class="card">
   <b>Privacidad y almacenamiento</b><p class="small">Los datos se guardan en el almacenamiento local del navegador de este dispositivo. Si borras los datos de Chrome o cambias de móvil, necesitarás restaurar una copia de seguridad.</p>
@@ -252,7 +295,8 @@ function render(){
  document.getElementById('placesOpenCount').textContent=data.events.filter(e=>e.availability==='Plazas disponibles').length;
  document.getElementById('soldOutCount').textContent=data.events.filter(e=>e.availability==='Agotadas').length;
  let country=document.getElementById('countryFilter').value,type=document.getElementById('typeFilter').value,franchise=document.getElementById('franchiseFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase(),dist=document.getElementById('distanceFilter').value,region=document.getElementById('communityFilter').value;
- let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ let month=document.getElementById('monthFilter').value;
+ let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
  document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
  <div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div>
@@ -315,9 +359,9 @@ function renderMap(){
  document.getElementById('mapEventList').innerHTML=events.length?events.map(e=>`<div class="card"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · ${esc(e.country)}</div><div class="status-row">${statusPill(e.dateStatus,'date')}${statusPill(e.availability)}</div></div>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
 }
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
-window.addEventListener('scroll',()=>document.querySelector('header').classList.toggle('scrolled',window.scrollY>90),{passive:true});
+// La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap()}));
-['countryFilter','typeFilter','franchiseFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
 document.addEventListener('click',e=>{
  let edit=e.target.closest('[data-edit]');if(edit)openEvent(edit.dataset.edit);

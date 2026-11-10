@@ -1,7 +1,14 @@
-TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 9
+TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 10 PRO
 
-Novedades: cabecera fija con modo compacto al desplazarse; botones y filtros más pequeños; mapa ampliado con localizaciones europeas; calendario europeo IRONMAN, IRONMAN 70.3 y Challenge; filtro por franquicia.
+Novedades:
+- Rediseño global Competición PRO: negro/azul marino, azul eléctrico, turquesa y naranja.
+- Cabecera fija de altura constante, sin reducción ni transición al hacer scroll.
+- Encuadre de la foto personal ajustado para mantener al ciclista centrado.
+- Navegación inferior fija, estilo aplicación móvil.
+- Filtro por mes añadido y combinable con distancia, comunidad, franquicia, tipo, país y estado.
+- Directorio de fuentes de pruebas: Planeta Triatlón, Kirolprobak, RockTheSport, FETRI, IRONMAN y Challenge Family.
+- Se conserva la clave local triathlon2027_data_v1 para mantener favoritos e inscripciones.
 
-Actualización: sustituye los archivos de GitHub Pages por todos los archivos de este ZIP. No borres los datos del navegador ni el almacenamiento local. La aplicación conserva la clave triathlon2027_data_v1 y añade los nuevos eventos sin eliminar tus marcas.
+ACTUALIZACIÓN: sustituye los archivos del sitio por todos los archivos del ZIP. No borres los datos de Chrome ni el almacenamiento local. El Service Worker utiliza caché v10.
 
-Importante: las fechas de eventos se marcan como provisionales o pendientes y deben confirmarse con la organización. Algunas pruebas sin coordenadas exactas pueden aparecer en el listado del mapa sin marcador.
+NOTA: la PWA estática no rastrea automáticamente webs externas. Las fuentes quedan enlazadas para consulta y detección de eventos; fechas, distancias y disponibilidad deben verificarse con organizadores/federaciones. Las pruebas sin fecha o con fecha provisional se identifican en la ficha.
