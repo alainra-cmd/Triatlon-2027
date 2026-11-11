@@ -1,23 +1,17 @@
-TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 14 PRO
+TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 15 PRO
 
-Novedades:
-- Rediseño global Competición PRO: negro/azul marino, azul eléctrico, turquesa y naranja.
-- Cabecera fija de altura constante, sin reducción ni transición al hacer scroll.
-- Encuadre de la foto personal ajustado para mantener al ciclista centrado.
-- Navegación inferior fija, estilo aplicación móvil.
-- Filtro por mes añadido y combinable con distancia, comunidad, franquicia, tipo, país y estado.
-- Directorio de fuentes de pruebas: Planeta Triatlón, Kirolprobak, RockTheSport, FETRI, IRONMAN y Challenge Family.
-- Se conserva la clave local triathlon2027_data_v1 para mantener favoritos e inscripciones.
+Novedades de V15:
+- Navegación fija rediseñada con iconos y etiquetas compactas. La sección de competiciones se identifica como «Pruebas» y se añade «Calendario» para el calendario laboral.
+- Nueva sección Calendario laboral 2027, preparada para importar archivos ICS, CSV o JSON con días libres de 2027 y cruzarlos con las fechas de las competiciones.
+- En Mi temporada, las pruebas inscritas tienen fondo verde suave y las pruebas de interés fondo naranja suave.
+- Datos y ajustes incluye Fuentes del calendario: páginas de referencia utilizadas y opción para añadir/quitar URLs.
+- Fondo general aclarado sutilmente a negro grafito.
+- Icono de triatlón renovado (natación, ciclismo y carrera) para Android y PWA.
+- Caché del Service Worker actualizada a v15.
 
-ACTUALIZACIÓN: sustituye los archivos del sitio por todos los archivos del ZIP. No borres los datos de Chrome ni el almacenamiento local. El Service Worker utiliza caché v10.
-
-NOTA: la PWA estática no rastrea automáticamente webs externas. Las fuentes quedan enlazadas para consulta y detección de eventos; fechas, distancias y disponibilidad deben verificarse con organizadores/federaciones. Las pruebas sin fecha o con fecha provisional se identifican en la ficha.
-
-
-VERSIÓN 14: cabecera aprobada y barra de navegación fijas en la parte superior. Se mantiene intacta la sección «Mis fuentes». El botón «Actualizar estado» queda junto al título del calendario. Caché actualizada a v12. No borres los datos del navegador: se conserva triathlon2027_data_v1.
-
-
-VERSIÓN 14: corregido el anclaje superior con position:fixed al viewport (no sticky). Se reserva espacio superior en el documento para evitar solapamientos. Cabecera y barra de navegación permanecen visibles al desplazarse.
-
-
-VERSIÓN 14: eliminado de Datos y ajustes el apartado de fuentes/directorio. Se mantienen la cabecera fotográfica, la navegación fija, el calendario, los datos locales y el resto de funciones. La clave de almacenamiento triathlon2027_data_v1 no cambia.
+IMPORTANTE:
+- Se conserva la clave localStorage triathlon2027_data_v1 y se migran los campos nuevos sin borrar favoritos, inscripciones ni recordatorios existentes.
+- La antigua sección «Mis fuentes» con fotografías no se recupera. Las fuentes de calendario son un apartado independiente.
+- Añadir una URL la guarda como fuente de consulta; no habilita por sí solo el rastreo automático de esa web.
+- El calendario laboral admite ICS, CSV con la fecha en la primera columna (formato YYYY-MM-DD) o JSON con una lista de objetos que contengan date. Solo se importan fechas de 2027.
+- Sustituye todos los archivos del repositorio por los de este ZIP. No borres los datos de Chrome ni el almacenamiento local.

@@ -114,7 +114,7 @@ a{color:#35dff0}
 
 /* VERSION 13 · cabecera y navegación ancladas al viewport */
 :root{scroll-padding-top:310px}
-body{padding-top:300px!important;padding-bottom:24px!important}
+body{padding-top:315px!important;padding-bottom:24px!important}
 header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:100!important;height:248px!important;min-height:248px!important;max-height:248px!important;padding:0!important;margin:0!important;overflow:hidden!important;border-radius:0 0 16px 16px!important;background-image:url("cabecera-alain-triatlon-2027.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;transition:none!important;transform:none!important;will-change:auto!important;box-shadow:0 7px 22px #0009!important}
 header .brand-lockup,header .top{display:none!important}
 header .stats{position:absolute!important;left:12px!important;right:12px!important;bottom:10px!important;margin:0!important;z-index:2!important}
@@ -132,8 +132,30 @@ main{padding-top:10px!important}
 .event-card .check{font-size:11px!important;gap:4px!important;padding:4px 7px!important;border:1px solid #29465f!important;border-radius:9px!important;background:#0b1b2b!important}
 .event-card .check input{width:15px!important;height:15px!important;margin:0!important}
 .event-card .actions button,.event-card .actions .btn{padding:7px 9px!important;font-size:11px!important;border-radius:8px!important}
-@media(max-width:430px){body{padding-top:268px!important}header{height:218px!important;min-height:218px!important;max-height:218px!important}nav{top:218px!important;padding:6px 6px!important}nav button{font-size:10px!important;padding:7px 8px!important}.calendar-title-row h2{font-size:17px!important}.refresh-title-btn{padding:7px 8px!important;font-size:10px!important}header .stats{gap:5px!important}.stat{padding:6px!important}.stat b{font-size:17px!important}}
+@media(max-width:430px){body{padding-top:282px!important}header{height:218px!important;min-height:218px!important;max-height:218px!important}nav{top:218px!important;padding:6px 6px!important}nav button{font-size:10px!important;padding:7px 8px!important}.calendar-title-row h2{font-size:17px!important}.refresh-title-btn{padding:7px 8px!important;font-size:10px!important}header .stats{gap:5px!important}.stat{padding:6px!important}.stat b{font-size:17px!important}}
 @media(prefers-reduced-motion:reduce){header,nav{transition:none!important}}
+
+
+/* V15 · contraste grafito, navegación superior y estados de temporada */
+:root{--bg:#0b1420!important;--card:#111f2e!important;--line:#2b4054!important}
+body{background:radial-gradient(ellipse at top,#14283b 0,#0b1420 62%)!important}
+.card{background:linear-gradient(145deg,#142638,#101d2b)!important;border-color:#2b4054!important}
+nav{height:auto!important;min-height:62px!important;gap:3px!important;padding:5px 6px!important;justify-content:space-around!important}
+nav button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;flex:1 0 auto!important;min-width:52px!important;min-height:48px!important;padding:4px 7px!important;border:1px solid transparent!important;border-radius:10px!important;background:transparent!important;color:#a9bfd2!important;font-size:10px!important;line-height:1.1!important;white-space:nowrap!important}
+nav button .nav-icon{font-size:19px!important;line-height:1.1!important;display:block!important}
+nav button.active{background:#102b43!important;border-color:#1d4e70!important;color:#4fc8ff!important;box-shadow:inset 0 -3px 0 #16b9f4!important}
+#myraces .season-registered{background:linear-gradient(120deg,#173d32,#142d29)!important;border:1px solid #34765b!important}
+#myraces .season-interested{background:linear-gradient(120deg,#4a321c,#332719)!important;border:1px solid #8a5a2a!important}
+#myraces .season-registered .meta{color:#b9d8c9!important}
+#myraces .season-interested .meta{color:#e5c9a9!important}
+#calendarSourcesCard a{color:#65c9f5;overflow-wrap:anywhere}
+.source-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #2b4054;font-size:13px}
+.source-item:last-child{border-bottom:0}
+.source-item .source-meta{min-width:0;overflow-wrap:anywhere}
+.source-item button{flex:0 0 auto;padding:6px 8px!important;font-size:11px!important}
+#workcalendar .card{margin-top:8px}
+#workcalendar .off-day{background:#173d32!important;border-color:#34765b!important}
+@media(max-width:430px){nav{top:218px!important;min-height:59px!important}nav button{min-width:48px!important;padding:4px 5px!important;font-size:9px!important}nav button .nav-icon{font-size:18px!important}body{padding-bottom:24px!important}}
 
 </style>
 </head>
@@ -147,12 +169,13 @@ main{padding-top:10px!important}
   <div class="stat"><b id="countReminders">0</b><span>AVISOS ACTIVOS</span></div>
  </div>
 </header>
-<nav>
- <button class="active" data-tab="calendar">Calendario</button>
- <button data-tab="map">🗺️ Mapa</button>
- <button data-tab="myraces">Mi temporada</button>
- <button data-tab="reminders">Avisos</button>
- <button data-tab="settings">Datos y ajustes</button>
+<nav aria-label="Navegación principal">
+ <button class="active" data-tab="calendar"><span class="nav-icon">🏁</span><span>Pruebas</span></button>
+ <button data-tab="map"><span class="nav-icon">🗺️</span><span>Mapa</span></button>
+ <button data-tab="myraces"><span class="nav-icon">🏆</span><span>Mi temporada</span></button>
+ <button data-tab="workcalendar"><span class="nav-icon">📅</span><span>Calendario</span></button>
+ <button data-tab="reminders"><span class="nav-icon">🔔</span><span>Avisos</span></button>
+ <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Datos</span></button>
 </nav>
 <main>
 <section id="calendar" class="panel active">
@@ -192,6 +215,24 @@ main{padding-top:10px!important}
  <div class="card"><b>Presupuesto estimado</b><div style="font-size:25px;font-weight:800;margin-top:5px" id="budgetTotal">0 €</div><span class="small">Suma de costes de pruebas marcadas como inscrito.</span></div>
  <h3>Pruebas que me interesan</h3><div id="interestedList"></div>
 </section>
+<section id="workcalendar" class="panel">
+ <h2>Calendario laboral 2027</h2>
+ <p class="sub">Importa más adelante tu calendario laboral para comparar días libres con las pruebas de triatlón.</p>
+ <div class="card">
+  <b>Importar calendario laboral</b>
+  <p class="small">Preparado para archivos de calendario .ICS, CSV o JSON. Se guardarán las fechas en este dispositivo y podrás sustituir el archivo cuando tengas una versión actualizada.</p>
+  <label for="workCalendarFile">Seleccionar archivo</label><input id="workCalendarFile" type="file" accept=".ics,.csv,.json,text/calendar,text/csv,application/json">
+  <p class="small" id="workCalendarStatus">Todavía no has importado tu calendario laboral.</p>
+  <button class="secondary" id="clearWorkCalendar" type="button">Quitar calendario importado</button>
+ </div>
+ <div class="status-grid">
+  <div class="status-tile"><b id="workDaysCount">0</b><span>DÍAS LIBRES IMPORTADOS</span></div>
+  <div class="status-tile"><b id="workMatchesCount">0</b><span>PRUEBAS EN DÍA LIBRE</span></div>
+  <div class="status-tile"><b id="workEventsCount">0</b><span>PRUEBAS CON FECHA</span></div>
+ </div>
+ <h3>Pruebas que coinciden con días libres</h3><div id="workMatchList"></div>
+ <h3>Fechas libres importadas</h3><div id="workDaysList"></div>
+</section>
 <section id="reminders" class="panel">
  <h2>Avisos y recordatorios</h2><p class="sub">Crea avisos para aperturas, cierres de inscripción y días de carrera.</p>
  <div class="card">
@@ -205,6 +246,16 @@ main{padding-top:10px!important}
 </section>
 <section id="settings" class="panel">
  <h2>Datos y ajustes</h2>
+ <div class="card" id="calendarSourcesCard">
+  <b>Fuentes del calendario</b>
+  <p class="small">Páginas de referencia utilizadas para recopilar o contrastar fechas. Añadir una URL la guarda como fuente de consulta; no implica que la web pueda importarse o actualizarse automáticamente.</p>
+  <div id="calendarSourceList"></div>
+  <form id="addSourceForm">
+   <label for="newSourceName">Nombre de la página</label><input id="newSourceName" required placeholder="Ej. Federación autonómica">
+   <label for="newSourceUrl">Dirección web (URL)</label><input id="newSourceUrl" type="url" required placeholder="https://…">
+   <button class="primary" type="submit">＋ Añadir página</button>
+  </form>
+ </div>
  <div class="card">
   <b>Guardar una copia de seguridad</b><p class="small">Exporta tus pruebas, marcas y recordatorios a un archivo JSON. Guárdalo en Drive o en tus archivos.</p>
   <button class="primary" id="exportData">Exportar mis datos</button>
@@ -216,7 +267,6 @@ main{padding-top:10px!important}
  <div class="card">
   <b>Instalar en Android</b><p class="small">Abre esta web desde Chrome, pulsa el menú ⋮ y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio».</p>
   <button class="secondary" id="installBtn" disabled>Instalar aplicación</button><p id="installHelp" class="small">La opción aparecerá cuando abras la versión publicada mediante HTTPS en Chrome.</p>
- </div>
  </div>
  <div class="card"><b>Actualización de fechas y dorsales</b><p class="small">La aplicación descarga status-feed.json al abrirse y cuando pulsas «Actualizar estados». Para cambiar la información revisada, hay que publicar la nueva versión de ese archivo en GitHub. Las webs de organizadores no permiten una consulta automática fiable desde una PWA estática.</p><p class="small" id="statusSettingsLabel">Última sincronización: pendiente.</p></div>
  <div class="card">
@@ -282,7 +332,7 @@ const seed=[
 const extraSeed=[["X Ducross Ciudad de Albacete", "España", "Duatlón", "2027-02-13", "Albacete", "Cross", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["VII Duatlón Hellín", "España", "Duatlón", "2027-02-20", "Hellín", "Carretera", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["VI Duatlón San Pedro", "España", "Duatlón", "2027-03-07", "San Pedro", "Carretera", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["Duatlón Ciudad de Tomelloso", "España", "Duatlón", "2027-04-04", "Tomelloso", "Carretera", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["III Duatlón Estándar No Drafting Alcázar de San Juan", "España", "Duatlón", "2027-04-18", "Alcázar de San Juan", "Estándar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["Triatlón Ciudad Tomelloso", "España", "Triatlón", "2027-06-06", "Tomelloso", "Por confirmar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["XXII Triatlón Agramón", "España", "Triatlón", "2027-06-12", "Agramón", "Por confirmar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["III Triatlón MD y Sprint Río Mundo Riópar", "España", "Triatlón", "2027-07-03", "Riópar", "Media / Sprint", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["XIII Triatlón Alcalá del Júcar", "España", "Triatlón", "2027-07-10", "Alcalá del Júcar", "Por confirmar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["XXXVIII Triatlón Hoces de Cuenca", "España", "Triatlón", "2027-07-17", "Cuenca", "Por confirmar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["XXXII Triatlón Pálmaces", "España", "Triatlón", "2027-07-24", "Pálmaces", "Por confirmar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["V Triatlón Supersprint La Roda", "España", "Triatlón", "2027-08-29", "La Roda", "Supersprint", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["II Trijúcar", "España", "Triatlón", "2027-09-04", "Júcar", "Por confirmar", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["XXVII Duatlón Cross Alcázar de San Juan", "España", "Duatlón", "2027-10-24", "Alcázar de San Juan", "Cross", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["XXI Duatlón Cross Campo de Criptana", "España", "Duatlón", "2027-11-07", "Campo de Criptana", "Cross", "https://triatlonclm.org/competiciones/todas/2027/asc"], ["Duatlón por Equipos Archena", "España", "Duatlón", "2027-01-16", "Archena", "Contrarreloj por equipos", "https://trimurcia.es/calendario-2027"], ["Duatlón de Águilas", "España", "Duatlón", "2027-01-24", "Águilas", "Clasificatorio C.E.", "https://trimurcia.es/calendario-2027"], ["Duatlón de Yecla", "España", "Duatlón", "2027-02-14", "Yecla", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Duatlón Calasparra", "España", "Duatlón", "2027-02-21", "Calasparra", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Duatlón de Lorca", "España", "Duatlón", "2027-02-27", "Lorca", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Duatlón Orihuela", "España", "Duatlón", "2027-03-06", "Orihuela", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Duatlón Torre Pacheco", "España", "Duatlón", "2027-03-14", "Torre Pacheco", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Triatlón San Pedro del Pinatar", "España", "Triatlón", "2027-04-11", "San Pedro del Pinatar", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Triatlón Portmán", "España", "Triatlón", "2027-04-25", "Portmán (La Unión)", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Triatlón Orihuela", "España", "Triatlón", "2027-05-09", "Orihuela", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Copa del Rey / Copa de la Reina de Triatlón – Águilas", "España", "Triatlón", "2027-05-15", "Águilas", "Clubes / relevos", "https://trimurcia.es/calendario-2027"], ["Triatlón Cartagena", "España", "Triatlón", "2027-05-29", "Cartagena", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Triatlón de Fuente Álamo", "España", "Triatlón", "2027-06-05", "Fuente Álamo", "Clasificatorio C.E.", "https://trimurcia.es/calendario-2027"], ["Triatlón Blanca", "España", "Triatlón", "2027-07-17", "Blanca", "Por confirmar", "https://trimurcia.es/calendario-2027"], ["Dúatlon de Reis de Vimianzo", "España", "Duatlón", "2027-01-10", "Vimianzo", "Cross", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Dúatlon Concello de Vilalba – CRE Popular Absoluto", "España", "Duatlón", "2027-02-14", "Vilalba", "Contrarreloj por equipos", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Dúatlon Val de Soneira de Vimianzo", "España", "Duatlón", "2027-02-20", "Vimianzo", "Carretera", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Duatlón Concello de Vedra – CRE", "España", "Duatlón", "2027-03-06", "Vedra", "Contrarreloj por equipos", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Duatlón Cidade de Santiago", "España", "Duatlón", "2027-04-10", "Santiago de Compostela", "Carretera", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Duatlón Eleuterio Balayo Concello de Muros", "España", "Duatlón", "2027-04-17", "Muros", "Popular / supersprint", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Triatlón Concello do Porriño", "España", "Triatlón", "2027-05-09", "O Porriño", "Sprint", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Triatlón Mar de Muros – Trofeo Iván Raña", "España", "Triatlón", "2027-06-05", "Muros", "Sprint", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Triatlón Lagoa As Pontes", "España", "Triatlón", "2027-06-20", "As Pontes", "Olímpico / media", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Trishark Narón", "España", "Triatlón", "2027-07-17", "Narón", "Popular", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Triatlón do Miño", "España", "Triatlón", "2027-08-08", "Lugo", "Carretera", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Triatlón Vila de Allariz", "España", "Triatlón", "2027-08-21", "Allariz", "Popular", "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/"], ["Campeonato de España de Duatlón SuperSprint por Clubes – La Nucía", "España", "Duatlón", "2027-01-30", "La Nucía", "SuperSprint / clubes", "https://triatlon.org/noticias/novedades-en-las-pruebas-de-duatlon-de-la-primera-parte-de-la-temporada-fetri-2027/"], ["Campeonato de España de Duatlón Relevos Mixtos – La Nucía", "España", "Duatlón", "2027-01-30", "La Nucía", "Relevos mixtos", "https://triatlon.org/noticias/novedades-en-las-pruebas-de-duatlon-de-la-primera-parte-de-la-temporada-fetri-2027/"], ["Campeonato de España de Duatlón CRE – Ciudad Real", "España", "Duatlón", "2027-02-27", "Ciudad Real", "Contrarreloj por equipos", "https://triatlon.org/noticias/novedades-en-las-pruebas-de-duatlon-de-la-primera-parte-de-la-temporada-fetri-2027/"], ["Campeonato de España de Duatlón Relevos – Ciudad Real", "España", "Duatlón", "2027-02-28", "Ciudad Real", "Relevos", "https://triatlon.org/noticias/novedades-en-las-pruebas-de-duatlon-de-la-primera-parte-de-la-temporada-fetri-2027/"], ["Campeonato de España de Duatlón por Clubes – Albacete", "España", "Duatlón", "2027-03-13", "Albacete", "Clubes", "https://triatlon.org/noticias/novedades-en-las-pruebas-de-duatlon-de-la-primera-parte-de-la-temporada-fetri-2027/"], ["Campeonato de España de Duatlón Relevos Parejas – Albacete", "España", "Duatlón", "2027-03-14", "Albacete", "Relevos parejas", "https://triatlon.org/noticias/novedades-en-las-pruebas-de-duatlon-de-la-primera-parte-de-la-temporada-fetri-2027/"], ["Campeonato de España de Triatlón por Clubes – Roquetas de Mar", "España", "Triatlón", "2027-04-17", "Roquetas de Mar", "Clubes", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"], ["Campeonato de España de Triatlón Relevos/Parejas – Roquetas de Mar", "España", "Triatlón", "2027-04-18", "Roquetas de Mar", "Relevos / parejas", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"], ["Campeonato de España de Duatlón y Triatlón Cross / Acuatlón – Calahorra", "España", "Multideporte", "2027-05-08", "Calahorra", "Cross / acuatlón", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"], ["Copa del Rey y Copa de la Reina de Triatlón – Águilas", "España", "Triatlón", "2027-05-15", "Águilas", "Clubes", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"], ["Campeonato de España de Triatlón Gravel – Vinuesa", "España", "Triatlón", "2027-06-20", "Vinuesa", "Gravel", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"], ["Campeonato de España de Triatlón – Banyoles", "España", "Triatlón", "2027-09-25", "Banyoles", "Campeonato de España", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"], ["Campeonato de España de Triatlón – Banyoles (jornada 2)", "España", "Triatlón", "2027-09-26", "Banyoles", "Campeonato de España", "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"]].map((a,i)=>({id:'fed27-'+i,name:a[0],country:a[1],type:a[2],date:a[3],place:a[4],distance:a[5],interested:false,registered:false,cost:'',status:'Pendiente de verificar',dateStatus:'Provisional',availability:'Por verificar',checkedAt:'2026-11-10',sourceUrl:a[6],url:'',notes:'Incluida desde calendario federativo 2027. Confirmar posibles cambios con la federación/organizador.'}));
 const franchiseSeed=[["IRONMAN Lanzarote","España","2027-05-15","Lanzarote","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Hamburg","Alemania","2027-06-06","Hamburg","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Kärnten-Klagenfurt","Austria","2027-06-13","Klagenfurt","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Frankfurt","Alemania","2027-06-27","Frankfurt","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Les Sables d’Olonne","Francia","2027-06-27","Les Sables-d’Olonne","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Switzerland Thun","Suiza","2027-07-04","Thun","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Vitoria-Gasteiz","España","2027-07-11","Vitoria-Gasteiz","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Tallinn","Estonia","2027-08-07","Tallinn","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Kalmar","Suecia","2027-08-21","Kalmar","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Copenhagen","Dinamarca","2027-08-22","Copenhagen","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Vichy","Francia","2027-08-22","Vichy","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Knokke-Heist","Bélgica","2027-09-05","Knokke-Heist","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN France Nice","Francia","2027-09-12","Nice","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Italy Emilia-Romagna","Italia","2027-09-18","Cervia","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Wales","Reino Unido","2027-09-19","Tenby","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Calella-Barcelona","España","2027-10-03","Calella","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN Portugal-Cascais","Portugal","2027-10-23","Cascais","Larga","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Vilamoura","Portugal","2027-04-03","Vilamoura","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Valencia","España","2027-04-18","Valencia","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Venice-Jesolo","Italia","2027-04-24","Jesolo","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Alcúdia-Mallorca","España","2027-05-08","Alcúdia","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Aix-en-Provence","Francia","2027-05-23","Aix-en-Provence","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Kraichgau","Alemania","2027-05-23","Bad Schönborn","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 St. Pölten","Austria","2027-05-23","St. Pölten","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Alghero","Italia","2027-05-30","Alghero","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Tours Métropole","Francia","2027-06-06","Tours","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Switzerland","Suiza","2027-06-06","Rapperswil","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Bolton","Reino Unido","2027-06-06","Bolton","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Westfriesland","Países Bajos","2027-06-20","Hoorn","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Elsinore","Dinamarca","2027-06-27","Elsinore","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Swansea","Reino Unido","2027-07-11","Swansea","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Jönköping","Suecia","2027-07-11","Jönköping","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Luxembourg","Luxemburgo","2027-07-11","Remich","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Vitoria-Gasteiz","España","2027-07-11","Vitoria-Gasteiz","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Tallinn","Estonia","2027-08-08","Tallinn","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Leipzig","Alemania","2027-08-08","Leipzig","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Vichy","Francia","2027-08-22","Vichy","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Duisburg","Alemania","2027-08-29","Duisburg","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Zell am See-Kaprun","Austria","2027-08-29","Zell am See","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Erkner Berlin-Brandenburg","Alemania","2027-09-12","Erkner","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Nice","Francia","2027-09-12","Nice","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Emilia-Romagna","Italia","2027-09-19","Cervia","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Portugal-Cascais","Portugal","2027-10-23","Cascais","Media","IRONMAN","https://www.ironman.com/races"],["IRONMAN 70.3 Málaga","España","2027-10-31","Málaga","Media","IRONMAN","https://www.ironman.com/races"],["Anfi Challenge Mogán","España","2027-04-17","Mogán","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Salou","España","2027-05-09","Salou","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Cesenatico","Italia","2027-05-16","Cesenatico","Media","Challenge","https://www.challenge-family.com/races/"],["The Championship Challenge Šamorín","Eslovaquia","2027-05-23","Šamorín","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Gdańsk","Polonia","2027-06-20","Gdańsk","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Kaiserwinkl-Walchsee","Austria","2027-06-27","Walchsee","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Roth","Alemania","2027-07-04","Roth","Larga","Challenge","https://www.challenge-family.com/races/"],["Challenge Turku","Finlandia","","Turku","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Almere-Amsterdam","Países Bajos","2027-09-11","Almere","Larga","Challenge","https://www.challenge-family.com/races/"],["Challenge Vieux Boucau","Francia","2027-10-02","Vieux Boucau","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Peguera-Mallorca","España","2027-10-16","Peguera","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Forte Village","Italia","2027-10-24","Santa Margherita di Pula","Media","Challenge","https://www.challenge-family.com/races/"],["Challenge Barcelona","España","","Barcelona","Media","Challenge","https://www.challenge-family.com/races/"]].map((a,i)=>({id:'franchise27-'+i,name:a[0],country:a[1],type:'Triatlón',date:a[2],place:a[3],distance:a[4],franchise:a[5],interested:false,registered:false,cost:'',status:'Pendiente de verificar',dateStatus:a[2]?'Provisional':'Fecha pendiente',availability:'Por verificar',checkedAt:'2026-11-10',sourceUrl:a[6],url:'',notes:'Calendario europeo de franquicia. Verificar fecha, distancia y disponibilidad en la web oficial antes de reservar.'}));
 let data=load();
-function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.events)){const ids=new Set(d.events.map(e=>e.id));d.events.push(...seed.filter(e=>!ids.has(e.id)),...extraSeed.filter(e=>!ids.has(e.id)),...franchiseSeed.filter(e=>!ids.has(e.id)&&!d.events.some(old=>old.name===e.name&&old.place===e.place&&old.date===e.date)));return d}}catch(e){}return {events:[...seed,...extraSeed,...franchiseSeed],reminders:[],fired:[]}}
+function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.events)){const ids=new Set(d.events.map(e=>e.id));d.events.push(...seed.filter(e=>!ids.has(e.id)),...extraSeed.filter(e=>!ids.has(e.id)),...franchiseSeed.filter(e=>!ids.has(e.id)&&!d.events.some(old=>old.name===e.name&&old.place===e.place&&old.date===e.date)));d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.fired=Array.isArray(d.fired)?d.fired:[];d.customSources=Array.isArray(d.customSources)?d.customSources:[];d.workCalendar=Array.isArray(d.workCalendar)?d.workCalendar:[];return d}}catch(e){}return {events:[...seed,...extraSeed,...franchiseSeed],reminders:[],fired:[],customSources:[],workCalendar:[]}}
 function save(){localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function dateLabel(s){if(!s)return 'Fecha pendiente';let d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}
@@ -329,15 +379,69 @@ function render(){
  ${e.cost?`<div class="meta">Coste indicado: ${esc(e.cost)} €</div>`:''}
  <div class="checked-note">${e.checkedAt?'Comprobado: '+dateLabel(e.checkedAt):'Sin fecha de comprobación'} ${e.sourceUrl?`· <a href="${esc(e.sourceUrl)}" target="_blank" rel="noopener">Fuente del estado ↗</a>`:''}</div>
  <div class="actions"><label class="check"><input type="checkbox" data-mark="interested" data-id="${esc(e.id)}" ${e.interested?'checked':''}> Me interesa</label><label class="check"><input type="checkbox" data-mark="registered" data-id="${esc(e.id)}" ${e.registered?'checked':''}> Estoy inscrito</label><button class="secondary" data-edit="${esc(e.id)}">Editar</button>${e.url?`<a class="btn secondary" href="${esc(e.url)}" target="_blank" rel="noopener">Inscripción ↗</a>`:''}</div></article>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
- const list=(arr)=>arr.length?arr.map(e=>`<div class="card"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)}</div></div>`).join(''):'<div class="empty">Todavía no has añadido pruebas aquí.</div>';
- document.getElementById('interestedList').innerHTML=list(data.events.filter(e=>e.interested));
- document.getElementById('registeredList').innerHTML=list(data.events.filter(e=>e.registered));
+ const list=(arr,cls)=>arr.length?arr.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).map(e=>`<div class="card ${cls}"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)}</div></div>`).join(''):'<div class="empty">Todavía no has añadido pruebas aquí.</div>';
+ document.getElementById('interestedList').innerHTML=list(data.events.filter(e=>e.interested),'season-interested');
+ document.getElementById('registeredList').innerHTML=list(data.events.filter(e=>e.registered),'season-registered');
  let total=data.events.filter(e=>e.registered).reduce((s,e)=>s+(Number(e.cost)||0),0);
  document.getElementById('budgetTotal').textContent=total.toLocaleString('es-ES',{style:'currency',currency:'EUR'});
  document.getElementById('reminderList').innerHTML=data.reminders.length?data.reminders.slice().sort((a,b)=>a.when.localeCompare(b.when)).map(r=>`<div class="card reminder"><div class="event-head"><b>${esc(r.title)}</b><span class="pill ${r.done?'green':'amber'}">${r.done?'Avisado':'Pendiente'}</span></div><div class="meta">${new Date(r.when).toLocaleString('es-ES')}</div><div class="actions"><button class="secondary" data-done="${esc(r.id)}">${r.done?'Reactivar':'Marcar hecho'}</button><button class="danger" data-rdelete="${esc(r.id)}">Eliminar</button></div></div>`).join(''):'<div class="empty">No tienes recordatorios creados.</div>';
  const opts=data.events.map(e=>`<option value="${esc(e.id)}">${esc(e.name)}</option>`).join('');
  document.getElementById('rEvent').innerHTML='<option value="">Sin prueba asociada</option>'+opts;
+ renderCalendarSources();renderWorkCalendar();
 }
+
+
+const defaultCalendarSources=[
+ {name:'FETRI · Federación Española de Triatlón',url:'https://triatlon.org/',kind:'Federación nacional'},
+ {name:'Planeta Triatlón',url:'https://planetatriatlon.com/',kind:'Medio especializado'},
+ {name:'Kirolprobak',url:'https://www.kirolprobak.com/',kind:'Calendario de eventos'},
+ {name:'RockTheSport',url:'https://www.rockthesport.com/',kind:'Plataforma de inscripciones'},
+ {name:'IRONMAN',url:'https://www.ironman.com/races',kind:'Organizador'},
+ {name:'Challenge Family',url:'https://www.challenge-family.com/races/',kind:'Organizador'},
+ {name:'Federación Catalana de Triatlón',url:'https://www.triatlo.org/',kind:'Federación autonómica'},
+ {name:'Federación Gallega de Triatlón',url:'https://fegatri.org/',kind:'Federación autonómica'},
+ {name:'Federación de Triatlón de la Región de Murcia',url:'https://trimurcia.es/',kind:'Federación autonómica'},
+ {name:'Federación de Triatlón de Castilla-La Mancha',url:'https://triatlonclm.org/',kind:'Federación autonómica'}
+];
+function renderCalendarSources(){
+ const el=document.getElementById('calendarSourceList');if(!el)return;
+ const found=new Map();
+ defaultCalendarSources.forEach(x=>found.set(x.url,x));
+ data.events.forEach(e=>{if(e.sourceUrl){try{let u=new URL(e.sourceUrl);if(!found.has(u.href))found.set(u.href,{name:u.hostname.replace(/^www\./,''),url:u.href,kind:'Fuente de una prueba'});}catch(_){}}});
+ (data.customSources||[]).forEach(x=>found.set(x.url,x));
+ el.innerHTML=[...found.values()].map(x=>`<div class="source-item"><div class="source-meta"><b>${esc(x.name)}</b><br><span class="small">${esc(x.kind||'Añadida por ti')} · <a href="${esc(x.url)}" target="_blank" rel="noopener">Abrir página ↗</a></span></div>${(data.customSources||[]).some(c=>c.url===x.url)?`<button class="danger" data-source-delete="${esc(x.url)}">Quitar</button>`:''}</div>`).join('');
+}
+function renderWorkCalendar(){
+ const days=Array.isArray(data.workCalendar)?data.workCalendar:[];
+ const daySet=new Set(days.map(x=>x.date));
+ const dated=data.events.filter(e=>e.date);
+ const matches=dated.filter(e=>daySet.has(e.date));
+ const count=document.getElementById('workDaysCount');if(!count)return;
+ count.textContent=days.length;
+ document.getElementById('workMatchesCount').textContent=matches.length;
+ document.getElementById('workEventsCount').textContent=dated.length;
+ document.getElementById('workCalendarStatus').textContent=days.length?`Calendario cargado: ${days.length} días libres. ${data.workCalendarName||''}`:'Todavía no has importado tu calendario laboral.';
+ document.getElementById('workMatchList').innerHTML=matches.length?matches.map(e=>`<div class="card off-day"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · Coincide con día libre</div></div>`).join(''):'<div class="empty">Cuando importes tu calendario, aquí aparecerán las pruebas que coincidan con días libres.</div>';
+ document.getElementById('workDaysList').innerHTML=days.length?days.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(d=>`<div class="source-item"><div><b>${dateLabel(d.date)}</b><br><span class="small">${esc(d.label||'Día libre')}</span></div></div>`).join(''):'<div class="empty">Sin fechas importadas.</div>';
+}
+function parseWorkCalendar(text,ext){
+ const rows=[];
+ if(ext==='ics'){
+  const lines=text.replace(/\r/g,'').split('\n');let current=null;
+  for(const line of lines){if(line==='BEGIN:VEVENT')current={};else if(line==='END:VEVENT'&&current){let raw=current.DTSTART||current['DTSTART;VALUE=DATE']||'';let m=raw.match(/(\d{4})(\d{2})(\d{2})/);if(m)rows.push({date:`${m[1]}-${m[2]}-${m[3]}`,label:current.SUMMARY||'Día libre'});current=null;}else if(current){let i=line.indexOf(':');if(i>0){let k=line.slice(0,i).split(';')[0],v=line.slice(i+1);if(k==='DTSTART'||k==='SUMMARY')current[k]=v;}}}
+ }else if(ext==='json'){
+  const d=JSON.parse(text);const arr=Array.isArray(d)?d:(d.days||d.events||[]);arr.forEach(x=>{let v=String(x.date||x.start||'').slice(0,10);if(/^2027-\d\d-\d\d$/.test(v))rows.push({date:v,label:x.label||x.title||x.summary||'Día libre'});});
+ }else{
+  text.split(/\r?\n/).slice(1).forEach(line=>{let c=line.split(/[;,\t]/).map(x=>x.trim().replace(/^"|"$/g,''));let date=(c[0]||'').slice(0,10);if(/^2027-\d\d-\d\d$/.test(date))rows.push({date,label:c[1]||'Día libre'});});
+ }
+ const unique=new Map();rows.forEach(x=>{if(x.date.startsWith('2027-'))unique.set(x.date,x)});return [...unique.values()].sort((a,b)=>a.date.localeCompare(b.date));
+}
+document.getElementById('workCalendarFile').addEventListener('change',async e=>{
+ const f=e.target.files?.[0];if(!f)return;try{const ext=f.name.split('.').pop().toLowerCase();if(!['ics','csv','json'].includes(ext))throw new Error('Formato no compatible');const parsed=parseWorkCalendar(await f.text(),ext);if(!parsed.length)throw new Error('No se encontraron fechas de 2027 en el archivo');data.workCalendar=parsed;data.workCalendarName=f.name;save();alert(`Calendario laboral importado: ${parsed.length} días libres de 2027.`);}catch(err){alert('No se ha podido importar el calendario. Usa un archivo ICS, CSV o JSON con fechas de 2027.');}e.target.value='';
+});
+document.getElementById('clearWorkCalendar').addEventListener('click',()=>{if(confirm('¿Quitar el calendario laboral importado?')){data.workCalendar=[];data.workCalendarName='';save();}});
+document.getElementById('addSourceForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('newSourceName').value.trim(),url=document.getElementById('newSourceUrl').value.trim();try{const u=new URL(url);if(!/^https?:$/.test(u.protocol))throw 0;if(!data.customSources)data.customSources=[];if(data.customSources.some(x=>x.url===u.href))throw 0;data.customSources.push({name,url:u.href,kind:'Añadida por ti'});e.target.reset();save();}catch(_){alert('Introduce una URL http o https válida y que no esté ya añadida.');}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
 
 async function refreshStatusFeed(showMessage=true){
  const label=document.getElementById('statusSyncLabel');
@@ -384,7 +488,7 @@ function renderMap(){
 }
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 // La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap()}));
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar()}));
 ['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
 document.addEventListener('click',e=>{
@@ -405,7 +509,7 @@ document.getElementById('enableNotifications').onclick=askPermission;
 function checkReminders(){if(!('Notification'in window)||Notification.permission!=='granted')return;let now=Date.now();data.reminders.forEach(r=>{if(!r.done&&!data.fired.includes(r.id)&&new Date(r.when).getTime()<=now){try{new Notification('TRIATLÓN 2027',{body:r.title,icon:'icon.svg',tag:r.id})}catch(e){}data.fired.push(r.id);r.done=true}});localStorage.setItem(KEY,JSON.stringify(data));render()}
 document.getElementById('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mi-temporada-triatlon-2027.json';a.click();URL.revokeObjectURL(a.href)};
 document.getElementById('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.events)||!Array.isArray(d.reminders))throw 0;if(confirm('¿Sustituir los datos actuales por esta copia?')){data=d;save();alert('Copia restaurada.')}}catch(err){alert('El archivo no parece una copia válida.')}e.target.value=''};
-document.getElementById('resetData').onclick=()=>{if(confirm('Se borrarán tus cambios, favoritos y recordatorios. ¿Continuar?')){data={events:[...seed,...extraSeed,...franchiseSeed].map(x=>({...x})),reminders:[],fired:[]};save()}};
+document.getElementById('resetData').onclick=()=>{if(confirm('Se borrarán tus cambios, favoritos y recordatorios. ¿Continuar?')){data={events:[...seed,...extraSeed,...franchiseSeed].map(x=>({...x})),reminders:[],fired:[],customSources:[],workCalendar:[]};save()}};
 let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.disabled=false;installHelp.textContent='Pulsa para instalar la aplicación.'});
 installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.disabled=true}else installHelp.textContent='En Chrome, abre ⋮ y elige «Instalar aplicación». '};
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
