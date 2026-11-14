@@ -1,4 +1,4 @@
-const CACHE='triatlon-2027-v16';
+const CACHE='triatlon-2027-v15-1-complete';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','./hero-triatlon.jpg','./fondo-alain.jpg','./cabecera-alain-triatlon-2027.jpg','./status-feed.json'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('triatlon-2027-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

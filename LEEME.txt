@@ -1,20 +1,16 @@
-TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 16 PRO
+ALAIN RASTROLLO · TRIATLÓN 2027 · VERSIÓN 15.1
 
-Novedades de V16:
-- Se incorpora la fuente oficial 100x100Half a Fuentes del calendario.
-- Se añade una importación asistida de las seis sedes 100x100Half publicadas para 2027: Empuriabrava (16/05), Sant Feliu de Guíxols (29/05), El Vendrell (06/06), Berga (19/06), Platja d'Aro (03/10) y L'Estartit (10/10).
-- La importación evita duplicados y conserva las pruebas y preferencias que ya existan en el dispositivo.
-- Las modalidades anunciadas se muestran en las notas de cada competición. La disponibilidad de dorsales queda «Por verificar».
-- Se añaden las coordenadas aproximadas de las seis sedes al mapa.
-- Se actualiza la caché del Service Worker a v16 para que los dispositivos descarguen la nueva versión.
+Incluye la base PRO de la versión anterior y las mejoras solicitadas:
+- Indicador discreto V15.1 visible en la esquina superior derecha de la cabecera.
+- Miniaturas de localidades en las tarjetas de pruebas. Las imágenes se buscan en Wikimedia Commons cuando se muestran por primera vez, se guardan en caché local y se conserva un marcador neutro si no se encuentra una fotografía.
+- Botón «Buscar nuevas pruebas en mis fuentes»: revisa las seis pruebas 100x100Half incorporables y consulta las fuentes personalizadas. Admite feeds JSON/CSV y extracción heurística de enlaces HTML mediante un proxy público. Los resultados se presentan para revisión y aceptación manual; las webs pueden bloquear la consulta y la extracción HTML puede requerir correcciones.
+- Importación laboral tipada en JSON/CSV/ICS: distingue días libres, trabajo, vacaciones V y activaciones X; conserva turnos A/B/C. Las X no se cuentan como días libres. Los registros JSON pueden usar type: free/work/vacation/x y shift: A/B/C.
+- Compatibilidad con calendarios antiguos: fechas sin tipo siguen interpretándose como días libres.
+- Caché del Service Worker renovada para forzar la actualización sin borrar los datos personales almacenados.
 
-Limitaciones conocidas de esta versión:
-- La importación 100x100Half utiliza el calendario oficial revisado e integrado en esta compilación. No es un rastreador web automático ni detecta por sí solo cambios futuros.
-- La aplicación sigue siendo una PWA estática: consultar automáticamente páginas de terceros requiere un servicio intermedio/backend, especialmente en webs que bloquean peticiones desde navegador.
-- Las fotografías individuales de cada localidad todavía no están integradas.
-- La importación del calendario laboral sigue interpretando las fechas importadas como días libres. No clasifica todavía turnos A/B/C, vacaciones V y activaciones X.
+Límites conocidos:
+- La búsqueda de fuentes no es un rastreador universal ni garantiza leer todas las webs. Para una integración robusta de muchas fuentes se necesita un backend propio, ya que los sitios pueden bloquear CORS, el proxy o el acceso automatizado.
+- Las fotografías dependen de la disponibilidad y relevancia de los resultados de Wikimedia Commons; se pueden sustituir por una imagen neutra si no hay coincidencias.
+- La importación laboral clasifica los datos que contiene el archivo; no transcribe automáticamente fotografías/PDF ni crea un calendario laboral real a partir de una plantilla incompleta.
 
-Instalación/actualización:
-- Sustituye los archivos publicados por los de este ZIP.
-- No borres los datos de Chrome ni el almacenamiento local: se mantiene la clave triathlon2027_data_v1 y los datos personales existentes.
-- Tras publicar, cierra y vuelve a abrir la PWA para que el Service Worker active la caché v16.
+Publica todos los archivos del ZIP en el alojamiento de la PWA. No borres los datos del sitio en Chrome para conservar favoritos, inscripciones, fuentes, calendario laboral y recordatorios.
