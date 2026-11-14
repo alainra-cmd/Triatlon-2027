@@ -278,7 +278,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <b>Instalar en Android</b><p class="small">Abre esta web desde Chrome, pulsa el menú ⋮ y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio».</p>
   <button class="secondary" id="installBtn" disabled>Instalar aplicación</button><p id="installHelp" class="small">La opción aparecerá cuando abras la versión publicada mediante HTTPS en Chrome.</p>
  </div>
- <div class="card"><b>Actualización de fechas y dorsales</b><p class="small">La aplicación descarga status-feed.json al abrirse y cuando pulsas «Actualizar estados». La búsqueda de fuentes es asistida y puede depender de un proxy externo; las webs que bloquean consultas no se podrán leer desde la PWA.</p><p class="small" id="statusSettingsLabel">Última sincronización: pendiente.</p></div>
+ <div class="card"><b>Verificación de fechas y dorsales</b><p class="small">Al actualizar, la aplicación intenta consultar las páginas asociadas a cada prueba. Solo modifica fechas o inscripciones cuando encuentra indicios explícitos; si una web bloquea el acceso o no aporta datos concluyentes, conserva el estado anterior y lo indica.</p><p class="small" id="statusSettingsLabel">Último intento de consulta: pendiente.</p></div>
  <div class="card">
   <b>Privacidad y almacenamiento</b><p class="small">Los datos se guardan en el almacenamiento local del navegador de este dispositivo. Si borras los datos de Chrome o cambias de móvil, necesitarás restaurar una copia de seguridad.</p>
   <button class="danger" id="resetData">Borrar todos mis datos</button>
@@ -395,7 +395,7 @@ function render(){
  <div class="status-row"><span class="section-label">Fecha</span>${statusPill(e.dateStatus||'Por verificar','date')}<span class="section-label">Dorsales</span>${statusPill(e.availability||'Por verificar')}</div>
  ${e.status&&e.status!=='Por verificar'?`<div class="meta">${esc(e.status)}</div>`:''}
  ${e.cost?`<div class="meta">Coste indicado: ${esc(e.cost)} €</div>`:''}
- <div class="checked-note">${e.checkedAt?'Comprobado: '+dateLabel(e.checkedAt):'Sin fecha de comprobación'} ${e.sourceUrl?`· <a href="${esc(e.sourceUrl)}" target="_blank" rel="noopener">Fuente del estado ↗</a>`:''}</div>
+ <div class="checked-note">${e.checkedAt?'Dato verificado: '+dateLabel(e.checkedAt):'Estado sin verificación reciente'}${e.verificationResult?' · '+esc(e.verificationResult):''} ${e.sourceUrl?`· <a href="${esc(e.sourceUrl)}" target="_blank" rel="noopener">Fuente del estado ↗</a>`:''}</div>
  <div class="actions"><label class="check"><input type="checkbox" data-mark="interested" data-id="${esc(e.id)}" ${e.interested?'checked':''}> Me interesa</label><label class="check"><input type="checkbox" data-mark="registered" data-id="${esc(e.id)}" ${e.registered?'checked':''}> Estoy inscrito</label><button class="secondary" data-edit="${esc(e.id)}">Editar</button>${e.url?`<a class="btn secondary" href="${esc(e.url)}" target="_blank" rel="noopener">Inscripción ↗</a>`:''}</div></article>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
  hydrateEventPhotos(ev);
  const list=(arr,cls)=>arr.length?arr.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).map(e=>`<div class="card ${cls}"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)}</div></div>`).join(''):'<div class="empty">Todavía no has añadido pruebas aquí.</div>';
@@ -498,28 +498,64 @@ document.getElementById('scanCalendarSources')?.addEventListener('click',async()
 });
 document.addEventListener('click',e=>{const b=e.target.closest('[data-scan-add]');if(!b)return;const box=document.getElementById('sourceScanResults'),items=box?box._items||[]:[],x=items[Number(b.dataset.scanAdd)];if(!x)return;const {sourceName,...event}=x;event.interested=false;event.registered=false;event.cost='';event.notes='Importada desde fuente externa; comprobar fecha, distancia y localidad con el organizador.';data.events.push(event);items.splice(Number(b.dataset.scanAdd),1);showScanCandidates(items);save();});
 
+function statusTextFromHtml(html){
+ const doc=new DOMParser().parseFromString(html,'text/html');
+ return (doc.body?.innerText||doc.body?.textContent||'').replace(/\s+/g,' ').trim().slice(0,250000);
+}
+function inferLiveStatus(text,ev){
+ const t=(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ const result={};
+ const sold=/(inscripciones?\s*(cerradas|agotadas)|plazas?\s*(agotadas|completas)|sin\s*plazas|sold\s*out|fully\s*booked|no\s* quedan?\s*(dorsales|plazas)|lista\s*de\s*espera)/i.test(t);
+ const open=/(inscripciones?\s*(abiertas?|open)|inscribete|inscribirse|inscripcion\s*abierta|plazas?\s*disponibles|register\s*now|registration\s*open)/i.test(t);
+ const notOpen=/(inscripciones?\s*(proximamente|aun\s*no\s*abiertas?)|registration\s*opens?\s*(soon|on)|apertura\s*de\s*inscripciones)/i.test(t);
+ if(sold)result.availability=/lista\s*de\s*espera/i.test(t)?'Lista de espera':'Agotadas';
+ else if(open)result.availability='Plazas disponibles';
+ else if(notOpen)result.availability='Inscripción aún no abierta';
+ const iso=(ev.date||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+ if(iso){const [_,y,m,d]=iso;const variants=[`${d}/${m}/${y}`,`${d}-${m}-${y}`,`${y}-${m}-${d}`,`${d}/${m}`,`${d}-${m}`];if(variants.some(v=>t.includes(v)))result.dateStatus='Confirmada';}
+ if(/fecha\s*(por\s*confirmar|pendiente)|date\s*to\s*be\s*confirmed|tbc/i.test(t))result.dateStatus='Provisional';
+ return result;
+}
+async function fetchSourceText(url){
+ const proxy='https://api.allorigins.win/raw?url='+encodeURIComponent(url);
+ const res=await fetch(proxy,{cache:'no-store',signal:AbortSignal.timeout(10000)});
+ if(!res.ok)throw new Error('HTTP '+res.status);
+ return statusTextFromHtml(await res.text());
+}
 async function refreshStatusFeed(showMessage=true){
- const label=document.getElementById('statusSyncLabel');
- if(label)label.textContent='Consultando el archivo de estados…';
+ const label=document.getElementById('statusSyncLabel'),sl=document.getElementById('statusSettingsLabel');
+ const started=new Date();const stamp=started.toISOString();
+ if(label)label.textContent='Consultando fuentes oficiales…';
+ if(sl)sl.textContent='Último intento de consulta: '+started.toLocaleString('es-ES');
+ let liveChecked=0,liveChanged=0,failed=0,feedChanged=0;
+ // El feed estático es solo una referencia adicional. Nunca se presenta su fecha como si fuera la fecha de hoy.
  try{
-  const res=await fetch('./status-feed.json?refresh='+Date.now(),{cache:'no-store'});
-  if(!res.ok)throw new Error('No se pudo descargar status-feed.json');
-  const feed=await res.json();
-  if(!feed||!feed.updates)throw new Error('Formato de estados no válido');
-  let changed=0;
-  data.events=data.events.map(ev=>{
-   const u=feed.updates[ev.id]; if(!u)return ev; changed++;
-   return {...ev,date:u.date??ev.date,dateStatus:u.dateStatus??ev.dateStatus,availability:u.availability??ev.availability,checkedAt:u.checkedAt??feed.checkedAt??ev.checkedAt,sourceUrl:u.sourceUrl??ev.sourceUrl,status:u.note??ev.status};
-  });
-  data.statusFeedCheckedAt=feed.checkedAt||new Date().toISOString().slice(0,10);
-  localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map').classList.contains('active'))renderMap();
-  if(label)label.textContent=`Estados sincronizados: ${data.statusFeedCheckedAt} · ${changed} pruebas con información revisada.`;const sl=document.getElementById('statusSettingsLabel');if(sl)sl.textContent='Última sincronización: '+data.statusFeedCheckedAt;
-  if(showMessage)alert(`Estados actualizados. ${changed} pruebas recibieron información revisada.`);
- }catch(err){
-  const cached=data.statusFeedCheckedAt;
-  if(label)label.textContent=cached?`No se pudo conectar. Se mantienen los últimos datos (${cached}).`:'No se pudo actualizar. Comprueba que status-feed.json esté subido a GitHub.';const sl=document.getElementById('statusSettingsLabel');if(sl)sl.textContent='Última sincronización: '+(cached||'pendiente');
-  if(showMessage)alert('No se han podido actualizar los estados. Comprueba que status-feed.json esté publicado junto a index.html.');
- }
+  const res=await fetch('./status-feed.json?refresh='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(8000)});
+  if(res.ok){const feed=await res.json();if(feed?.updates){
+   data.events=data.events.map(ev=>{const u=feed.updates[ev.id];if(!u)return ev;const incoming=String(u.checkedAt||feed.checkedAt||'');const current=String(ev.checkedAt||'');if(!incoming||incoming<=current)return ev;feedChanged++;return {...ev,date:u.date??ev.date,dateStatus:u.dateStatus??ev.dateStatus,availability:u.availability??ev.availability,checkedAt:incoming,sourceUrl:u.sourceUrl??ev.sourceUrl,status:u.note??ev.status,verificationResult:'Dato procedente del boletín estático ('+incoming+')'};});
+  }}
+ }catch(_){/* La comprobación en directo continúa aunque el feed estático falle. */}
+ const targets=data.events.filter(e=>e.sourceUrl||e.url);
+ let cursor=0;
+ async function worker(){while(cursor<targets.length){const ev=targets[cursor++];const url=ev.sourceUrl||ev.url;try{
+   let inferred={},consulted=0,lastError=null;
+   const urls=[...new Set([ev.sourceUrl,ev.url].filter(Boolean))];
+   for(const candidateUrl of urls){try{const text=await fetchSourceText(candidateUrl);consulted++;inferred=inferLiveStatus(text,ev);if(Object.keys(inferred).length)break;}catch(err){lastError=err;}}
+   if(consulted)liveChecked++;else throw (lastError||new Error('No se pudo consultar ninguna URL'));
+   const hasEvidence=Object.keys(inferred).length>0;
+   const updated={...ev,verificationAttemptAt:stamp,verificationResult:hasEvidence?'Comprobación web con indicios explícitos':`Página consultada (${consulted} URL); sin datos concluyentes`};
+   if(hasEvidence){if(inferred.dateStatus&&inferred.dateStatus!==ev.dateStatus){updated.dateStatus=inferred.dateStatus;liveChanged++;}if(inferred.availability&&inferred.availability!==ev.availability){updated.availability=inferred.availability;liveChanged++;}updated.checkedAt=started.toISOString().slice(0,10);updated.checkedAtTime=stamp;}
+   else if(!updated.checkedAt)updated.checkedAt='';
+   const idx=data.events.findIndex(x=>x.id===ev.id);if(idx>=0)data.events[idx]=updated;
+  }catch(err){failed++;const idx=data.events.findIndex(x=>x.id===ev.id);if(idx>=0)data.events[idx]={...data.events[idx],verificationAttemptAt:stamp,verificationResult:'No se pudo comprobar la web; estado anterior conservado'};}
+ }}
+ await Promise.all(Array.from({length:4},()=>worker()));
+ data.lastStatusAttemptAt=stamp;data.lastStatusAttemptSummary={total:targets.length,liveChecked,failed,liveChanged,feedChanged};
+ localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap();
+ const finished=new Date();const summary=`Intento ${finished.toLocaleString('es-ES')}: ${liveChecked} páginas consultadas, ${failed} inaccesibles, ${liveChanged} cambios detectados${feedChanged?`, ${feedChanged} datos nuevos del boletín`:''}.`;
+ if(label)label.textContent=summary;
+ if(sl)sl.textContent='Último intento real: '+finished.toLocaleString('es-ES')+'. La fecha «Dato verificado» solo cambia cuando se detecta información explícita.';
+ if(showMessage)alert(summary+' Las páginas consultadas sin información concluyente mantienen su estado anterior.');
 }
 document.getElementById('refreshStatuses').addEventListener('click',()=>refreshStatusFeed(true));
 
@@ -569,6 +605,6 @@ let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDe
 installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.disabled=true}else installHelp.textContent='En Chrome, abre ⋮ y elige «Instalar aplicación». '};
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 if('Notification'in window)permissionStatus.textContent='Estado: '+Notification.permission;
-render();checkReminders();refreshStatusFeed(false);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});window.addEventListener('focus',checkReminders);
+render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=document.getElementById('statusSyncLabel');const settings=document.getElementById('statusSettingsLabel');if(prev){const when=new Date(prev).toLocaleString('es-ES');if(label)label.textContent='Último intento de consulta: '+when;if(settings)settings.textContent='Último intento real: '+when+'. Pulsa «Actualizar estado» para volver a consultar las páginas.';}else{if(label)label.textContent='Todavía no se han consultado las páginas de las pruebas.';if(settings)settings.textContent='Último intento de consulta: pendiente.';}}document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});window.addEventListener('focus',checkReminders);
 </script>
 </body></html>

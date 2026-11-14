@@ -1,16 +1,25 @@
-ALAIN RASTROLLO · TRIATLÓN 2027 · VERSIÓN 15.1
+ALAIN RASTROLLO · TRIATLÓN 2027 · VERSIÓN 15.1 PRO — VERIFICACIÓN DE ESTADOS
 
-Incluye la base PRO de la versión anterior y las mejoras solicitadas:
-- Indicador discreto V15.1 visible en la esquina superior derecha de la cabecera.
-- Miniaturas de localidades en las tarjetas de pruebas. Las imágenes se buscan en Wikimedia Commons cuando se muestran por primera vez, se guardan en caché local y se conserva un marcador neutro si no se encuentra una fotografía.
-- Botón «Buscar nuevas pruebas en mis fuentes»: revisa las seis pruebas 100x100Half incorporables y consulta las fuentes personalizadas. Admite feeds JSON/CSV y extracción heurística de enlaces HTML mediante un proxy público. Los resultados se presentan para revisión y aceptación manual; las webs pueden bloquear la consulta y la extracción HTML puede requerir correcciones.
-- Importación laboral tipada en JSON/CSV/ICS: distingue días libres, trabajo, vacaciones V y activaciones X; conserva turnos A/B/C. Las X no se cuentan como días libres. Los registros JSON pueden usar type: free/work/vacation/x y shift: A/B/C.
-- Compatibilidad con calendarios antiguos: fechas sin tipo siguen interpretándose como días libres.
-- Caché del Service Worker renovada para forzar la actualización sin borrar los datos personales almacenados.
+Mejora de la actualización de fechas e inscripciones:
+- Al pulsar «Actualizar estado», consulta las URLs asociadas a cada prueba (fuente del estado y, si hace falta, enlace del evento) mediante AllOrigins.
+- Busca únicamente señales explícitas de inscripción abierta, agotada, lista de espera o próxima apertura.
+- Solo marca una fecha como confirmada si encuentra la fecha de la prueba escrita en la página consultada.
+- Si una página no ofrece señales concluyentes, conserva el estado anterior y lo identifica como «sin datos concluyentes».
+- Si la página no responde o bloquea el proxy, indica «No se pudo comprobar» y conserva el estado anterior.
+- Distingue la hora del último intento de consulta de la fecha en que un dato quedó realmente verificado. No convierte la fecha antigua del status-feed.json en una comprobación de hoy.
+- El boletín status-feed.json solo sustituye un dato si su fecha es posterior a la verificación ya guardada.
+- La consulta en directo se ejecuta al pulsar el botón; al abrir la app solo se muestra el último intento guardado, evitando consultas masivas silenciosas.
 
-Límites conocidos:
-- La búsqueda de fuentes no es un rastreador universal ni garantiza leer todas las webs. Para una integración robusta de muchas fuentes se necesita un backend propio, ya que los sitios pueden bloquear CORS, el proxy o el acceso automatizado.
-- Las fotografías dependen de la disponibilidad y relevancia de los resultados de Wikimedia Commons; se pueden sustituir por una imagen neutra si no hay coincidencias.
-- La importación laboral clasifica los datos que contiene el archivo; no transcribe automáticamente fotografías/PDF ni crea un calendario laboral real a partir de una plantilla incompleta.
+Límites importantes:
+- La consulta depende de que el proxy público y la web de destino estén disponibles. No es un backend propio ni garantiza acceso a todas las webs.
+- La detección es conservadora y basada en texto. No interpreta de forma fiable sistemas dinámicos de inscripción, JavaScript de terceros, formularios protegidos, cupos privados ni páginas que no publiquen estados textuales.
+- Un dato solo se marca como verificado cuando la página consultada contiene una señal explícita compatible. La ausencia de señal nunca se interpreta como plazas disponibles.
+- La fecha de una competición solo se confirma si la página contiene la fecha exacta en formatos numéricos admitidos. No deduce fechas a partir de calendarios ambiguos.
+- Para cobertura robusta y regular se recomienda desplegar un backend propio que consulte APIs oficiales o fuentes estructuradas.
 
-Publica todos los archivos del ZIP en el alojamiento de la PWA. No borres los datos del sitio en Chrome para conservar favoritos, inscripciones, fuentes, calendario laboral y recordatorios.
+Pruebas realizadas:
+- Sintaxis JavaScript del documento validada con Node.js.
+- Pruebas unitarias del analizador: inscripción abierta + fecha, agotadas + fecha, próxima apertura y página sin señales. Los cuatro casos dieron el resultado esperado.
+- La disponibilidad real del proxy y el contenido de cada organizador no se pudo verificar desde el entorno de compilación; se debe comprobar al ejecutar la PWA publicada.
+
+Publica todos los archivos del ZIP en el alojamiento de la PWA. No borres los datos del sitio en Chrome para conservar la información local.
