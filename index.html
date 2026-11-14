@@ -158,7 +158,8 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 @media(max-width:430px){nav{top:218px!important;min-height:59px!important}nav button{min-width:48px!important;padding:4px 5px!important;font-size:9px!important}nav button .nav-icon{font-size:18px!important}body{padding-bottom:24px!important}}
 
 
-/* V15.1 · versión, fotos de localidad y descubrimiento de fuentes */
+/* V15.2 · versión, fotos de localidad y descubrimiento de fuentes */
+.progress-wrap{margin-top:8px}.progress-wrap[hidden]{display:none}.progress-track{height:8px;border-radius:99px;background:#233b50;overflow:hidden;margin:6px 0}.progress-track i{display:block;width:0;height:100%;background:#00d5df;transition:width .2s ease}
 .app-version{position:absolute;top:10px;right:12px;z-index:5;padding:4px 8px;border:1px solid rgba(115,190,230,.45);border-radius:999px;background:rgba(4,16,28,.72);color:#b9dff5;font-size:10px;font-weight:800;letter-spacing:.45px;line-height:1.2;backdrop-filter:blur(8px)}
 .event-layout{display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:10px;align-items:start}.event-photo{width:104px;height:82px;object-fit:cover;border-radius:11px;background:linear-gradient(135deg,#dce8ef,#9fb6c5);border:1px solid #d6e2e9}.event-photo-wrap{position:relative}.event-photo-fallback{width:104px;height:82px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#dce8ef,#a8c0ce);color:#31536a;font-size:26px}.scan-results{margin-top:10px}.scan-candidate{padding:10px 0;border-bottom:1px solid #2b4054}.scan-candidate:last-child{border:0}@media(max-width:370px){.event-layout{grid-template-columns:minmax(0,1fr) 82px}.event-photo,.event-photo-fallback{width:82px;height:70px}}
 .work-type{display:inline-block;margin-top:3px;padding:2px 7px;border-radius:7px;font-size:10px;font-weight:800;background:#1b3850;color:#d8e9f5}
@@ -167,7 +168,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 </head>
 <body>
 <header>
- <span class="app-version" aria-label="Versión de la aplicación">V15.1</span>
+ <span class="app-version" aria-label="Versión de la aplicación">V15.2</span>
  <div class="stats">
   <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
   <div class="stat"><b id="countRegistered">0</b><span>INSCRITO</span></div>
@@ -190,7 +191,8 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <div class="status-tile"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></div>
   <div class="status-tile"><b id="soldOutCount">0</b><span>AGOTADAS</span></div>
  </div>
- <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div></div>
+ <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div>
+  <div id="statusProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="statusProgressFill"></i></div><div class="small" id="statusProgressText">0 % · 0 de 0 pruebas</div></div></div>
  <div class="toolbar">
   <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
   <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
@@ -257,9 +259,8 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <div id="calendarSourceList"></div>
   <button class="secondary" id="scanCalendarSources" type="button" style="width:100%;margin:8px 0">⌕ Buscar nuevas pruebas en mis fuentes</button>
   <p class="small" id="scanSourcesStatus">Busca calendarios estructurados y páginas accesibles. Los resultados se revisan antes de añadirlos.</p>
+  <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i></div><div class="small" id="scanProgressText">0 % · 0 de 0 fuentes</div></div>
   <div id="sourceScanResults" class="scan-results"></div>
-  <button class="secondary" id="import100x100" type="button" style="width:100%;margin:8px 0">＋ Incorporar calendario 100x100Half 2027</button>
-  <p class="small" id="import100x100Status">Importación asistida con el calendario oficial publicado; no es una lectura automática en tiempo real.</p>
   <form id="addSourceForm">
    <label for="newSourceName">Nombre de la página</label><input id="newSourceName" required placeholder="Ej. Federación autonómica">
    <label for="newSourceUrl">Dirección web (URL)</label><input id="newSourceUrl" type="url" required placeholder="https://…">
@@ -353,6 +354,7 @@ let data=load();
 function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.events)){const ids=new Set(d.events.map(e=>e.id));d.events.push(...seed.filter(e=>!ids.has(e.id)),...extraSeed.filter(e=>!ids.has(e.id)),...franchiseSeed.filter(e=>!ids.has(e.id)&&!d.events.some(old=>old.name===e.name&&old.place===e.place&&old.date===e.date)));d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.fired=Array.isArray(d.fired)?d.fired:[];d.customSources=Array.isArray(d.customSources)?d.customSources:[];d.workCalendar=Array.isArray(d.workCalendar)?d.workCalendar:[];return d}}catch(e){}return {events:[...seed,...extraSeed,...franchiseSeed],reminders:[],fired:[],customSources:[],workCalendar:[]}}
 function save(){localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function compareEventDate(a,b){const da=/^\d{4}-\d{2}-\d{2}$/.test(a.date||'')?a.date:'9999-99-99';const db=/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')?b.date:'9999-99-99';return da.localeCompare(db)||String(a.name||'').localeCompare(String(b.name||''),'es');}
 function dateLabel(s){if(!s)return 'Fecha pendiente';let d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}
 function statusPill(s,kind='availability'){
  let cls='grey'; if(s==='Plazas disponibles'||s==='Confirmada')cls='green';
@@ -388,7 +390,7 @@ function render(){
  document.getElementById('soldOutCount').textContent=data.events.filter(e=>e.availability==='Agotadas').length;
  let country=document.getElementById('countryFilter').value,type=document.getElementById('typeFilter').value,franchise=document.getElementById('franchiseFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase(),dist=document.getElementById('distanceFilter').value,region=document.getElementById('communityFilter').value;
  let month=document.getElementById('monthFilter').value;
- let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort(compareEventDate);
  document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
  <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
@@ -398,7 +400,7 @@ function render(){
  <div class="checked-note">${e.checkedAt?'Dato verificado: '+dateLabel(e.checkedAt):'Estado sin verificación reciente'}${e.verificationResult?' · '+esc(e.verificationResult):''} ${e.sourceUrl?`· <a href="${esc(e.sourceUrl)}" target="_blank" rel="noopener">Fuente del estado ↗</a>`:''}</div>
  <div class="actions"><label class="check"><input type="checkbox" data-mark="interested" data-id="${esc(e.id)}" ${e.interested?'checked':''}> Me interesa</label><label class="check"><input type="checkbox" data-mark="registered" data-id="${esc(e.id)}" ${e.registered?'checked':''}> Estoy inscrito</label><button class="secondary" data-edit="${esc(e.id)}">Editar</button>${e.url?`<a class="btn secondary" href="${esc(e.url)}" target="_blank" rel="noopener">Inscripción ↗</a>`:''}</div></article>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
  hydrateEventPhotos(ev);
- const list=(arr,cls)=>arr.length?arr.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).map(e=>`<div class="card ${cls}"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)}</div></div>`).join(''):'<div class="empty">Todavía no has añadido pruebas aquí.</div>';
+ const list=(arr,cls)=>arr.length?arr.slice().sort(compareEventDate).map(e=>`<div class="card ${cls}"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)}</div></div>`).join(''):'<div class="empty">Todavía no has añadido pruebas aquí.</div>';
  document.getElementById('interestedList').innerHTML=list(data.events.filter(e=>e.interested),'season-interested');
  document.getElementById('registeredList').innerHTML=list(data.events.filter(e=>e.registered),'season-registered');
  let total=data.events.filter(e=>e.registered).reduce((s,e)=>s+(Number(e.cost)||0),0);
@@ -445,7 +447,7 @@ function renderWorkCalendar(){
  document.getElementById('workEventsCount').textContent=dated.length;
  const nWork=days.filter(x=>normalizeWorkType(x.type)==='work').length,nX=days.filter(x=>normalizeWorkType(x.type)==='x').length,nVac=days.filter(x=>normalizeWorkType(x.type)==='vacation').length;
  document.getElementById('workCalendarStatus').textContent=days.length?`Calendario cargado: ${offDays.length} días libres (${nVac} vacaciones), ${nWork} jornadas de trabajo y ${nX} activaciones X. ${data.workCalendarName||''}`:'Todavía no has importado tu calendario laboral.';
- document.getElementById('workMatchList').innerHTML=matches.length?matches.map(e=>`<div class="card off-day"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · Coincide con día libre</div></div>`).join(''):'<div class="empty">Cuando importes tu calendario, aquí aparecerán las pruebas que coincidan con días libres o vacaciones.</div>';
+ document.getElementById('workMatchList').innerHTML=matches.length?matches.slice().sort(compareEventDate).map(e=>`<div class="card off-day"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · Coincide con día libre</div></div>`).join(''):'<div class="empty">Cuando importes tu calendario, aquí aparecerán las pruebas que coincidan con días libres o vacaciones.</div>';
  document.getElementById('workDaysList').innerHTML=days.length?days.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(d=>{const t=normalizeWorkType(d.type),label=d.label||({free:'Día libre',work:'Jornada de trabajo',vacation:'Vacaciones',x:'Activación posible (X)'}[t]);return `<div class="source-item"><div><b>${dateLabel(d.date)}</b><br><span class="work-type ${t}">${esc(label)}${d.shift?' · Turno '+esc(d.shift):''}</span></div></div>`}).join(''):'<div class="empty">Sin fechas importadas.</div>';
 }
 function parseWorkCalendar(text,ext){
@@ -466,35 +468,30 @@ document.getElementById('workCalendarFile').addEventListener('change',async e=>{
 document.getElementById('clearWorkCalendar').addEventListener('click',()=>{if(confirm('¿Quitar el calendario laboral importado?')){data.workCalendar=[];data.workCalendarName='';save();}});
 document.getElementById('addSourceForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('newSourceName').value.trim(),url=document.getElementById('newSourceUrl').value.trim();try{const u=new URL(url);if(!/^https?:$/.test(u.protocol))throw 0;if(!data.customSources)data.customSources=[];if(data.customSources.some(x=>x.url===u.href))throw 0;data.customSources.push({name,url:u.href,kind:'Añadida por ti'});e.target.reset();save();}catch(_){alert('Introduce una URL http o https válida y que no esté ya añadida.');}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
-document.getElementById('import100x100').addEventListener('click',()=>{const existing=new Set(data.events.map(e=>e.id));const added=hundredByHundred2027.filter(e=>!existing.has(e.id));data.events.push(...added);if(!data.customSources)data.customSources=[];if(!data.customSources.some(x=>x.url==='https://100x100half.com/'))data.customSources.push({name:'100x100Half',url:'https://100x100half.com/',kind:'Organizador · Calendario 2027'});save();document.getElementById('import100x100Status').textContent=added.length?`Incorporadas ${added.length} pruebas. Las fechas están publicadas; dorsales y apertura de inscripciones deben comprobarse en la web oficial.`:'Las seis pruebas de 100x100Half ya estaban en tu calendario. No se han creado duplicados.';});
 
-// Fotografías de localidades: búsqueda en Wikimedia Commons, con caché local y fallback visual.
-const photoCacheKey='triathlon2027_photo_cache_v1';
+// Fotografías de localidades: carga todas las tarjetas; solo acepta coincidencia textual de localidad.
+const photoCacheKey='triathlon2027_photo_cache_v2';
 function readPhotoCache(){try{return JSON.parse(localStorage.getItem(photoCacheKey)||'{}')}catch(_){return {}}}
 const photoCache=readPhotoCache();
-async function hydrateEventPhotos(events){
- const wraps=[...document.querySelectorAll('[data-photo-place]')].slice(0,18);
- for(const w of wraps){const place=w.dataset.photoPlace,id=w.dataset.photoId;if(!place)continue;const cached=photoCache[place];if(cached){if(cached.url)w.innerHTML=`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(cached.url)}">`;continue;}
-  if(w.dataset.loading==='1')continue;w.dataset.loading='1';
-  try{const q=encodeURIComponent(`filetype:bitmap ${place} Spain`);const url=`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=240&format=json&origin=*`;const r=await fetch(url);if(!r.ok)throw 0;const j=await r.json();const pages=Object.values(j.query?.pages||{});const chosen=pages.find(x=>x.imageinfo?.[0]?.thumburl)||pages[0];const img=chosen?.imageinfo?.[0]?.thumburl;if(img){photoCache[place]={url:img,at:Date.now()};localStorage.setItem(photoCacheKey,JSON.stringify(photoCache));if(document.querySelector(`[data-photo-id="${CSS.escape(id)}"]`))w.innerHTML=`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(img)}">`;}else{photoCache[place]={url:null,at:Date.now()};localStorage.setItem(photoCacheKey,JSON.stringify(photoCache));}}
-  catch(_){w.dataset.loading='0';}
- }
-}
+function normPhotoText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function localityMatch(page,place){const target=normPhotoText(place),title=normPhotoText(page.title||''),desc=normPhotoText(page.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||'');const terms=target.split(' ').filter(x=>x.length>2);if(!terms.length)return false;return title.includes(target)||terms.every(x=>title.includes(x))||desc.includes(target)||(terms.length>1&&terms.every(x=>desc.includes(x)));}
+async function lookupLocalityPhoto(place){const q=encodeURIComponent('"'+place+'"');const url=`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=320&format=json&origin=*`;const res=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!res.ok)throw new Error('Wikimedia HTTP '+res.status);const json=await res.json();const pages=Object.values(json.query?.pages||{}).filter(x=>x.imageinfo?.[0]?.thumburl&&localityMatch(x,place));if(!pages.length)return null;pages.sort((a,b)=>{const score=x=>normPhotoText(x.title).includes(normPhotoText(place))?2:1;return score(b)-score(a)});return pages[0].imageinfo[0].thumburl;}
+async function hydrateEventPhotos(events){const cards=[...document.querySelectorAll('[data-photo-place]')];let cursor=0;async function worker(){while(cursor<cards.length){const w=cards[cursor++],place=w.dataset.photoPlace,id=w.dataset.photoId;if(!place)continue;const cached=photoCache[place];if(cached&&Date.now()-cached.checkedAt<30*86400000){w.innerHTML=cached.url?`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(cached.url)}" onerror="this.parentElement.innerHTML='<div class=&quot;event-photo-fallback&quot;>📍</div>'">`:'<div class="event-photo-fallback" aria-label="Imagen no disponible">📍</div>';continue;}if(w.dataset.loading==='1')continue;w.dataset.loading='1';try{const imageUrl=await lookupLocalityPhoto(place);photoCache[place]={url:imageUrl,checkedAt:Date.now()};try{localStorage.setItem(photoCacheKey,JSON.stringify(photoCache));}catch(_){}const live=document.querySelector(`[data-photo-id="${CSS.escape(id)}"]`);if(live)live.innerHTML=imageUrl?`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(imageUrl)}" onerror="this.parentElement.innerHTML='<div class=&quot;event-photo-fallback&quot;>📍</div>'">`:'<div class="event-photo-fallback" aria-label="Imagen no disponible">📍</div>';}catch(_){w.dataset.loading='0';}}}await Promise.all(Array.from({length:3},()=>worker()));}
 // Búsqueda asistida de nuevas competiciones: importa feeds JSON/CSV directamente y prueba extracción ligera vía proxy para webs HTML.
 function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])|\b(0?[1-9]|[12]\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.]2027\b/);if(!m)return '';if(m[1])return `2027-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;return `2027-${String(m[5]).padStart(2,'0')}-${String(m[4]).padStart(2,'0')}`;}
 function candidateId(name,place,date){return 'scan-'+btoa(unescape(encodeURIComponent(`${name}|${place}|${date}`))).replace(/[^a-z0-9]/gi,'').slice(0,24).toLowerCase()}
 function showScanCandidates(items){const box=document.getElementById('sourceScanResults');if(!box)return;box.innerHTML=items.length?items.map((x,i)=>`<div class="scan-candidate"><b>${esc(x.name)}</b><div class="meta">${dateLabel(x.date)} · ${esc(x.place)} · ${esc(x.sourceName)}</div><button class="secondary" data-scan-add="${i}">Añadir al calendario</button></div>`).join(''):'<div class="small">No se han encontrado pruebas nuevas verificables en las fuentes consultadas.</div>';box._items=items;}
 document.getElementById('scanCalendarSources')?.addEventListener('click',async()=>{
- const status=document.getElementById('scanSourcesStatus'),btn=document.getElementById('scanCalendarSources');btn.disabled=true;status.textContent='Buscando en las fuentes guardadas…';let found=[];
- // Calendario 100x100Half oficial ya estructurado en la app.
- for(const e of hundredByHundred2027){if(!data.events.some(old=>old.name===e.name&&old.date===e.date&&old.place===e.place))found.push({...e,sourceName:'100x100Half'});}
- const sources=(data.customSources||[]).filter(x=>!/100x100half/i.test(x.url));
+ const status=document.getElementById('scanSourcesStatus'),btn=document.getElementById('scanCalendarSources');btn.disabled=true;status.textContent='Buscando en las fuentes guardadas…';let found=[];const progressWrap=document.getElementById('scanProgressWrap'),progressFill=document.getElementById('scanProgressFill'),progressText=document.getElementById('scanProgressText');progressWrap.hidden=false;
+ const sources=(data.customSources||[]);const total=sources.length+1;let completed=0;const tick=()=>{const pct=total?Math.round(completed/total*100):100;progressFill.style.width=pct+'%';progressText.textContent=`${pct} % · ${completed} de ${total} fuentes procesadas`;};tick();
+ // Fuente 100x100Half integrada en la búsqueda general, sin botón exclusivo.
+ const builtIn=hundredByHundred2027.filter(e=>!data.events.some(old=>old.name===e.name&&old.date===e.date&&old.place===e.place));found.push(...builtIn.map(e=>({...e,sourceName:'100x100Half'})));completed++;tick();
  for(const src of sources){try{
   const prox=`https://api.allorigins.win/raw?url=${encodeURIComponent(src.url)}`;const res=await fetch(prox,{signal:AbortSignal.timeout(12000)});if(!res.ok)continue;const raw=await res.text();
   if(/\.json(?:$|\?)/i.test(src.url)||/\.csv(?:$|\?)/i.test(src.url)){let arr;if(/\.csv(?:$|\?)/i.test(src.url)){const lines=raw.split(/\r?\n/);const headers=(lines.shift()||'').split(/[;,]/).map(x=>x.trim().toLowerCase());arr=lines.map(line=>{const cols=line.split(/[;,]/);const o={};headers.forEach((h,i)=>o[h]=(cols[i]||'').trim().replace(/^\"|\"$/g,''));return {date:o.date||o.fecha||o.start,name:o.name||o.nombre||o.title||o.prueba,place:o.place||o.city||o.localidad||o.location,distance:o.distance||o.distancia||o.modality,type:o.type||o.tipo,url:o.url||o.link};});}else{const parsed=JSON.parse(raw);arr=Array.isArray(parsed)?parsed:(parsed.events||parsed.races||parsed.days||[]);}for(const v of arr){const date=String(v.date||v.fecha||v.start||'').slice(0,10);const name=v.name||v.nombre||v.title||v.event||v.prueba;if(/^2027-\d\d-\d\d$/.test(date)&&name){const place=v.place||v.city||v.localidad||v.location||'Localidad por confirmar';found.push({id:candidateId(name,place,date),name,country:v.country||'España',type:v.type||v.tipo||'Triatlón',date,place,distance:v.distance||v.distancia||v.modality||'Por confirmar',sourceUrl:src.url,url:v.url||v.link||src.url,availability:'Por verificar',dateStatus:'Pendiente de verificar',status:'Detectada en fuente externa',sourceName:src.name});}}}
   else {const doc=new DOMParser().parseFromString(raw,'text/html');const links=[...doc.querySelectorAll('a[href]')];for(const a of links){const label=(a.textContent||'').trim().replace(/\s+/g,' ');if(label.length<8||label.length>130)continue;const context=(a.parentElement?.textContent||label).trim().replace(/\s+/g,' ');const date=scanDate(context);if(!date||!/triatl|duatl|aquatl|ironman|challenge|race|carrera|competici/i.test(context+' '+label))continue;const place=(context.match(/(?:en|@|–|-|·)\s*([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ'’ -]{2,35})/)||[])[1]||'Localidad por confirmar';found.push({id:candidateId(label,place,date),name:label,country:'España',type:/duatl/i.test(context)?'Duatlón':'Triatlón',date,place,distance:'Por confirmar',sourceUrl:src.url,url:new URL(a.getAttribute('href'),src.url).href,availability:'Por verificar',dateStatus:'Pendiente de verificar',status:'Detectada en página; revisar datos',sourceName:src.name});}}
- }catch(_){}}
- const seen=new Set();found=found.filter(x=>{const k=`${x.name}|${x.date}|${x.place}`.toLowerCase();if(seen.has(k)||data.events.some(e=>`${e.name}|${e.date}|${e.place}`.toLowerCase()===k))return false;seen.add(k);return true;});showScanCandidates(found);status.textContent=`Búsqueda terminada: ${found.length} posibles pruebas nuevas. Revisa cada resultado antes de añadirlo. Algunas webs pueden bloquear la consulta o requerir una fuente estructurada.`;btn.disabled=false;
+ }catch(_){}finally{completed++;tick();}}
+ const seen=new Set();found=found.filter(x=>{const k=`${x.name}|${x.date}|${x.place}`.toLowerCase();if(seen.has(k)||data.events.some(e=>`${e.name}|${e.date}|${e.place}`.toLowerCase()===k))return false;seen.add(k);return true;});showScanCandidates(found);status.textContent=`Búsqueda terminada: ${found.length} posibles pruebas nuevas. Revisa cada resultado antes de añadirlo. Algunas webs pueden bloquear la consulta o requerir una fuente estructurada.`;progressFill.style.width='100%';progressText.textContent=`100 % · ${total} de ${total} fuentes procesadas`;btn.disabled=false;
 });
 document.addEventListener('click',e=>{const b=e.target.closest('[data-scan-add]');if(!b)return;const box=document.getElementById('sourceScanResults'),items=box?box._items||[]:[],x=items[Number(b.dataset.scanAdd)];if(!x)return;const {sourceName,...event}=x;event.interested=false;event.registered=false;event.cost='';event.notes='Importada desde fuente externa; comprobar fecha, distancia y localidad con el organizador.';data.events.push(event);items.splice(Number(b.dataset.scanAdd),1);showScanCandidates(items);save();});
 
@@ -524,6 +521,7 @@ async function fetchSourceText(url){
 }
 async function refreshStatusFeed(showMessage=true){
  const label=document.getElementById('statusSyncLabel'),sl=document.getElementById('statusSettingsLabel');
+ const progressWrap=document.getElementById('statusProgressWrap'),progressFill=document.getElementById('statusProgressFill'),progressText=document.getElementById('statusProgressText');progressWrap.hidden=false;progressFill.style.width='0%';
  const started=new Date();const stamp=started.toISOString();
  if(label)label.textContent='Consultando fuentes oficiales…';
  if(sl)sl.textContent='Último intento de consulta: '+started.toLocaleString('es-ES');
@@ -535,7 +533,7 @@ async function refreshStatusFeed(showMessage=true){
    data.events=data.events.map(ev=>{const u=feed.updates[ev.id];if(!u)return ev;const incoming=String(u.checkedAt||feed.checkedAt||'');const current=String(ev.checkedAt||'');if(!incoming||incoming<=current)return ev;feedChanged++;return {...ev,date:u.date??ev.date,dateStatus:u.dateStatus??ev.dateStatus,availability:u.availability??ev.availability,checkedAt:incoming,sourceUrl:u.sourceUrl??ev.sourceUrl,status:u.note??ev.status,verificationResult:'Dato procedente del boletín estático ('+incoming+')'};});
   }}
  }catch(_){/* La comprobación en directo continúa aunque el feed estático falle. */}
- const targets=data.events.filter(e=>e.sourceUrl||e.url);
+ const targets=data.events.filter(e=>e.sourceUrl||e.url);let completed=0;const total=targets.length;const tick=()=>{const pct=total?Math.round(completed/total*100):100;progressFill.style.width=pct+'%';progressText.textContent=`${pct} % · ${completed} de ${total} pruebas comprobadas`;};tick();
  let cursor=0;
  async function worker(){while(cursor<targets.length){const ev=targets[cursor++];const url=ev.sourceUrl||ev.url;try{
    let inferred={},consulted=0,lastError=null;
@@ -547,13 +545,13 @@ async function refreshStatusFeed(showMessage=true){
    if(hasEvidence){if(inferred.dateStatus&&inferred.dateStatus!==ev.dateStatus){updated.dateStatus=inferred.dateStatus;liveChanged++;}if(inferred.availability&&inferred.availability!==ev.availability){updated.availability=inferred.availability;liveChanged++;}updated.checkedAt=started.toISOString().slice(0,10);updated.checkedAtTime=stamp;}
    else if(!updated.checkedAt)updated.checkedAt='';
    const idx=data.events.findIndex(x=>x.id===ev.id);if(idx>=0)data.events[idx]=updated;
-  }catch(err){failed++;const idx=data.events.findIndex(x=>x.id===ev.id);if(idx>=0)data.events[idx]={...data.events[idx],verificationAttemptAt:stamp,verificationResult:'No se pudo comprobar la web; estado anterior conservado'};}
+  }catch(err){failed++;const idx=data.events.findIndex(x=>x.id===ev.id);if(idx>=0)data.events[idx]={...data.events[idx],verificationAttemptAt:stamp,verificationResult:'No se pudo comprobar la web; estado anterior conservado'};}finally{completed++;tick();}
  }}
  await Promise.all(Array.from({length:4},()=>worker()));
  data.lastStatusAttemptAt=stamp;data.lastStatusAttemptSummary={total:targets.length,liveChecked,failed,liveChanged,feedChanged};
  localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap();
  const finished=new Date();const summary=`Intento ${finished.toLocaleString('es-ES')}: ${liveChecked} páginas consultadas, ${failed} inaccesibles, ${liveChanged} cambios detectados${feedChanged?`, ${feedChanged} datos nuevos del boletín`:''}.`;
- if(label)label.textContent=summary;
+ if(label)label.textContent=summary;progressFill.style.width='100%';progressText.textContent=`100 % · ${completed} de ${total} pruebas procesadas`;
  if(sl)sl.textContent='Último intento real: '+finished.toLocaleString('es-ES')+'. La fecha «Dato verificado» solo cambia cuando se detecta información explícita.';
  if(showMessage)alert(summary+' Las páginas consultadas sin información concluyente mantienen su estado anterior.');
 }
@@ -575,11 +573,11 @@ function renderMap(){
  const groups={};events.forEach(e=>{let c=placeCoords[e.place]||(()=>{const r=communityFor(e);const centers={'País Vasco':[42.95,-2.7],'Navarra':[42.7,-1.65],'La Rioja':[42.3,-2.5],'Aragón':[41.6,-0.9],'Cataluña':[41.8,1.5],'Comunitat Valenciana':[39.5,-0.4],'Región de Murcia':[37.9,-1.2],'Andalucía':[37.4,-4.5],'Castilla-La Mancha':[39.5,-3.0],'Castilla y León':[41.7,-4.7],'Galicia':[42.8,-8.1],'Comunidad de Madrid':[40.4,-3.7],'Extremadura':[39.0,-6.0],'Asturias':[43.36,-5.85],'Cantabria':[43.2,-4.0],'Illes Balears':[39.6,2.9],'Canarias':[28.1,-15.4],'Portugal':[39.5,-8.0]};return centers[r]||([e.country==='España'?40.2: e.country==='Portugal'?39.5:50.5,e.country==='España'?-3.7:e.country==='Portugal'?-8.0:10.0])})();let key=e.place+'|'+e.country;(groups[key] ||= {coord:c,events:[]}).events.push(e)});
  Object.values(groups).forEach(g=>{const first=g.events[0],color=markerColor(first);const icon=L.divIcon({className:'',html:`<div style="width:18px;height:18px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 1px 5px #0008"></div>`,iconSize:[18,18],iconAnchor:[9,9]});const content=g.events.map(e=>`<b>${esc(e.name)}</b><br>${dateLabel(e.date)}<br>${esc(e.place)} · ${esc(e.availability||'Por verificar')}`).join('<hr style="border:0;border-top:1px solid #ddd">');const m=L.marker(g.coord,{icon}).addTo(raceMap).bindPopup(content);mapMarkers.push(m)});
  const pts=Object.values(groups).map(g=>g.coord);if(pts.length>1)raceMap.fitBounds(pts,{padding:[25,25],maxZoom:7});else if(pts.length===1)raceMap.setView(pts[0],8);
- document.getElementById('mapEventList').innerHTML=events.length?events.map(e=>`<div class="card"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · ${esc(e.country)}</div><div class="status-row">${statusPill(e.dateStatus,'date')}${statusPill(e.availability)}</div></div>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
+ document.getElementById('mapEventList').innerHTML=events.length?events.slice().sort(compareEventDate).map(e=>`<div class="card"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · ${esc(e.country)}</div><div class="status-row">${statusPill(e.dateStatus,'date')}${statusPill(e.availability)}</div></div>`).join(''):'<div class="empty">No hay pruebas con esos filtros.</div>';
 }
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 // La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar()}));
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar();window.scrollTo({top:0,behavior:'smooth'});}));
 ['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
 document.addEventListener('click',e=>{

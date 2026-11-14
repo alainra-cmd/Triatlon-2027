@@ -1,0 +1,12 @@
+ALAIN RASTROLLO · TRIATLÓN 2027 · V15.2 PRO
+
+Cambios incluidos:
+- Listado principal, Mi temporada, coincidencias con días libres y listado del mapa ordenados cronológicamente: próximas fechas primero; pruebas sin fecha al final; desempate por nombre.
+- Indicador V15.2 visible.
+- Eliminado el botón exclusivo de importar 100x100Half; las seis pruebas permanecen en los datos y aparecen en la búsqueda general de fuentes.
+- Barra de progreso de actualización de estados: porcentaje y número de pruebas procesadas.
+- Barra de progreso de búsqueda de fuentes: porcentaje y número de fuentes procesadas.
+- Al pulsar cualquier pestaña, incluida la activa, la vista vuelve al principio.
+- Miniaturas para todas las tarjetas renderizadas; selección conservadora de imágenes que deben mencionar la localidad en título o descripción; marcador neutro cuando no hay coincidencia fiable. Caché nueva para descartar imágenes incorrectas.
+
+Límites: la consulta web y la búsqueda de fotografías dependen de la disponibilidad de los servicios externos y de que las páginas permitan acceso. El progreso mide tareas completadas, no una animación estimada.
