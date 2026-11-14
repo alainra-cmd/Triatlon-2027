@@ -1,17 +1,20 @@
-TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 15 PRO
+TRIATLÓN 2027 · ALAIN RASTROLLO · VERSIÓN 16 PRO
 
-Novedades de V15:
-- Navegación fija rediseñada con iconos y etiquetas compactas. La sección de competiciones se identifica como «Pruebas» y se añade «Calendario» para el calendario laboral.
-- Nueva sección Calendario laboral 2027, preparada para importar archivos ICS, CSV o JSON con días libres de 2027 y cruzarlos con las fechas de las competiciones.
-- En Mi temporada, las pruebas inscritas tienen fondo verde suave y las pruebas de interés fondo naranja suave.
-- Datos y ajustes incluye Fuentes del calendario: páginas de referencia utilizadas y opción para añadir/quitar URLs.
-- Fondo general aclarado sutilmente a negro grafito.
-- Icono de triatlón renovado (natación, ciclismo y carrera) para Android y PWA.
-- Caché del Service Worker actualizada a v15.
+Novedades de V16:
+- Se incorpora la fuente oficial 100x100Half a Fuentes del calendario.
+- Se añade una importación asistida de las seis sedes 100x100Half publicadas para 2027: Empuriabrava (16/05), Sant Feliu de Guíxols (29/05), El Vendrell (06/06), Berga (19/06), Platja d'Aro (03/10) y L'Estartit (10/10).
+- La importación evita duplicados y conserva las pruebas y preferencias que ya existan en el dispositivo.
+- Las modalidades anunciadas se muestran en las notas de cada competición. La disponibilidad de dorsales queda «Por verificar».
+- Se añaden las coordenadas aproximadas de las seis sedes al mapa.
+- Se actualiza la caché del Service Worker a v16 para que los dispositivos descarguen la nueva versión.
 
-IMPORTANTE:
-- Se conserva la clave localStorage triathlon2027_data_v1 y se migran los campos nuevos sin borrar favoritos, inscripciones ni recordatorios existentes.
-- La antigua sección «Mis fuentes» con fotografías no se recupera. Las fuentes de calendario son un apartado independiente.
-- Añadir una URL la guarda como fuente de consulta; no habilita por sí solo el rastreo automático de esa web.
-- El calendario laboral admite ICS, CSV con la fecha en la primera columna (formato YYYY-MM-DD) o JSON con una lista de objetos que contengan date. Solo se importan fechas de 2027.
-- Sustituye todos los archivos del repositorio por los de este ZIP. No borres los datos de Chrome ni el almacenamiento local.
+Limitaciones conocidas de esta versión:
+- La importación 100x100Half utiliza el calendario oficial revisado e integrado en esta compilación. No es un rastreador web automático ni detecta por sí solo cambios futuros.
+- La aplicación sigue siendo una PWA estática: consultar automáticamente páginas de terceros requiere un servicio intermedio/backend, especialmente en webs que bloquean peticiones desde navegador.
+- Las fotografías individuales de cada localidad todavía no están integradas.
+- La importación del calendario laboral sigue interpretando las fechas importadas como días libres. No clasifica todavía turnos A/B/C, vacaciones V y activaciones X.
+
+Instalación/actualización:
+- Sustituye los archivos publicados por los de este ZIP.
+- No borres los datos de Chrome ni el almacenamiento local: se mantiene la clave triathlon2027_data_v1 y los datos personales existentes.
+- Tras publicar, cierra y vuelve a abrir la PWA para que el Service Worker active la caché v16.
