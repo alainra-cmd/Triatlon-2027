@@ -164,11 +164,24 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 .event-layout{display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:10px;align-items:start}.event-photo{width:104px;height:82px;object-fit:cover;border-radius:11px;background:linear-gradient(135deg,#dce8ef,#9fb6c5);border:1px solid #d6e2e9}.event-photo-wrap{position:relative}.event-photo-fallback{width:104px;height:82px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#dce8ef,#a8c0ce);color:#31536a;font-size:26px}.scan-results{margin-top:10px}.scan-candidate{padding:10px 0;border-bottom:1px solid #2b4054}.scan-candidate:last-child{border:0}@media(max-width:370px){.event-layout{grid-template-columns:minmax(0,1fr) 82px}.event-photo,.event-photo-fallback{width:82px;height:70px}}
 .work-type{display:inline-block;margin-top:3px;padding:2px 7px;border-radius:7px;font-size:10px;font-weight:800;background:#1b3850;color:#d8e9f5}
 .work-type.free,.work-type.vacation{background:#174535;color:#a8f0cb}.work-type.work{background:#183b59;color:#b8e2ff}.work-type.x{background:#59431b;color:#ffdf9a}
+
+/* V15.3 · realce visual de filtros activos */
+.toolbar select.filter-active,
+.toolbar input.filter-active,
+#search.filter-active{
+ background:#5a3518!important;
+ border:1px solid #ff9b32!important;
+ color:#fff2df!important;
+ box-shadow:0 0 0 2px rgba(255,153,48,.18),0 0 12px rgba(255,153,48,.12)!important;
+}
+.toolbar select.filter-active:focus,
+#search.filter-active:focus{outline:2px solid rgba(255,166,74,.45);outline-offset:1px}
+
 </style>
 </head>
 <body>
 <header>
- <span class="app-version" aria-label="Versión de la aplicación">V15.2</span>
+ <span class="app-version" aria-label="Versión de la aplicación">V15.3</span>
  <div class="stats">
   <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
   <div class="stat"><b id="countRegistered">0</b><span>INSCRITO</span></div>
@@ -601,7 +614,54 @@ document.getElementById('importFile').onchange=async e=>{let f=e.target.files[0]
 document.getElementById('resetData').onclick=()=>{if(confirm('Se borrarán tus cambios, favoritos y recordatorios. ¿Continuar?')){data={events:[...seed,...extraSeed,...franchiseSeed].map(x=>({...x})),reminders:[],fired:[],customSources:[],workCalendar:[]};save()}};
 let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.disabled=false;installHelp.textContent='Pulsa para instalar la aplicación.'});
 installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.disabled=true}else installHelp.textContent='En Chrome, abre ⋮ y elige «Instalar aplicación». '};
-if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+// V15.3: destacar filtros con selección efectiva.
+(()=>{
+ const ids=['countryFilter','typeFilter','distanceFilter','communityFilter','franchiseFilter','monthFilter','interestFilter','availabilityFilter','mapCountry','mapAvailability','search'];
+ const refresh=el=>{
+  if(!el)return;
+  const active=String(el.value||'').trim()!=='';
+  el.classList.toggle('filter-active',active);
+  el.setAttribute('aria-pressed',active?'true':'false');
+ };
+ const bind=()=>{
+  ids.forEach(id=>{
+   const el=document.getElementById(id);
+   if(!el||el.dataset.v153Bound)return;
+   el.dataset.v153Bound='1';
+   refresh(el);
+   el.addEventListener('input',()=>refresh(el));
+   el.addEventListener('change',()=>refresh(el));
+  });
+ };
+ bind();
+ document.addEventListener('DOMContentLoaded',bind);
+ // Algunos filtros pueden recrearse al cambiar de pestaña.
+ new MutationObserver(bind).observe(document.body,{childList:true,subtree:true});
+})();
+
+// V15.3: comprobar actualizaciones del service worker al abrir y activar la nueva versión.
+// No se borran localStorage, IndexedDB ni otros datos locales de la aplicación.
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+ let reloadedForController=false;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{
+  if(reloadedForController)return;
+  reloadedForController=true;
+  location.reload();
+ });
+ navigator.serviceWorker.register('./sw.js').then(reg=>{
+  reg.update().catch(()=>{});
+  reg.addEventListener('updatefound',()=>{
+   const worker=reg.installing;
+   if(worker)worker.addEventListener('statechange',()=>{
+    if(worker.state==='installed' && navigator.serviceWorker.controller){
+     // El nuevo SW usa skipWaiting() y tomará el control automáticamente.
+    }
+   });
+  });
+ }).catch(()=>{});
+}
+
 if('Notification'in window)permissionStatus.textContent='Estado: '+Notification.permission;
 render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=document.getElementById('statusSyncLabel');const settings=document.getElementById('statusSettingsLabel');if(prev){const when=new Date(prev).toLocaleString('es-ES');if(label)label.textContent='Último intento de consulta: '+when;if(settings)settings.textContent='Último intento real: '+when+'. Pulsa «Actualizar estado» para volver a consultar las páginas.';}else{if(label)label.textContent='Todavía no se han consultado las páginas de las pruebas.';if(settings)settings.textContent='Último intento de consulta: pendiente.';}}document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});window.addEventListener('focus',checkReminders);
 </script>

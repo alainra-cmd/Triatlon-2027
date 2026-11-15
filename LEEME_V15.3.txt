@@ -1,0 +1,19 @@
+ALAIN RASTROLLO · TRIATLÓN 2027 · V15.3 PRO
+
+Cambios incluidos:
+- Indicador visible actualizado a V15.3.
+- Los filtros activos se resaltan con fondo naranja claro, borde naranja y un leve realce visual.
+- Se resaltan país, tipo, distancia, comunidad, franquicia, mes, interés, disponibilidad, búsqueda y filtros del mapa (país y estado).
+- Al limpiar un filtro, recupera su apariencia normal.
+- Nueva versión de caché del service worker: triatlon-2027-v15-3-release.
+- Comprobación de actualización al abrir la aplicación y activación del nuevo service worker.
+- Se conserva el almacenamiento local de la aplicación: no se borran localStorage ni IndexedDB.
+- Se conservan las funciones, datos, imágenes y recursos de V15.2.
+
+Pendiente:
+- No se ha sustituido Leaflet/OpenStreetMap por Google Maps. Esa integración queda pendiente de una clave válida de Google Maps JavaScript API y facturación habilitada.
+
+Verificaciones realizadas:
+- Sintaxis JavaScript del documento validada con Node.js.
+- Se conserva el conjunto de archivos y recursos de la versión base.
+- No se ha publicado en GitHub ni desplegado en el alojamiento. El usuario debe subir el contenido del ZIP.
