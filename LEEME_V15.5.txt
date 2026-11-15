@@ -1,0 +1,11 @@
+TRIATLÓN 2027 · V15.5 CORREGIDA
+
+Correcciones:
+- Tarjeta «Total de pruebas»: fondo naranja claro y borde naranja, aplicados después de los estilos de tema para evitar que sean sobrescritos.
+- Tarjetas de estado: verde para fechas confirmadas, naranja para plazas disponibles y rojo para agotadas.
+- Las tarjetas abren una ventana emergente construida con la estructura modal real de la aplicación (clase .sheet), con botón de cierre, cierre al tocar el fondo y tecla Escape.
+- Los listados usan los campos reales del modelo: dateStatus === «Confirmada» y availability === «Plazas disponibles» / «Agotadas».
+- La barra de actualización de estado y la barra de búsqueda de fuentes ocupan el ancho completo; el texto y porcentaje permanecen centrados y superpuestos al relleno.
+- Actualizada la clave de caché del service worker.
+
+No se han borrado los datos locales. Esta compilación no se ha publicado en GitHub.
