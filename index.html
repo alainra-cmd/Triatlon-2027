@@ -177,6 +177,27 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 .toolbar select.filter-active:focus,
 #search.filter-active:focus{outline:2px solid rgba(229,138,36,.35);outline-offset:1px}
 
+
+/* V15.4 · tarjetas de estado y ventana emergente */
+.status-grid .status-tile{appearance:none;width:100%;font:inherit;text-align:left;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+.status-grid .status-tile:active{transform:scale(.98)}
+.status-grid .status-tile:focus-visible{outline:3px solid #1677c8;outline-offset:2px}
+.status-grid .status-confirmed{background:#e1f5e8!important;border:1px solid #249653!important;color:#14532d!important}
+.status-grid .status-confirmed b,.status-grid .status-confirmed span{color:#14532d!important}
+.status-grid .status-open{background:#fff0d9!important;border:1px solid #d97706!important;color:#854d0e!important}
+.status-grid .status-open b,.status-grid .status-open span{color:#854d0e!important}
+.status-grid .status-sold{background:#fde2e2!important;border:1px solid #dc4545!important;color:#8f1d1d!important}
+.status-grid .status-sold b,.status-grid .status-sold span{color:#8f1d1d!important}
+#statusEventsModal .modal-card{max-height:82vh;overflow:auto}
+.status-modal-list{display:grid;gap:9px;margin-top:12px}
+.status-modal-event{padding:11px 12px;border:1px solid var(--line,#d7e0e7);border-radius:12px;background:rgba(128,150,170,.08)}
+.status-modal-event strong{display:block;margin-bottom:4px}
+.status-modal-event .meta{font-size:12px}
+.status-modal-empty{padding:18px;text-align:center;color:var(--muted,#647989)}
+.total-counter{background:#fff0d9!important;border:1px solid #d97706!important;color:#854d0e!important}
+.total-counter strong{color:#9a4d00!important}
+.total-counter .small,.total-counter small{color:#a16207!important}
+
 </style>
 </head>
 <body>
@@ -200,9 +221,9 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 <section id="calendar" class="panel active">
  <div class="calendar-title-row"><div><h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p></div><button class="primary refresh-title-btn" id="refreshStatuses">Actualizar estado</button></div>
  <div class="status-grid">
-  <div class="status-tile"><b id="dateConfirmedCount">0</b><span>FECHA CONFIRMADA</span></div>
-  <div class="status-tile"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></div>
-  <div class="status-tile"><b id="soldOutCount">0</b><span>AGOTADAS</span></div>
+  <button type="button" class="status-tile status-confirmed" id="openConfirmedEvents" aria-label="Mostrar pruebas con fecha confirmada"><b id="dateConfirmedCount">0</b><span>FECHAS CONFIRMADAS</span></button>
+  <button type="button" class="status-tile status-open" id="openAvailableEvents" aria-label="Mostrar pruebas con plazas abiertas"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></button>
+  <button type="button" class="status-tile status-sold" id="openSoldOutEvents" aria-label="Mostrar pruebas agotadas"><b id="soldOutCount">0</b><span>AGOTADAS</span></button>
  </div>
  <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div>
   <div id="statusProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="statusProgressFill"></i><span class="progress-label" id="statusProgressText">0 % · 0 de 0 pruebas</span></div></div></div>
@@ -638,4 +659,45 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
 if('Notification'in window)permissionStatus.textContent='Estado: '+Notification.permission;
 render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=document.getElementById('statusSyncLabel');const settings=document.getElementById('statusSettingsLabel');if(prev){const when=new Date(prev).toLocaleString('es-ES');if(label)label.textContent='Último intento de consulta: '+when;if(settings)settings.textContent='Último intento real: '+when+'. Pulsa «Actualizar estado» para volver a consultar las páginas.';}else{if(label)label.textContent='Todavía no se han consultado las páginas de las pruebas.';if(settings)settings.textContent='Último intento de consulta: pendiente.';}}document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});window.addEventListener('focus',checkReminders);
 </script>
-</body></html>
+
+<div class="modal" id="statusEventsModal" role="dialog" aria-modal="true" aria-labelledby="statusEventsTitle">
+ <div class="modal-card">
+  <div class="modal-head"><h3 id="statusEventsTitle">Pruebas</h3><button type="button" class="secondary" data-close="statusEventsModal" aria-label="Cerrar">✕</button></div>
+  <div class="status-modal-list" id="statusEventsList"></div>
+ </div>
+</div>
+
+<script>
+/* V15.4 · listado emergente de pruebas por estado */
+(function(){
+ const modalId='statusEventsModal';
+ function openStatusList(kind){
+   if(typeof data==='undefined'||!data.events)return;
+   let title='', items=[];
+   if(kind==='confirmed'){
+     title='Fechas confirmadas';
+     items=data.events.filter(e=>e.dateStatus==='Confirmada');
+   }else if(kind==='open'){
+     title='Plazas abiertas';
+     items=data.events.filter(e=>e.availability==='Plazas disponibles');
+   }else{
+     title='Pruebas agotadas';
+     items=data.events.filter(e=>e.availability==='Agotadas');
+   }
+   if(typeof compareEventDate==='function')items.sort(compareEventDate);
+   document.getElementById('statusEventsTitle').textContent=title+' · '+items.length;
+   const list=document.getElementById('statusEventsList');
+   list.innerHTML=items.length?items.map(e=>{
+     const date=typeof dateLabel==='function'?dateLabel(e.date):(e.date||'Fecha sin confirmar');
+     const place=[e.place,e.country].filter(Boolean).join(', ');
+     const status=kind==='confirmed'?'Fecha confirmada':(kind==='open'?'Plazas disponibles':'Agotadas');
+     return '<article class="status-modal-event"><strong>'+esc(e.name||'Prueba sin nombre')+'</strong><div class="meta">📅 '+esc(date)+(place?' · 📍 '+esc(place):'')+'</div><div class="meta">'+esc(e.type||'')+(e.distance?' · '+esc(e.distance):'')+' · '+status+'</div></article>';
+   }).join(''):'<div class="status-modal-empty">No hay pruebas en esta categoría.</div>';
+   showModal(modalId);
+ }
+ document.getElementById('openConfirmedEvents').addEventListener('click',()=>openStatusList('confirmed'));
+ document.getElementById('openAvailableEvents').addEventListener('click',()=>openStatusList('open'));
+ document.getElementById('openSoldOutEvents').addEventListener('click',()=>openStatusList('sold'));
+})();
+</script>
+</body></html></html>

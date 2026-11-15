@@ -1,0 +1,16 @@
+TRIATLÓN 2027 · V15.4
+
+Cambios incluidos sobre V15.3:
+- Tarjeta «Total de pruebas» con fondo naranja claro y borde naranja.
+- Tarjetas de estado con colores diferenciados: fechas confirmadas en verde, plazas abiertas en naranja y pruebas agotadas en rojo.
+- Las tres tarjetas de estado son pulsables y abren una ventana emergente con el listado correspondiente, incluyendo nombre, fecha, localidad y estado.
+- Barra de actualización a todo el ancho disponible, con porcentaje y texto superpuestos y centrados sobre el relleno.
+- Caché del service worker actualizada a V15.4 para facilitar la publicación de la nueva versión.
+
+La ventana emergente utiliza los datos existentes de la aplicación:
+- Fecha confirmada: dateStatus = «Confirmada».
+- Plazas abiertas: availability = «Plazas disponibles».
+- Agotadas: availability = «Agotadas».
+
+No se han borrado ni migrado los datos locales del usuario.
+No se ha publicado esta versión en GitHub.
