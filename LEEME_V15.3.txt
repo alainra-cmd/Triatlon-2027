@@ -1,19 +1,18 @@
 ALAIN RASTROLLO · TRIATLÓN 2027 · V15.3 PRO
 
 Cambios incluidos:
+- Resaltado naranja claro y borde naranja en filtros activos: país, tipo, distancia, comunidad, franquicia, mes, interés, disponibilidad, búsqueda y filtros del mapa.
+- Al limpiar un filtro, recupera su aspecto normal.
+- Tarjeta «Total de pruebas» con fondo naranja claro y borde naranja.
+- Barras de progreso de actualización de estados y búsqueda de fuentes a ancho completo, con porcentaje y recuento superpuestos sobre la barra.
 - Indicador visible actualizado a V15.3.
-- Los filtros activos se resaltan con fondo naranja claro, borde naranja y un leve realce visual.
-- Se resaltan país, tipo, distancia, comunidad, franquicia, mes, interés, disponibilidad, búsqueda y filtros del mapa (país y estado).
-- Al limpiar un filtro, recupera su apariencia normal.
-- Nueva versión de caché del service worker: triatlon-2027-v15-3-release.
-- Comprobación de actualización al abrir la aplicación y activación del nuevo service worker.
-- Se conserva el almacenamiento local de la aplicación: no se borran localStorage ni IndexedDB.
-- Se conservan las funciones, datos, imágenes y recursos de V15.2.
+- Nueva caché del service worker V15.3 y comprobación de actualización al abrir.
+- Se conservan los datos locales; no se borran localStorage ni IndexedDB.
+- Se mantienen las funciones, datos, imágenes y mapa Leaflet de V15.2.
 
 Pendiente:
-- No se ha sustituido Leaflet/OpenStreetMap por Google Maps. Esa integración queda pendiente de una clave válida de Google Maps JavaScript API y facturación habilitada.
+- Google Maps con vista satélite/híbrida: requiere una clave válida de Google Maps API y facturación habilitada.
 
-Verificaciones realizadas:
-- Sintaxis JavaScript del documento validada con Node.js.
-- Se conserva el conjunto de archivos y recursos de la versión base.
-- No se ha publicado en GitHub ni desplegado en el alojamiento. El usuario debe subir el contenido del ZIP.
+Publicación:
+- Sustituir en el alojamiento los archivos del ZIP.
+- No borrar los datos del sitio en Chrome para conservar la información local.

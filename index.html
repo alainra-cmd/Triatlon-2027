@@ -52,7 +52,7 @@ nav button{background:#eef3f7;border:1px solid #d8e3eb;color:#29485e;padding:10p
 nav button.active{background:#176b9b;border-color:#176b9b;color:#fff;box-shadow:0 3px 10px #176b9b30}
 main{padding:12px 13px 32px}.card{background:#fff;border:1px solid #dce6ed;box-shadow:0 3px 12px #18384d0c;color:#193247}
 .status-tile{background:#fff;border:1px solid #dce6ed}.status-tile span,.sub,.meta,.small,.checked-note,.section-label,.map-key,.map-help{color:#647989}
-.total-counter{display:flex;justify-content:space-between;align-items:center;background:#eaf2f8;border:1px solid #cbdfea;border-radius:14px;padding:12px 14px;margin:10px 0;color:#193247}.total-counter strong{font-size:24px;color:#176b9b}.refresh-bar{background:#eaf2f8;border:1px solid #d5e3ec}.secondary{background:#e8eff4;color:#29485e}.primary{background:#ed8b1b;color:#fff}
+.total-counter{display:flex;justify-content:space-between;align-items:center;background:#fff0d9;border:1px solid #d97706;border-radius:14px;padding:12px 14px;margin:10px 0;color:#854d0e}.total-counter strong{font-size:24px;color:#9a4d00}.refresh-bar{background:#eaf2f8;border:1px solid #d5e3ec}.secondary{background:#e8eff4;color:#29485e}.primary{background:#ed8b1b;color:#fff}
 input,select,textarea{background:#fff;color:#193247;border:1px solid #cad9e3}label,.check{color:#435d70}
 .sheet{background:#f5f8fa;color:#193247}.modal{background:#102c4388}
 header.scrolled{min-height:104px;height:104px;padding:54px 10px 7px;border-radius:0 0 14px 14px;box-shadow:0 3px 14px #17364b30}
@@ -92,7 +92,7 @@ h2,h3{color:#f6faff}h2{font-size:20px;letter-spacing:.2px}h3{font-size:16px}
 .event-card.open{border-top-color:#00e5a8!important;border-left-color:#00e5a8!important}.event-card.sold{border-top-color:#ff4568!important;border-left-color:#ff4568!important}.event-card.wait{border-top-color:#ff982b!important;border-left-color:#ff982b!important}
 .meta,.small,.sub,.checked-note,.section-label,.map-key,.map-help,.status-tile span{color:#9bb0c4!important}
 .total-counter,.refresh-bar{background:linear-gradient(110deg,#102940,#0b1a2b)!important;border:1px solid #24516b!important;color:#f5faff!important;border-radius:14px}
-.total-counter strong{color:#00e5e7!important;font-size:26px}
+.total-counter strong{color:#ffb45c!important;font-size:26px}
 .primary{background:linear-gradient(110deg,#00dce5,#087fc2)!important;color:#00121b!important;border:1px solid #39f1f0!important;box-shadow:0 4px 14px #00dce533}
 .secondary{background:#142b41!important;color:#e7f5ff!important;border:1px solid #31516c!important}
 .danger{background:#421c2a!important;color:#ffdce4!important}
@@ -159,23 +159,23 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 
 
 /* V15.2 · versión, fotos de localidad y descubrimiento de fuentes */
-.progress-wrap{margin-top:8px}.progress-wrap[hidden]{display:none}.progress-track{height:8px;border-radius:99px;background:#233b50;overflow:hidden;margin:6px 0}.progress-track i{display:block;width:0;height:100%;background:#00d5df;transition:width .2s ease}
+.progress-wrap{margin-top:8px}.progress-wrap[hidden]{display:none}.progress-track{position:relative;height:30px;border-radius:10px;background:#233b50;overflow:hidden;margin:6px 0}.progress-track i{display:block;width:0;height:100%;background:linear-gradient(90deg,#00a88f,#00d5df);transition:width .2s ease}.progress-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 8px;color:#fff;font-size:12px;font-weight:800;text-shadow:0 1px 3px #002b36;white-space:nowrap;z-index:1}
 .app-version{position:absolute;top:10px;right:12px;z-index:5;padding:4px 8px;border:1px solid rgba(115,190,230,.45);border-radius:999px;background:rgba(4,16,28,.72);color:#b9dff5;font-size:10px;font-weight:800;letter-spacing:.45px;line-height:1.2;backdrop-filter:blur(8px)}
 .event-layout{display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:10px;align-items:start}.event-photo{width:104px;height:82px;object-fit:cover;border-radius:11px;background:linear-gradient(135deg,#dce8ef,#9fb6c5);border:1px solid #d6e2e9}.event-photo-wrap{position:relative}.event-photo-fallback{width:104px;height:82px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#dce8ef,#a8c0ce);color:#31536a;font-size:26px}.scan-results{margin-top:10px}.scan-candidate{padding:10px 0;border-bottom:1px solid #2b4054}.scan-candidate:last-child{border:0}@media(max-width:370px){.event-layout{grid-template-columns:minmax(0,1fr) 82px}.event-photo,.event-photo-fallback{width:82px;height:70px}}
 .work-type{display:inline-block;margin-top:3px;padding:2px 7px;border-radius:7px;font-size:10px;font-weight:800;background:#1b3850;color:#d8e9f5}
 .work-type.free,.work-type.vacation{background:#174535;color:#a8f0cb}.work-type.work{background:#183b59;color:#b8e2ff}.work-type.x{background:#59431b;color:#ffdf9a}
 
-/* V15.3 · realce visual de filtros activos */
+/* V15.3 · resaltado de filtros activos */
 .toolbar select.filter-active,
 .toolbar input.filter-active,
 #search.filter-active{
- background:#5a3518!important;
- border:1px solid #ff9b32!important;
- color:#fff2df!important;
- box-shadow:0 0 0 2px rgba(255,153,48,.18),0 0 12px rgba(255,153,48,.12)!important;
+ background:#ffe2b8!important;
+ border:1px solid #e58a24!important;
+ color:#914b0a!important;
+ box-shadow:0 0 0 2px rgba(229,138,36,.16)!important;
 }
 .toolbar select.filter-active:focus,
-#search.filter-active:focus{outline:2px solid rgba(255,166,74,.45);outline-offset:1px}
+#search.filter-active:focus{outline:2px solid rgba(229,138,36,.35);outline-offset:1px}
 
 </style>
 </head>
@@ -205,7 +205,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <div class="status-tile"><b id="soldOutCount">0</b><span>AGOTADAS</span></div>
  </div>
  <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div>
-  <div id="statusProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="statusProgressFill"></i></div><div class="small" id="statusProgressText">0 % · 0 de 0 pruebas</div></div></div>
+  <div id="statusProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="statusProgressFill"></i><span class="progress-label" id="statusProgressText">0 % · 0 de 0 pruebas</span></div></div></div>
  <div class="toolbar">
   <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
   <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
@@ -272,7 +272,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <div id="calendarSourceList"></div>
   <button class="secondary" id="scanCalendarSources" type="button" style="width:100%;margin:8px 0">⌕ Buscar nuevas pruebas en mis fuentes</button>
   <p class="small" id="scanSourcesStatus">Busca calendarios estructurados y páginas accesibles. Los resultados se revisan antes de añadirlos.</p>
-  <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i></div><div class="small" id="scanProgressText">0 % · 0 de 0 fuentes</div></div>
+  <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i><span class="progress-label" id="scanProgressText">0 % · 0 de 0 fuentes</span></div></div>
   <div id="sourceScanResults" class="scan-results"></div>
   <form id="addSourceForm">
    <label for="newSourceName">Nombre de la página</label><input id="newSourceName" required placeholder="Ej. Federación autonómica">
@@ -614,51 +614,24 @@ document.getElementById('importFile').onchange=async e=>{let f=e.target.files[0]
 document.getElementById('resetData').onclick=()=>{if(confirm('Se borrarán tus cambios, favoritos y recordatorios. ¿Continuar?')){data={events:[...seed,...extraSeed,...franchiseSeed].map(x=>({...x})),reminders:[],fired:[],customSources:[],workCalendar:[]};save()}};
 let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.disabled=false;installHelp.textContent='Pulsa para instalar la aplicación.'});
 installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.disabled=true}else installHelp.textContent='En Chrome, abre ⋮ y elige «Instalar aplicación». '};
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
-// V15.3: destacar filtros con selección efectiva.
+// V15.3: resaltar todos los filtros activos, incluidos los del mapa.
 (()=>{
  const ids=['countryFilter','typeFilter','distanceFilter','communityFilter','franchiseFilter','monthFilter','interestFilter','availabilityFilter','mapCountry','mapAvailability','search'];
- const refresh=el=>{
-  if(!el)return;
-  const active=String(el.value||'').trim()!=='';
-  el.classList.toggle('filter-active',active);
-  el.setAttribute('aria-pressed',active?'true':'false');
- };
- const bind=()=>{
-  ids.forEach(id=>{
-   const el=document.getElementById(id);
-   if(!el||el.dataset.v153Bound)return;
-   el.dataset.v153Bound='1';
-   refresh(el);
-   el.addEventListener('input',()=>refresh(el));
-   el.addEventListener('change',()=>refresh(el));
-  });
- };
+ const update=el=>{if(!el)return;const active=String(el.value||'').trim()!=='';el.classList.toggle('filter-active',active);};
+ const bind=()=>ids.forEach(id=>{const el=document.getElementById(id);if(el&&!el.dataset.v153Bound){el.dataset.v153Bound='1';update(el);el.addEventListener('input',()=>update(el));el.addEventListener('change',()=>update(el));}});
  bind();
- document.addEventListener('DOMContentLoaded',bind);
- // Algunos filtros pueden recrearse al cambiar de pestaña.
  new MutationObserver(bind).observe(document.body,{childList:true,subtree:true});
 })();
 
-// V15.3: comprobar actualizaciones del service worker al abrir y activar la nueva versión.
-// No se borran localStorage, IndexedDB ni otros datos locales de la aplicación.
+// V15.3: buscar actualizaciones del SW al abrir y activar la versión nueva.
+// No se borran localStorage ni IndexedDB.
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
- let reloadedForController=false;
- navigator.serviceWorker.addEventListener('controllerchange',()=>{
-  if(reloadedForController)return;
-  reloadedForController=true;
-  location.reload();
- });
+ let reloaded=false;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!reloaded){reloaded=true;location.reload();}});
  navigator.serviceWorker.register('./sw.js').then(reg=>{
   reg.update().catch(()=>{});
-  reg.addEventListener('updatefound',()=>{
-   const worker=reg.installing;
-   if(worker)worker.addEventListener('statechange',()=>{
-    if(worker.state==='installed' && navigator.serviceWorker.controller){
-     // El nuevo SW usa skipWaiting() y tomará el control automáticamente.
-    }
-   });
-  });
  }).catch(()=>{});
 }
 
