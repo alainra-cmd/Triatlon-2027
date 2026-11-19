@@ -202,7 +202,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 </head>
 <body>
 <header>
- <span class="app-version" aria-label="Versión de la aplicación">V15.3</span>
+ <span class="app-version" aria-label="Versión de la aplicación">V15.7</span>
  <div class="stats">
   <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
   <div class="stat"><b id="countRegistered">0</b><span>INSCRITO</span></div>
@@ -271,7 +271,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <div class="status-tile"><b id="workMatchesCount">0</b><span>PRUEBAS EN DÍA LIBRE</span></div>
   <div class="status-tile"><b id="workEventsCount">0</b><span>PRUEBAS CON FECHA</span></div>
  </div>
- <h3>Pruebas que coinciden con días libres</h3><div id="workMatchList"></div>
+ <h3>Coincidencias por meses</h3><p class="small">Pruebas agrupadas por mes y cruzadas con el estado laboral del día de la competición.</p><div id="workMatchList"></div>
  <h3>Fechas libres importadas</h3><div id="workDaysList"></div>
 </section>
 <section id="reminders" class="panel">
@@ -488,7 +488,21 @@ function renderWorkCalendar(){
  document.getElementById('workEventsCount').textContent=dated.length;
  const nWork=days.filter(x=>normalizeWorkType(x.type)==='work').length,nX=days.filter(x=>normalizeWorkType(x.type)==='x').length,nVac=days.filter(x=>normalizeWorkType(x.type)==='vacation').length;
  document.getElementById('workCalendarStatus').textContent=days.length?`Calendario cargado: ${offDays.length} días libres (${nVac} vacaciones), ${nWork} jornadas de trabajo y ${nX} activaciones X. ${data.workCalendarName||''}`:'Todavía no has importado tu calendario laboral.';
- document.getElementById('workMatchList').innerHTML=matches.length?matches.slice().sort(compareEventDate).map(e=>`<div class="card off-day"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place)} · Coincide con día libre</div></div>`).join(''):'<div class="empty">Cuando importes tu calendario, aquí aparecerán las pruebas que coincidan con días libres o vacaciones.</div>';
+ const monthNames=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+ const workByDate=new Map(days.map(d=>[d.date,d]));
+ const eventsByMonth=Array.from({length:12},()=>[]);
+ dated.forEach(e=>{const d=workByDate.get(e.date);if(d){const m=Number(e.date.slice(5,7))-1;if(m>=0&&m<12)eventsByMonth[m].push({event:e,day:d});}});
+ document.getElementById('workMatchList').innerHTML=monthNames.map((month,i)=>{
+  const items=eventsByMonth[i].sort((a,b)=>a.event.date.localeCompare(b.event.date));
+  const freeCount=items.filter(x=>['free','vacation'].includes(normalizeWorkType(x.day.type))).length;
+  const badge=items.length?`${items.length} ${items.length===1?'fecha':'fechas'} · ${freeCount} ${freeCount===1?'libre':'libres'}`:'Sin coincidencias';
+  const body=items.length?items.map(({event:e,day:d})=>{
+   const t=normalizeWorkType(d.type),label=d.label||({free:'Día libre',work:'Jornada de trabajo',vacation:'Vacaciones',x:'Activación posible (X)'}[t]);
+   const cls=t==='free'||t==='vacation'?'off-day':(t==='x'?'work-x':'');
+   return `<div class="card ${cls}"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place||'Localidad pendiente')} · ${esc(label)}${d.shift?' · Turno '+esc(d.shift):''}</div></div>`;
+  }).join(''):'<div class="empty">No hay pruebas con fecha laboral importada este mes.</div>';
+  return `<section class="month-match"><div class="month-match-head"><b>${month}</b><span>${badge}</span></div>${body}</section>`;
+ }).join('');
  document.getElementById('workDaysList').innerHTML=days.length?days.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(d=>{const t=normalizeWorkType(d.type),label=d.label||({free:'Día libre',work:'Jornada de trabajo',vacation:'Vacaciones',x:'Activación posible (X)'}[t]);return `<div class="source-item"><div><b>${dateLabel(d.date)}</b><br><span class="work-type ${t}">${esc(label)}${d.shift?' · Turno '+esc(d.shift):''}</span></div></div>`}).join(''):'<div class="empty">Sin fechas importadas.</div>';
 }
 function parseWorkCalendar(text,ext){
@@ -922,4 +936,8 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
  });
 })();
 </script>
-</body></html></html>
+
+<style id="v157-monthly-calendar-css">
+.month-match{margin:12px 0;padding:10px;border:1px solid #29465a;border-radius:14px;background:#0d1d2b}.month-match-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;color:#eaf5fc}.month-match-head span{font-size:11px;color:#a9c5d8}.month-match .card{margin:7px 0}.month-match .work-x{border-color:#b77b28;background:rgba(183,123,40,.12)}
+</style>
+</body></html>
