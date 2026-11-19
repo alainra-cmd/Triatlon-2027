@@ -202,7 +202,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 </head>
 <body>
 <header>
- <span class="app-version" aria-label="Versión de la aplicación">V15.9</span>
+ <span class="app-version" aria-label="Versión de la aplicación">V15.7</span>
  <div class="stats">
   <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
   <div class="stat"><b id="countRegistered">0</b><span>INSCRITO</span></div>
@@ -258,7 +258,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 </section>
 <section id="workcalendar" class="panel">
  <h2>Calendario laboral 2027</h2>
- <p class="sub">Consulta tus días libres y las pruebas de triatlón mes a mes.</p>
+ <p class="sub">Importa más adelante tu calendario laboral para comparar días libres con las pruebas de triatlón.</p>
  <div class="card">
   <b>Importar calendario laboral</b>
   <p class="small">Preparado para archivos de calendario .ICS, CSV o JSON. Se guardarán las fechas en este dispositivo y podrás sustituir el archivo cuando tengas una versión actualizada.</p>
@@ -266,18 +266,6 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <p class="small" id="workCalendarStatus">Todavía no has importado tu calendario laboral.</p>
   <button class="secondary" id="clearWorkCalendar" type="button">Quitar calendario importado</button>
  </div>
- <div class="work-month-nav" aria-label="Navegación del calendario laboral">
-  <button class="secondary" type="button" data-work-month="-1" aria-label="Mes anterior">‹</button>
-  <h3 id="workMonthTitle">Enero 2027</h3>
-  <button class="secondary" type="button" data-work-month="1" aria-label="Mes siguiente">›</button>
- </div>
- <div class="work-legend" aria-label="Leyenda del calendario">
-  <span><i class="legend-swatch race-free"></i>Libre + prueba</span>
-  <span><i class="legend-swatch shift-x"></i>Día X</span>
-  <span><i class="legend-swatch day-off"></i>Día libre</span>
-  <span><i class="legend-swatch day-work"></i>Trabajo</span>
- </div>
- <div id="workMonthGrid" class="work-month-grid" aria-label="Días del mes"></div>
  <div class="status-grid">
   <div class="status-tile"><b id="workDaysCount">0</b><span>DÍAS LIBRES IMPORTADOS</span></div>
   <div class="status-tile"><b id="workMatchesCount">0</b><span>PRUEBAS EN DÍA LIBRE</span></div>
@@ -488,7 +476,6 @@ function renderCalendarSources(){
 }
 function normalizeWorkType(v){const t=String(v||'free').toLowerCase().trim();if(['work','trabajo','laboral','a','b','c'].includes(t))return 'work';if(['vacation','vacaciones','vacacion','v'].includes(t))return 'vacation';if(['x','activation','activacion','activación'].includes(t))return 'x';if(['free','libre','descanso','festivo','off'].includes(t))return 'free';return 'free'}
 function shiftFrom(x){const raw=String(x.shift||x.turn||x.turno||x.type||'').toUpperCase();return ['A','B','C'].includes(raw)?raw:(['A','B','C'].includes(String(x.label||'').trim().toUpperCase())?String(x.label).trim().toUpperCase():'')}
-let workCalendarMonth=0;
 function renderWorkCalendar(){
  const days=Array.isArray(data.workCalendar)?data.workCalendar:[];
  const offDays=days.filter(x=>['free','vacation'].includes(normalizeWorkType(x.type)));
@@ -503,27 +490,6 @@ function renderWorkCalendar(){
  document.getElementById('workCalendarStatus').textContent=days.length?`Calendario cargado: ${offDays.length} días libres (${nVac} vacaciones), ${nWork} jornadas de trabajo y ${nX} activaciones X. ${data.workCalendarName||''}`:'Todavía no has importado tu calendario laboral.';
  const monthNames=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
  const workByDate=new Map(days.map(d=>[d.date,d]));
- const grid=document.getElementById('workMonthGrid'),monthTitle=document.getElementById('workMonthTitle');
- if(grid&&monthTitle){
-  workCalendarMonth=Math.max(0,Math.min(11,workCalendarMonth));
-  monthTitle.textContent=`${monthNames[workCalendarMonth]} 2027`;
-  const firstWeekday=(new Date(Date.UTC(2027,workCalendarMonth,1)).getUTCDay()+6)%7;
-  const dayCount=new Date(Date.UTC(2027,workCalendarMonth+1,0)).getUTCDate();
-  const eventsByDate=new Map();
-  dated.forEach(e=>{if(!eventsByDate.has(e.date))eventsByDate.set(e.date,[]);eventsByDate.get(e.date).push(e)});
-  const headers=['L','M','X','J','V','S','D'].map(x=>`<span class="work-weekday" aria-hidden="true">${x}</span>`).join('');
-  const cells=Array.from({length:firstWeekday},()=>'<span class="work-day empty-cell" aria-hidden="true"></span>');
-  for(let day=1;day<=dayCount;day++){
-   const date=`2027-${String(workCalendarMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-   const shift=workByDate.get(date),type=shift?normalizeWorkType(shift.type):'',events=eventsByDate.get(date)||[];
-   const isOff=['free','vacation'].includes(type),cls=type==='x'?'shift-x':(isOff?(events.length?'race-free':'day-off'):(type==='work'?'day-work':'day-empty'));
-   const raceText=events.length?`<span class="work-day-race">${esc(events.length>1?`${events.length} pruebas`:events[0].name)}</span>`:'';
-   const state=shift?(shift.label||({free:'Día libre',vacation:'Vacaciones',work:'Jornada de trabajo',x:'Día X'}[type])):'Sin dato laboral';
-   const label=`${day} de ${monthNames[workCalendarMonth]}: ${state}${events.length?`; ${events.map(e=>e.name).join(', ')}`:''}`;
-   cells.push(`<div class="work-day ${cls}" title="${esc(label)}" aria-label="${esc(label)}"><span class="work-day-number">${day}</span>${raceText}</div>`);
-  }
-  grid.innerHTML=headers+cells.join('');
- }
  const eventsByMonth=Array.from({length:12},()=>[]);
  dated.forEach(e=>{const d=workByDate.get(e.date);if(d){const m=Number(e.date.slice(5,7))-1;if(m>=0&&m<12)eventsByMonth[m].push({event:e,day:d});}});
  document.getElementById('workMatchList').innerHTML=monthNames.map((month,i)=>{
@@ -555,7 +521,6 @@ document.getElementById('workCalendarFile').addEventListener('change',async e=>{
  const f=e.target.files?.[0];if(!f)return;try{const ext=f.name.split('.').pop().toLowerCase();if(!['ics','csv','json'].includes(ext))throw new Error('Formato no compatible');const parsed=parseWorkCalendar(await f.text(),ext);if(!parsed.length)throw new Error('No se encontraron fechas de 2027 en el archivo');data.workCalendar=parsed;data.workCalendarName=f.name;save();alert(`Calendario laboral importado: ${parsed.filter(x=>['free','vacation'].includes(normalizeWorkType(x.type))).length} días libres/vacaciones, ${parsed.filter(x=>normalizeWorkType(x.type)==='work').length} jornadas de trabajo y ${parsed.filter(x=>normalizeWorkType(x.type)==='x').length} activaciones X.`);}catch(err){alert('No se ha podido importar el calendario. Usa un archivo ICS, CSV o JSON con fechas de 2027.');}e.target.value='';
 });
 document.getElementById('clearWorkCalendar').addEventListener('click',()=>{if(confirm('¿Quitar el calendario laboral importado?')){data.workCalendar=[];data.workCalendarName='';save();}});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-work-month]');if(!b)return;workCalendarMonth=Math.max(0,Math.min(11,workCalendarMonth+Number(b.dataset.workMonth)));renderWorkCalendar();});
 document.getElementById('addSourceForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('newSourceName').value.trim(),url=document.getElementById('newSourceUrl').value.trim();try{const u=new URL(url);if(!/^https?:$/.test(u.protocol))throw 0;if(!data.customSources)data.customSources=[];if(data.customSources.some(x=>x.url===u.href))throw 0;data.customSources.push({name,url:u.href,kind:'Añadida por ti'});e.target.reset();save();}catch(_){alert('Introduce una URL http o https válida y que no esté ya añadida.');}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
 
@@ -972,9 +937,7 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 })();
 </script>
 
-<style id="v159-work-calendar-css">
+<style id="v157-monthly-calendar-css">
 .month-match{margin:12px 0;padding:10px;border:1px solid #29465a;border-radius:14px;background:#0d1d2b}.month-match-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;color:#eaf5fc}.month-match-head span{font-size:11px;color:#a9c5d8}.month-match .card{margin:7px 0}.month-match .work-x{border-color:#b77b28;background:rgba(183,123,40,.12)}
-.work-month-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 8px;padding:10px 12px;background:#10263a;border:1px solid #29445a;border-radius:14px}.work-month-nav h3{margin:0;text-align:center;flex:1}.work-month-nav button{width:44px;height:42px;padding:0;font-size:24px;line-height:1}.work-legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin:8px 2px 12px;font-size:11px;color:#a8bdcc}.work-legend span{display:inline-flex;align-items:center;gap:5px}.legend-swatch{display:inline-block;width:13px;height:13px;border-radius:4px;border:1px solid #9baab3}.work-month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;padding:8px;background:#10263a;border:1px solid #29445a;border-radius:14px}.work-weekday{text-align:center;font-size:11px;font-weight:800;color:#9bb0c4;padding:4px 0}.work-day{min-width:0;min-height:68px;padding:5px;border:1px solid #29445a;border-radius:9px;background:#152e43;color:#f2f7fb;overflow:hidden}.work-day.empty-cell{min-height:0;padding:0;border:0;background:transparent}.work-day-number{display:block;font-size:13px;font-weight:800}.work-day-race{display:block;margin-top:4px;font-size:9px;line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.work-day.day-empty{background:#f4f6f7;border-color:#dce4e9;color:#546575}.work-day.day-off{background:#fff;border-color:#dce4e9;color:#31485a}.work-day.race-free{background:#dff4e9;border-color:#61b487;color:#145c3a}.work-day.shift-x{background:#ffead1;border-color:#f2a447;color:#844400}.work-day.day-work{background:#15334a;border-color:#29445a;color:#dce9f1}.legend-swatch.day-off{background:#fff;border-color:#dce4e9}.legend-swatch.day-work{background:#15334a;border-color:#29445a}.legend-swatch.shift-x{background:#ffead1;border-color:#f2a447}.legend-swatch.race-free{background:#dff4e9;border-color:#61b487}
-@media(max-width:430px){.work-month-grid{gap:3px;padding:6px}.work-day{min-height:54px;padding:4px;border-radius:7px}.work-day-number{font-size:12px}.work-day-race{font-size:8px}.work-legend{font-size:10px;gap:6px 9px}}
 </style>
 </body></html>
