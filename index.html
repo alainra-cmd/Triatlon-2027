@@ -518,7 +518,7 @@ function render(){
  let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort(compareEventDate);
  document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
- <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${provinceBadge(e)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
+ <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${provinceBadge(e)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-type="${esc(e.type||"Triatlón")}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
  <div class="status-row"><span class="section-label">Fecha</span>${statusPill(e.dateStatus||'Por verificar','date')}<span class="section-label">Dorsales</span>${statusPill(e.availability||'Por verificar')}</div>
  ${e.status&&e.status!=='Por verificar'?`<div class="meta">${esc(e.status)}</div>`:''}
  ${e.cost?`<div class="meta">Coste indicado: ${esc(e.cost)} €</div>`:''}
@@ -622,7 +622,7 @@ document.getElementById('addSourceForm').addEventListener('submit',e=>{e.prevent
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
 
 // Fotografías de localidades: carga todas las tarjetas; solo acepta coincidencia textual de localidad.
-const photoCacheKey='triathlon2027_photo_cache_v3';
+const photoCacheKey='triathlon2027_photo_cache_v4';
 function readPhotoCache(){try{return JSON.parse(localStorage.getItem(photoCacheKey)||'{}')}catch(_){return {}}}
 const photoCache=readPhotoCache();
 function normPhotoText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
@@ -635,8 +635,12 @@ function localityMatch(page,place){
  const visual=/(landscape|cityscape|aerial|panorama|building|architecture|bridge|coast|beach|lake|river|mountain|park|stadium|harbour|harbor|town|village|street|square|monument|castle|view of|skyline)/;
  return titleMatch&&visual.test(all);
 }
-async function lookupLocalityPhoto(place){const q=encodeURIComponent('"'+place+'" (landscape OR panorama OR architecture OR landmark OR cityscape OR beach OR mountain OR lake)');const url=`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=50&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=320&format=json&origin=*`;const res=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!res.ok)throw new Error('Wikimedia HTTP '+res.status);const json=await res.json();const pages=Object.values(json.query?.pages||{}).filter(x=>x.imageinfo?.[0]?.thumburl&&localityMatch(x,place));if(!pages.length)return null;pages.sort((a,b)=>{const score=x=>normPhotoText(x.title).includes(normPhotoText(place))?2:1;return score(b)-score(a)});return pages[0].imageinfo[0].thumburl;}
-async function hydrateEventPhotos(events){const cards=[...document.querySelectorAll('[data-photo-place]')];let cursor=0;async function worker(){while(cursor<cards.length){const w=cards[cursor++],place=w.dataset.photoPlace,id=w.dataset.photoId;if(!place)continue;const cached=photoCache[place];if(cached&&Date.now()-cached.checkedAt<30*86400000){w.innerHTML=cached.url?`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(cached.url)}" onerror="this.parentElement.innerHTML='<div class=&quot;event-photo-fallback&quot;>📍</div>'">`:'<div class="event-photo-fallback" aria-label="Imagen no disponible">📍</div>';continue;}if(w.dataset.loading==='1')continue;w.dataset.loading='1';try{const imageUrl=await lookupLocalityPhoto(place);photoCache[place]={url:imageUrl,checkedAt:Date.now()};try{localStorage.setItem(photoCacheKey,JSON.stringify(photoCache));}catch(_){}const live=document.querySelector(`[data-photo-id="${CSS.escape(id)}"]`);if(live)live.innerHTML=imageUrl?`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(imageUrl)}" onerror="this.parentElement.innerHTML='<div class=&quot;event-photo-fallback&quot;>📍</div>'">`:'<div class="event-photo-fallback" aria-label="Imagen no disponible">📍</div>';}catch(_){w.dataset.loading='0';}}}await Promise.all(Array.from({length:3},()=>worker()));}
+function sportFallback(type){const t=String(type||'').toLowerCase();if(t.includes('duatl'))return '🏃🚴';if(t.includes('acuat'))return '🏊🏃';if(t.includes('triatl'))return '🏊🚴🏃';return '🏁';}
+function photoFallback(type,place){return '<div class="event-photo-fallback sport-photo-fallback" aria-label="Imagen deportiva de '+esc(place||'la prueba')+'">'+sportFallback(type)+'</div>';}
+async function hydrateEventPhotos(events){
+ const cards=[...document.querySelectorAll('[data-photo-place]')];
+ cards.forEach(w=>{const place=w.dataset.photoPlace,type=w.dataset.photoType||'Triatlón';w.innerHTML=photoFallback(type,place);});
+}
 // Búsqueda asistida de nuevas competiciones: importa feeds JSON/CSV directamente y prueba extracción ligera vía proxy para webs HTML.
 function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])|\b(0?[1-9]|[12]\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.]2027\b/);if(!m)return '';if(m[1])return `2027-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;return `2027-${String(m[5]).padStart(2,'0')}-${String(m[4]).padStart(2,'0')}`;}
 function candidateId(name,place,date){return 'scan-'+btoa(unescape(encodeURIComponent(`${name}|${place}|${date}`))).replace(/[^a-z0-9]/gi,'').slice(0,24).toLowerCase()}
@@ -1049,3 +1053,23 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 </style>
 <div id="dayRacesBackdrop" class="day-races-backdrop" role="dialog" aria-modal="true"><div class="day-races-modal"><div class="day-races-head"><h3 id="dayRacesTitle">Pruebas del día</h3><button class="day-races-close" id="dayRacesClose" aria-label="Cerrar">×</button></div><div class="day-races-body" id="dayRacesBody"></div></div></div>
 </body></html>
+
+<style id="v161-header-photo-panels">
+/* Mantener la fotografía principal original y hacer más transparentes los tres indicadores. */
+header .stat{
+ background:rgba(4,13,24,.34)!important;
+ border:1px solid rgba(255,255,255,.48)!important;
+ color:#fff!important;
+ backdrop-filter:blur(3px)!important;
+ -webkit-backdrop-filter:blur(3px)!important;
+ box-shadow:0 3px 12px rgba(0,0,0,.18)!important;
+}
+header .stat b{color:#fff!important;text-shadow:0 1px 5px rgba(0,0,0,.7)!important}
+header .stat span{color:#fff!important;text-shadow:0 1px 4px rgba(0,0,0,.85)!important}
+.event-photo-fallback.sport-photo-fallback{
+ display:flex;align-items:center;justify-content:center;gap:2px;
+ background:linear-gradient(145deg,#12334b,#071827);
+ color:#eafaff;font-size:22px;letter-spacing:-5px;
+ border:1px solid #31546d;border-radius:10px;
+}
+</style>
