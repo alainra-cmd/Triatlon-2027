@@ -464,29 +464,32 @@ function communityFor(e){
  return 'Sin determinar';
 }
 function communityFlag(region){
- const svg=(body)=>'<svg class="community-flag" viewBox="0 0 30 20" role="img" aria-label="Bandera de '+esc(region)+'" xmlns="http://www.w3.org/2000/svg">'+body+'</svg>';
- const stripes=(colors)=>svg(colors.map((c,i)=>'<rect x="0" y="'+(20*i/colors.length)+'" width="30" height="'+(20/colors.length+0.2)+'" fill="'+c+'"/>').join(''));
+ const svg=body=>'<svg class="community-flag" viewBox="0 0 60 40" role="img" aria-label="Bandera de '+esc(region)+'" xmlns="http://www.w3.org/2000/svg">'+body+'</svg>';
+ const rect=(x,y,w,h,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+c+'"/>';
+ const line=(d,c,w)=>'<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="butt"/>';
+ const coat=(x,y,scale=1)=>'<g transform="translate('+x+' '+y+') scale('+scale+')"><path d="M0 0H20V15Q20 25 10 31Q0 25 0 15Z" fill="#f6d34a" stroke="#7d4b16" stroke-width="1.2"/><path d="M2 2H18V15Q18 22 10 28Q2 22 2 15Z" fill="#c92332"/><path d="M2 10H18V15H2Z" fill="#f6d34a"/><path d="M6 5H14M6 18H14" stroke="#fff" stroke-width="1.5"/></g>';
+ const stripes=colors=>svg(colors.map((c,i)=>rect(0,i*40/colors.length,60,40/colors.length+0.15,c)).join(''));
  const flags={
- 'País Vasco':svg('<rect width="30" height="20" fill="#d90000"/><path d="M0 0L30 20M30 0L0 20" stroke="#007a3d" stroke-width="5"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="2.5"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="4"/>'),
- 'Cataluña':stripes(['#f9d616','#f9d616','#d71920','#f9d616','#d71920','#f9d616','#d71920','#f9d616']),
- 'Galicia':svg('<rect width="30" height="20" fill="#fff"/><path d="M0 0L30 20" stroke="#168bd1" stroke-width="6"/>'),
- 'Andalucía':stripes(['#fff','#168b48','#fff']),
- 'Navarra':svg('<rect width="30" height="20" fill="#d71920"/><rect x="12" y="5" width="6" height="10" rx="1" fill="#f5d442"/><path d="M15 4V16M10 10H20" stroke="#f5d442" stroke-width="1.5"/>'),
+ 'País Vasco':svg(rect(0,0,60,40,'#d50000')+line('M0 0L60 40M60 0L0 40','#fff',9)+line('M0 0L60 40M60 0L0 40','#00843d',4)+line('M30 0V40M0 20H60','#fff',8)),
+ 'Cataluña':svg(rect(0,0,60,40,'#f6d21b')+Array.from({length:4},(_,i)=>rect(0,4+i*9,60,4,'#c8102e')).join('')),
+ 'Galicia':svg(rect(0,0,60,40,'#fff')+line('M0 0L60 40','#168bd1',9)),
+ 'Andalucía':stripes(['#fff','#168b45','#fff']),
+ 'Navarra':svg(rect(0,0,60,40,'#c8102e')+coat(20,4,.95)),
  'La Rioja':stripes(['#e53935','#fff','#168b48','#f5d442']),
- 'Aragón':stripes(['#f5d21b','#d71920','#f5d21b','#d71920','#f5d21b','#d71920','#f5d21b']),
- 'Comunitat Valenciana':svg('<rect width="30" height="20" fill="#f4d21f"/><path d="M0 0H8V20H0Z" fill="#1761a0"/><path d="M8 0H30V3H8ZM8 5H30V8H8ZM8 10H30V13H8ZM8 15H30V18H8Z" fill="#d71920"/>'),
- 'Región de Murcia':svg('<rect width="30" height="20" fill="#d71920"/><rect y="10" width="30" height="10" fill="#f4d21f"/><g fill="#fff"><circle cx="5" cy="5" r="1.5"/><circle cx="11" cy="5" r="1.5"/><circle cx="17" cy="5" r="1.5"/><circle cx="23" cy="5" r="1.5"/></g>'),
- 'Castilla-La Mancha':svg('<rect width="12" height="20" fill="#d71920"/><rect x="12" width="18" height="20" fill="#fff"/><path d="M3 6H9V14H3Z" fill="#f4d21f"/>'),
- 'Castilla y León':svg('<rect width="15" height="10" fill="#d71920"/><rect x="15" width="15" height="10" fill="#fff"/><rect y="10" width="15" height="10" fill="#fff"/><rect x="15" y="10" width="15" height="10" fill="#d71920"/>'),
- 'Comunidad de Madrid':svg('<rect width="30" height="20" fill="#d71920"/><g fill="#fff"><circle cx="6" cy="5" r="1.2"/><circle cx="14" cy="5" r="1.2"/><circle cx="22" cy="5" r="1.2"/><circle cx="10" cy="14" r="1.2"/><circle cx="18" cy="14" r="1.2"/></g>'),
- 'Extremadura':svg('<rect width="30" height="20" fill="#168b48"/><rect y="6.7" width="30" height="6.6" fill="#fff"/><rect y="13.3" width="30" height="6.7" fill="#111"/>'),
- 'Asturias':svg('<rect width="30" height="20" fill="#0066a1"/><path d="M15 1V19" stroke="#f5d21b" stroke-width="3"/><path d="M12 7L18 13M18 7L12 13" stroke="#f5d21b" stroke-width="1.5"/>'),
- 'Cantabria':svg('<rect width="30" height="20" fill="#fff"/><rect width="30" height="10" fill="#d71920"/><path d="M15 0V20" stroke="#1761a0" stroke-width="2"/>'),
- 'Illes Balears':svg('<rect width="30" height="20" fill="#f5d21b"/><rect width="10" height="20" fill="#d71920"/><rect width="7" height="9" fill="#d71920"/>'),
- 'Canarias':svg('<rect width="10" height="20" fill="#fff"/><rect x="10" width="10" height="20" fill="#1761a0"/><rect x="20" width="10" height="20" fill="#f5d21b"/>'),
- 'Ceuta':svg('<rect width="30" height="20" fill="#fff"/><path d="M0 0L30 20M30 0L0 20" stroke="#111" stroke-width="5"/><path d="M0 0L30 20M30 0L0 20" stroke="#d71920" stroke-width="2"/>'),
- 'Melilla':svg('<rect width="30" height="20" fill="#1761a0"/><path d="M0 0H30V20H0Z" fill="none" stroke="#fff" stroke-width="1"/><g fill="#fff"><circle cx="15" cy="10" r="3"/></g>'),
- 'Portugal':svg('<rect width="12" height="20" fill="#168b48"/><rect x="12" width="18" height="20" fill="#d71920"/><circle cx="12" cy="10" r="3.5" fill="#f5d21b"/>')
+ 'Aragón':svg(rect(0,0,60,40,'#f6d21b')+Array.from({length:4},(_,i)=>rect(0,4+i*9,60,4,'#c8102e')).join('')+coat(22,5,.8)),
+ 'Comunitat Valenciana':svg(rect(0,0,60,40,'#f6d21b')+rect(0,0,15,40,'#1761a0')+Array.from({length:4},(_,i)=>rect(15,3+i*9,45,4,'#c8102e')).join('')),
+ 'Región de Murcia':svg(rect(0,0,60,40,'#c8102e')+rect(0,20,60,20,'#f5d21b')+Array.from({length:4},(_,i)=>'<circle cx="'+(9+i*10)+'" cy="10" r="2.5" fill="#fff"/>').join('')),
+ 'Castilla-La Mancha':svg(rect(0,0,25,40,'#c8102e')+rect(25,0,35,40,'#fff')+coat(3,5,.9)),
+ 'Castilla y León':svg(rect(0,0,30,20,'#c8102e')+rect(30,0,30,20,'#fff')+rect(0,20,30,20,'#fff')+rect(30,20,30,20,'#c8102e')+coat(5,2,.65)+coat(35,22,.65)),
+ 'Comunidad de Madrid':svg(rect(0,0,60,40,'#c8102e')+Array.from({length:7},(_,i)=>'<circle cx="'+(9+(i%3)*20)+'" cy="'+(7+Math.floor(i/3)*12)+'" r="2.2" fill="#fff"/>').join('')),
+ 'Extremadura':stripes(['#168b48','#fff','#111']),
+ 'Asturias':svg(rect(0,0,60,40,'#0066a1')+line('M30 1V39','#f5d21b',5)+line('M24 12L36 24M36 12L24 24','#f5d21b',2)),
+ 'Cantabria':svg(rect(0,0,60,20,'#c8102e')+rect(0,20,60,20,'#fff')+line('M30 0V40','#1761a0',3)),
+ 'Illes Balears':svg(rect(0,0,60,40,'#f5d21b')+rect(0,0,18,40,'#c8102e')+rect(0,0,18,18,'#c8102e')+coat(3,2,.48)),
+ 'Canarias':svg(rect(0,0,20,40,'#fff')+rect(20,0,20,40,'#1761a0')+rect(40,0,20,40,'#f5d21b')),
+ 'Ceuta':svg(rect(0,0,60,40,'#fff')+line('M0 0L60 40M60 0L0 40','#111',7)+line('M0 0L60 40M60 0L0 40','#c8102e',3)),
+ 'Melilla':svg(rect(0,0,60,40,'#1761a0')+'<circle cx="30" cy="20" r="8" fill="#fff"/><circle cx="30" cy="20" r="4" fill="#c8102e"/>'),
+ 'Portugal':svg(rect(0,0,24,40,'#168b48')+rect(24,0,36,40,'#d71920')+'<circle cx="24" cy="20" r="8" fill="#f5d21b" stroke="#9b6b18" stroke-width="1.2"/><circle cx="24" cy="20" r="4.5" fill="#fff" stroke="#c8102e" stroke-width="1"/>')
  };
  return flags[region]||'';
 }
@@ -619,12 +622,20 @@ document.getElementById('addSourceForm').addEventListener('submit',e=>{e.prevent
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
 
 // Fotografías de localidades: carga todas las tarjetas; solo acepta coincidencia textual de localidad.
-const photoCacheKey='triathlon2027_photo_cache_v2';
+const photoCacheKey='triathlon2027_photo_cache_v3';
 function readPhotoCache(){try{return JSON.parse(localStorage.getItem(photoCacheKey)||'{}')}catch(_){return {}}}
 const photoCache=readPhotoCache();
 function normPhotoText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
-function localityMatch(page,place){const target=normPhotoText(place),title=normPhotoText(page.title||''),desc=normPhotoText(page.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||'');const terms=target.split(' ').filter(x=>x.length>2);if(!terms.length)return false;return title.includes(target)||terms.every(x=>title.includes(x))||desc.includes(target)||(terms.length>1&&terms.every(x=>desc.includes(x)));}
-async function lookupLocalityPhoto(place){const q=encodeURIComponent('"'+place+'"');const url=`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=320&format=json&origin=*`;const res=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!res.ok)throw new Error('Wikimedia HTTP '+res.status);const json=await res.json();const pages=Object.values(json.query?.pages||{}).filter(x=>x.imageinfo?.[0]?.thumburl&&localityMatch(x,place));if(!pages.length)return null;pages.sort((a,b)=>{const score=x=>normPhotoText(x.title).includes(normPhotoText(place))?2:1;return score(b)-score(a)});return pages[0].imageinfo[0].thumburl;}
+function localityMatch(page,place){
+ const title=normPhotoText(page.title||''),desc=normPhotoText(page.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||''),all=title+' '+desc,target=normPhotoText(place);
+ const bad=/(portrait|people|person|man |woman|athlete|runner|cyclist|swimmer|triathlete|crowd|team |group |selfie|animal|dog|cat|product|medal|trophy|logo|poster|advert|shirt|jersey|bike |bicycle|car |vehicle|food|sculpture|painting|drawing|illustration|map )/;
+ if(bad.test(all))return false;
+ const placeTerms=target.split(' ').filter(x=>x.length>2);
+ const titleMatch=title.includes(target)||placeTerms.length>0&&placeTerms.every(x=>title.includes(x));
+ const visual=/(landscape|cityscape|aerial|panorama|building|architecture|bridge|coast|beach|lake|river|mountain|park|stadium|harbour|harbor|town|village|street|square|monument|castle|view of|skyline)/;
+ return titleMatch&&visual.test(all);
+}
+async function lookupLocalityPhoto(place){const q=encodeURIComponent('"'+place+'" (landscape OR panorama OR architecture OR landmark OR cityscape OR beach OR mountain OR lake)');const url=`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=50&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=320&format=json&origin=*`;const res=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!res.ok)throw new Error('Wikimedia HTTP '+res.status);const json=await res.json();const pages=Object.values(json.query?.pages||{}).filter(x=>x.imageinfo?.[0]?.thumburl&&localityMatch(x,place));if(!pages.length)return null;pages.sort((a,b)=>{const score=x=>normPhotoText(x.title).includes(normPhotoText(place))?2:1;return score(b)-score(a)});return pages[0].imageinfo[0].thumburl;}
 async function hydrateEventPhotos(events){const cards=[...document.querySelectorAll('[data-photo-place]')];let cursor=0;async function worker(){while(cursor<cards.length){const w=cards[cursor++],place=w.dataset.photoPlace,id=w.dataset.photoId;if(!place)continue;const cached=photoCache[place];if(cached&&Date.now()-cached.checkedAt<30*86400000){w.innerHTML=cached.url?`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(cached.url)}" onerror="this.parentElement.innerHTML='<div class=&quot;event-photo-fallback&quot;>📍</div>'">`:'<div class="event-photo-fallback" aria-label="Imagen no disponible">📍</div>';continue;}if(w.dataset.loading==='1')continue;w.dataset.loading='1';try{const imageUrl=await lookupLocalityPhoto(place);photoCache[place]={url:imageUrl,checkedAt:Date.now()};try{localStorage.setItem(photoCacheKey,JSON.stringify(photoCache));}catch(_){}const live=document.querySelector(`[data-photo-id="${CSS.escape(id)}"]`);if(live)live.innerHTML=imageUrl?`<img class="event-photo" loading="lazy" alt="${esc(place)}" src="${esc(imageUrl)}" onerror="this.parentElement.innerHTML='<div class=&quot;event-photo-fallback&quot;>📍</div>'">`:'<div class="event-photo-fallback" aria-label="Imagen no disponible">📍</div>';}catch(_){w.dataset.loading='0';}}}await Promise.all(Array.from({length:3},()=>worker()));}
 // Búsqueda asistida de nuevas competiciones: importa feeds JSON/CSV directamente y prueba extracción ligera vía proxy para webs HTML.
 function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])|\b(0?[1-9]|[12]\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.]2027\b/);if(!m)return '';if(m[1])return `2027-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;return `2027-${String(m[5]).padStart(2,'0')}-${String(m[4]).padStart(2,'0')}`;}
