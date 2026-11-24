@@ -664,7 +664,7 @@ document.getElementById('importFile').onchange=async e=>{let f=e.target.files[0]
 document.getElementById('resetData').onclick=()=>{if(confirm('Se borrarán tus cambios, favoritos y recordatorios. ¿Continuar?')){data={events:[...seed,...extraSeed,...franchiseSeed].map(x=>({...x})),reminders:[],fired:[],customSources:[],workCalendar:[]};save()}};
 let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.disabled=false;installHelp.textContent='Pulsa para instalar la aplicación.'});
 installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.disabled=true}else installHelp.textContent='En Chrome, abre ⋮ y elige «Instalar aplicación». '};
-if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>reg.update()).catch(()=>{});
 
 // V15.3: resaltar todos los filtros activos, incluidos los del mapa.
 (()=>{
