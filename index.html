@@ -243,6 +243,22 @@ nav.main-navigation button.active{background:linear-gradient(145deg,#ff9d25,#e66
 @media(max-width:380px){.quick-chip{padding:6px 7px!important;font-size:10px!important}.quick-access{gap:5px!important}}
 @media(prefers-reduced-motion:reduce){nav.main-navigation,nav.main-navigation button,.quick-chip{transition:none!important}}
 
+
+/* V16.2 ajuste · navegación compacta, sin fila de accesos rápidos */
+body{padding-top:315px!important;padding-bottom:24px!important}
+html{scroll-padding-top:325px!important}
+nav.main-navigation{top:248px!important;gap:6px!important;padding:6px 8px!important;min-height:54px!important}
+nav.main-navigation button{display:flex!important;flex:1 0 auto!important;min-width:0!important;min-height:44px!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:6px!important;padding:7px 10px!important;border:1px solid #17618a!important;border-radius:11px!important;background:linear-gradient(145deg,#102b42,#071827)!important;color:#dceefa!important;font-size:11px!important;font-weight:750!important;line-height:1.1!important;white-space:nowrap!important;box-shadow:0 2px 7px #0004!important}
+nav.main-navigation button .nav-icon{display:inline-block!important;font-size:16px!important;line-height:1!important}
+nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075b91)!important;border-color:#20c7ed!important;color:#fff!important;box-shadow:inset 0 -2px 0 #36d8f4,0 2px 9px #00aee533!important}
+@media(max-width:650px){
+ body{padding-top:282px!important}
+ html{scroll-padding-top:292px!important}
+ nav.main-navigation{top:218px!important;gap:4px!important;padding:5px 6px!important;min-height:52px!important}
+ nav.main-navigation button{flex:0 0 auto!important;min-width:0!important;min-height:40px!important;padding:6px 8px!important;gap:4px!important;font-size:10px!important;border-radius:9px!important}
+ nav.main-navigation button .nav-icon{font-size:14px!important}
+}
+
 </style>
 
 <style id="community-flag-style">
@@ -268,12 +284,7 @@ nav.main-navigation button.active{background:linear-gradient(145deg,#ff9d25,#e66
  <button data-tab="reminders"><span class="nav-icon">🔔</span><span>Avisos</span></button>
  <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Datos y ajustes</span></button>
 </nav>
-<div class="quick-access" role="group" aria-label="Accesos rápidos">
- <button type="button" class="quick-chip quick-registered" data-quick-filter="registered"><span>✓</span> Inscrito <b id="quickRegisteredCount">0</b></button>
- <button type="button" class="quick-chip quick-interested" data-quick-filter="interested"><span>★</span> Me interesa <b id="quickInterestedCount">0</b></button>
- <button type="button" class="quick-chip quick-alerts" data-quick-tab="reminders"><span>♟</span> Avisos <b id="quickAlertsCount">0</b></button>
- <label class="quick-search"><span aria-hidden="true">⌕</span><input id="navQuickSearch" type="search" placeholder="Buscar prueba, lugar o provincia…" aria-label="Buscar prueba, lugar o provincia"></label>
-</div>
+
 <main>
 <section id="calendar" class="panel active">
  <div class="calendar-title-row"><div><h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p></div><button class="primary refresh-title-btn" id="refreshStatuses">Actualizar estado</button></div>
@@ -455,7 +466,7 @@ const hundredByHundred2027=[
 ].map((x,i)=>({id:'100x100half-2027-'+i,name:x.name,country:'España',type:'Triatlón',date:x.date,place:x.place,distance:'Varias distancias',interested:false,registered:false,cost:'',status:'Calendario oficial publicado',dateStatus:'Confirmada',availability:'Por verificar',checkedAt:'2026-11-14',sourceUrl:'https://100x100half.com/es/reglamento',url:'https://100x100half.com/',notes:'Modalidades anunciadas: '+x.distances+'. Inscripciones y disponibilidad por verificar en la web oficial.'}));
 let data=load();
 function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.events)){const ids=new Set(d.events.map(e=>e.id));d.events.push(...seed.filter(e=>!ids.has(e.id)),...extraSeed.filter(e=>!ids.has(e.id)),...franchiseSeed.filter(e=>!ids.has(e.id)&&!d.events.some(old=>old.name===e.name&&old.place===e.place&&old.date===e.date)));d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.fired=Array.isArray(d.fired)?d.fired:[];d.customSources=Array.isArray(d.customSources)?d.customSources:[];d.workCalendar=Array.isArray(d.workCalendar)?d.workCalendar:[];return d}}catch(e){}return {events:[...seed,...extraSeed,...franchiseSeed],reminders:[],fired:[],customSources:[],workCalendar:[]}}
-function save(){updateQuickAccessCounts();localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function compareEventDate(a,b){const da=/^\d{4}-\d{2}-\d{2}$/.test(a.date||'')?a.date:'9999-99-99';const db=/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')?b.date:'9999-99-99';return da.localeCompare(db)||String(a.name||'').localeCompare(String(b.name||''),'es');}
 function dateLabel(s){if(!s)return 'Fecha pendiente';let d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}
@@ -808,12 +819,7 @@ function renderMap(){
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 // La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar();window.scrollTo({top:0,behavior:'smooth'});}));
-function openAppTab(tab){const b=document.querySelector('nav.main-navigation [data-tab="'+tab+'"]');if(b)b.click();}
-document.querySelectorAll('[data-quick-filter]').forEach(b=>b.addEventListener('click',()=>{openAppTab('calendar');const f=document.getElementById('interestFilter');f.value=b.dataset.quickFilter;f.dispatchEvent(new Event('input',{bubbles:true}));document.querySelectorAll('[data-quick-filter]').forEach(x=>x.classList.toggle('quick-selected',x===b));}));
-document.querySelectorAll('[data-quick-tab]').forEach(b=>b.addEventListener('click',()=>openAppTab(b.dataset.quickTab)));
-document.getElementById('navQuickSearch')?.addEventListener('input',e=>{openAppTab('calendar');const f=document.getElementById('search');f.value=e.target.value;f.dispatchEvent(new Event('input',{bubbles:true}));});
-function updateQuickAccessCounts(){const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};put('quickRegisteredCount',data.events.filter(e=>e.registered).length);put('quickInterestedCount',data.events.filter(e=>e.interested).length);put('quickAlertsCount',data.reminders.filter(r=>!r.done).length);}
-updateQuickAccessCounts();
+
 
 ['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
