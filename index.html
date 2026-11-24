@@ -619,42 +619,64 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-work-month
 document.getElementById('addSourceForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('newSourceName').value.trim(),url=document.getElementById('newSourceUrl').value.trim();try{const u=new URL(url);if(!/^https?:$/.test(u.protocol))throw 0;if(!data.customSources)data.customSources=[];if(data.customSources.some(x=>x.url===u.href))throw 0;data.customSources.push({name,url:u.href,kind:'Añadida por ti'});e.target.reset();save();}catch(_){alert('Introduce una URL http o https válida y que no esté ya añadida.');}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
 
-// Fotografías de localidades: carga todas las tarjetas; solo acepta coincidencia textual de localidad.
-const photoCacheKey='triathlon2027_photo_cache_v5';
+// Miniaturas según criterios acordados: fotografías reales del circuito o localidad, sin deportistas ni carteles.
+const photoCacheKey='triathlon2027_photo_cache_v6';
 function readPhotoCache(){try{return JSON.parse(localStorage.getItem(photoCacheKey)||'{}')}catch(_){return {}}}
 const photoCache=readPhotoCache();
-function normPhotoText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
-function localityMatch(page,place){
- const title=normPhotoText(page.title||''),desc=normPhotoText(page.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||''),all=title+' '+desc,target=normPhotoText(place);
- const bad=/(portrait|people|person|man |woman|athlete|runner|cyclist|swimmer|triathlete|crowd|team |group |selfie|animal|dog|cat|product|medal|trophy|logo|poster|advert|shirt|jersey|bike |bicycle|car |vehicle|food|sculpture|painting|drawing|illustration|map )/;
- if(bad.test(all))return false;
- const placeTerms=target.split(' ').filter(x=>x.length>2);
- const titleMatch=title.includes(target)||placeTerms.length>0&&placeTerms.every(x=>title.includes(x));
- const visual=/(landscape|cityscape|aerial|panorama|building|architecture|bridge|coast|beach|lake|river|mountain|park|stadium|harbour|harbor|town|village|street|square|monument|castle|view of|skyline)/;
- return titleMatch&&visual.test(all);
+function normPhotoText(v){return String(v||'').replace(/<[^>]*>/g,' ').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function photoDescription(page){return page.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||''}
+function validLocalityPhoto(page,place){
+ const title=normPhotoText(page.title||''),desc=normPhotoText(photoDescription(page)),all=title+' '+desc,target=normPhotoText(place);
+ const terms=target.split(' ').filter(x=>x.length>2);
+ if(!terms.length||!terms.some(x=>all.includes(x)))return false;
+ const excluded=/(portrait|people|person|athlete|runner|cyclist|swimmer|triathlete|crowd|selfie|animal|dog|cat|medal|trophy|logo|poster|advert|shirt|jersey|bicycle|car |vehicle|food|sculpture|painting|drawing|illustration|map |infographic|flag |coat of arms)/;
+ if(excluded.test(all))return false;
+ const visual=/(landscape|cityscape|aerial|panorama|building|architecture|bridge|coast|beach|lake|river|mountain|park|stadium|harbou?r|town|village|street|square|monument|castle|view of|skyline|marina|port|seafront|promenade|circuit|route)/;
+ return visual.test(all);
 }
-function sportFallback(type){
- const t=String(type||'').toLowerCase();
- if(t.includes('duatl'))return 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=240&q=75';
- if(t.includes('acuat'))return 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=240&q=75';
- if(t.includes('triatl'))return 'https://images.unsplash.com/photo-1541625602330-2277e4c46182?auto=format&fit=crop&w=240&q=75';
- return 'https://images.unsplash.com/photo-1541625602330-2277e4c46182?auto=format&fit=crop&w=240&q=75';
+async function searchLocalityPhoto(place,eventName){
+ const key=normPhotoText(place)+'|'+normPhotoText(eventName||'');
+ if(photoCache[key])return photoCache[key];
+ const searches=[];
+ if(eventName)searches.push('"'+eventName+'" "'+place+'" (landscape OR coast OR beach OR circuit OR route OR stadium OR harbour)');
+ searches.push('"'+place+'" (landscape OR cityscape OR aerial OR panorama OR beach OR coast OR street OR square OR harbour OR port OR lake OR mountain)');
+ for(const query of searches){
+  try{
+   const url='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+query)+'&gsrnamespace=6&gsrlimit=18&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=300&format=json&origin=*';
+   const response=await fetch(url,{signal:AbortSignal.timeout(9000)});
+   if(!response.ok)continue;
+   const json=await response.json(),pages=Object.values(json.query?.pages||{});
+   const match=pages.find(p=>validLocalityPhoto(p,place)&&p.imageinfo?.[0]?.thumburl);
+   if(match){
+    const info={url:match.imageinfo[0].thumburl,title:match.title,description:photoDescription(match).replace(/<[^>]*>/g,' ').slice(0,240),source:'Wikimedia Commons'};
+    photoCache[key]=info;
+    try{localStorage.setItem(photoCacheKey,JSON.stringify(photoCache))}catch(_){}
+    return info;
+   }
+  }catch(_){}
+ }
+ photoCache[key]=null;
+ try{localStorage.setItem(photoCacheKey,JSON.stringify(photoCache))}catch(_){}
+ return null;
 }
-function photoFallback(type,place){
- const url=sportFallback(type);
- return '<img class="event-photo" src="'+url+'" alt="Imagen representativa de '+esc(type||'triatlón')+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=&quot;event-photo-fallback&quot;>🏁</div>\'">';
+function emptyPhotoFallback(place){
+ return '<div class="event-photo-fallback" role="img" aria-label="Sin fotografía válida de '+esc(place)+'"><span aria-hidden="true">📍</span></div>';
 }
 async function hydrateEventPhotos(events){
  const cards=[...document.querySelectorAll('[data-photo-place]')];
- cards.forEach(w=>{
-  const place=w.dataset.photoPlace,type=w.dataset.photoType||'Triatlón';
-  const ev=(events||[]).find(e=>String(e.id)===String(w.dataset.photoId));
-  const real=ev&&(ev.imageUrl||ev.image||ev.photoUrl||ev.bannerUrl||ev.logoUrl);
-  const safe=typeof real==='string'&&/^https?:\/\//i.test(real)?real:'';
-  w.innerHTML=safe
-   ? '<img class="event-photo" src="'+esc(safe)+'" alt="Imagen de '+esc(ev.name||place)+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+sportFallback(type)+'\'">'
-   : photoFallback(type,place);
- });
+ await Promise.all(cards.map(async w=>{
+  const place=w.dataset.photoPlace||'',ev=(events||[]).find(e=>String(e.id)===String(w.dataset.photoId));
+  const eventName=ev?.name||'';
+  w.innerHTML=emptyPhotoFallback(place);
+  const photo=await searchLocalityPhoto(place,eventName);
+  if(!photo||!photo.url||!w.isConnected)return;
+  const img=document.createElement('img');
+  img.className='event-photo';img.loading='lazy';img.referrerPolicy='no-referrer';
+  img.alt='Fotografía real de '+place;img.src=photo.url;
+  img.title=photo.title+' · '+photo.source;
+  img.onerror=()=>{img.replaceWith(document.createRange().createContextualFragment(emptyPhotoFallback(place)))};
+  w.replaceChildren(img);
+ }));
 }
 // Búsqueda asistida de nuevas competiciones: importa feeds JSON/CSV directamente y prueba extracción ligera vía proxy para webs HTML.
 function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])|\b(0?[1-9]|[12]\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.]2027\b/);if(!m)return '';if(m[1])return `2027-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;return `2027-${String(m[5]).padStart(2,'0')}-${String(m[4]).padStart(2,'0')}`;}
