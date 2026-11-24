@@ -212,6 +212,12 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 @media(max-width:430px){.day-races-backdrop{padding:10px}.day-races-modal{max-height:86vh}}
 
 </style>
+
+<style id="community-flag-style">
+.province-badge{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-weight:750;color:#c8dbea}
+.community-flag{width:25px;height:17px;flex:0 0 25px;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px #ffffff45}
+.day-race-meta .province-badge{margin:2px 0}
+</style>
 </head>
 <body>
 <header>
@@ -422,35 +428,77 @@ function statusPill(s,kind='availability'){
  return `<span class="pill ${cls}">${esc(s||'Por verificar')}</span>`;
 }
 
-function provinceInfo(e){
- const t=String((e.place||'')+' '+(e.name||'')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
- const list=[['Álava',['vitoria','gasteiz','alava','zuia','llodio']],['Bizkaia',['bilbao','bizkaia','getxo','bermeo','durango']],['Gipuzkoa',['donost','san sebastian','gipuzkoa','zarautz','irun']],['Navarra',['pamplona','iruña','navarra','tudela']],['La Rioja',['logrono','calahorra','rioja']],['Zaragoza',['zaragoza']],['Huesca',['huesca']],['Teruel',['teruel']],['Barcelona',['barcelona']],['Girona',['girona','banyoles']],['Tarragona',['tarragona','salou']],['Lleida',['lleida']],['Alicante',['alicante','nucia','orihuela','elche']],['Valencia',['valencia']],['Castellón',['castellon','peniscola']],['Murcia',['murcia','cartagena','lorca']],['Málaga',['malaga']],['Cádiz',['cadiz']],['Sevilla',['sevilla']],['Granada',['granada']],['Almería',['almeria']],['Huelva',['huelva']],['Córdoba',['cordoba']],['Jaén',['jaen']],['Madrid',['madrid']],['Cantabria',['santander','laredo','cantabria']],['Asturias',['gijon','oviedo','asturias']],['A Coruña',['a coruna','santiago','muros']],['Pontevedra',['pontevedra','vigo']],['Lugo',['lugo']],['Ourense',['ourense']],['Valladolid',['valladolid']],['Burgos',['burgos']],['León',['leon']],['Salamanca',['salamanca']],['Segovia',['segovia']],['Soria',['soria']],['Zamora',['zamora']],['Ávila',['avila']],['Palencia',['palencia']],['Toledo',['toledo']],['Albacete',['albacete']],['Cuenca',['cuenca']],['Ciudad Real',['ciudad real']],['Illes Balears',['mallorca','menorca','ibiza','palma']],['Santa Cruz de Tenerife',['tenerife']],['Las Palmas',['gran canaria','lanzarote','fuerteventura']]];
- for(const item of list){if(item[1].some(x=>t.includes(x)))return item[0];}return '';
+function normalizePlace(e){
+ return String((e.place||'')+' '+(e.name||'')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[’']/g,' ').replace(/\s+/g,' ').trim();
+}
+function communityFor(e){
+ const t=normalizePlace(e), country=String(e.country||'').toLowerCase();
+ const groups={
+ 'País Vasco':['vitoria','gasteiz','alava','araba','zuia','llodio','laudio','amurrio','bilbao','bizkaia','getxo','bermeo','durango','gipuzkoa','donost','san sebastian','zarautz','irun','hondarribia','eibar','tolosa','andoain','zumaia'],
+ 'Navarra':['pamplona','iruna','navarra','tudela','estella','olite','tafalla','elizondo','roncesvalles','bera'],
+ 'La Rioja':['logrono','calahorra','rioja','arnedillo','ezcaray','har o','najera'],
+ 'Aragón':['zaragoza','huesca','teruel','alcaniz','jaca','canfranc','barbastro','monzon','fraga','tarazona','calatayud','caspe'],
+ 'Cataluña':['banyoles','barcelona','tarragona','girona','lleida','salou','catalu','cambrils','sitges','l estartit','estartit','castelldefels','badalona','manresa','vic','reus','igualada','mat ar o','blanes','roses','sort','la seu d urgell'],
+ 'Comunitat Valenciana':['peniscola','nucia','alicante','valencia','castellon','orihuela','elche','benidorm','gandia','denia','calpe','x abia','javea','torrevieja','altea','onda','vinaros','burriana','sagunto','ontinyent','alcoy','alcoi','villajoyosa','villena','paterna','torrent'],
+ 'Región de Murcia':['murcia','archena','yecla','calasparra','lorca','cartagena','aguilas','fuente alamo','portman','pacheco','mazarron','san javier','los alcazares','caravaca','cieza','jumilla'],
+ 'Andalucía':['almeria','roquetas','sevilla','malaga','cadiz','granada','huelva','jaen','cordoba','marbella','estepona','fuengirola','ronda','motril','ay amonte','tarifa','conil','jerez','dos hermanas','antequera','almunecar','nerja','el puerto de santa maria','sanlucar','ubeda','b aeza','alhaurin','torremolinos'],
+ 'Castilla-La Mancha':['albacete','hellin','tomelloso','alcazar','riopar','cuenca','palmaces','criptana','jucar','ciudad real','toledo','guadalajara','talavera','puertollano','manzanares','siguenza','motilla','valdepenas','consuegra','azuqueca'],
+ 'Castilla y León':['vinuesa','valladolid','burgos','leon','salamanca','segovia','soria','zamora','avila','palencia','ponferrada','benavente','aran da','miranda','medina del campo','cistierna','sanabria','laguna de duero','tordesillas'],
+ 'Galicia':['vimianzo','vilalba','vedra','santiago','muros','porrino','naron','lugo','allariz','as pontes','ourense','pontevedra','a coruna','vigo','ferrol','oleiros','sanxenxo','baiona','ribadeo','monforte','carballo','o grove','vilagarcia','redondela','cangas','noia'],
+ 'Comunidad de Madrid':['madrid','casa de campo','alcala de henares','aranjuez','getafe','leganes','mostoles','alcorcon','alcobendas','san sebastian de los reyes','colmenar','navacerrada','el escorial','aranjuez','parla','fuenlabrada'],
+ 'Extremadura':['merida','caceres','badajoz','plasencia','don benito','villanueva de la serena','zafra','almendralejo','jaraiz','trujillo','navalmoral'],
+ 'Asturias':['gijon','oviedo','asturias','aviles','llanes','ribadesella','cangas de onis','luarca','mieres','siero','villaviciosa'],
+ 'Cantabria':['santander','laredo','cantabria','santillana','torrelavega','castro urdiales','suances','noja','comillas','reinosa','santoña'],
+ 'Illes Balears':['mallorca','menorca','ibiza','eivissa','palma','formentera','alcudia','manacor','inca','soller','calvia','mahon','ciutadella'],
+ 'Canarias':['tenerife','gran canaria','lanzarote','fuerteventura','canarias','las palmas','santa cruz','la palma','la gomera','el hierro','puerto del rosario','arrecife','maspalomas','adeje','puerto de la cruz'],
+ 'Ceuta':['ceuta'],
+ 'Melilla':['melilla']
+ };
+ for(const [region,terms] of Object.entries(groups))if(terms.some(x=>t.includes(x)))return region;
+ if(country.includes('portugal')||/\bportugal\b/.test(t))return 'Portugal';
+ if(country.includes('espana')||country.includes('españa')||country==='spain')return 'España';
+ const countryFlags={'francia':'🇫🇷','france':'🇫🇷','italia':'🇮🇹','italy':'🇮🇹','alemania':'🇩🇪','germany':'🇩🇪','reino unido':'🇬🇧','united kingdom':'🇬🇧','andorra':'🇦🇩','suiza':'🇨🇭','switzerland':'🇨🇭','paises bajos':'🇳🇱','netherlands':'🇳🇱','belgica':'🇧🇪','belgium':'🇧🇪','austria':'🇦🇹','luxemburgo':'🇱🇺','luxembourg':'🇱🇺','dinamarca':'🇩🇰','denmark':'🇩🇰','suecia':'🇸🇪','sweden':'🇸🇪','noruega':'🇳🇴','norway':'🇳🇴','estados unidos':'🇺🇸','united states':'🇺🇸','canada':'🇨🇦','canadá':'🇨🇦','mexico':'🇲🇽','méxico':'🇲🇽','brasil':'🇧🇷','brazil':'🇧🇷'};
+ for(const [name,flag] of Object.entries(countryFlags))if(country.includes(name))return name[0].toUpperCase()+name.slice(1);
+ return 'Sin determinar';
+}
+function communityFlag(region){
+ const svg=(body)=>'<svg class="community-flag" viewBox="0 0 30 20" role="img" aria-label="Bandera de '+esc(region)+'" xmlns="http://www.w3.org/2000/svg">'+body+'</svg>';
+ const stripes=(colors)=>svg(colors.map((c,i)=>'<rect x="0" y="'+(20*i/colors.length)+'" width="30" height="'+(20/colors.length+0.2)+'" fill="'+c+'"/>').join(''));
+ const flags={
+ 'País Vasco':svg('<rect width="30" height="20" fill="#d90000"/><path d="M0 0L30 20M30 0L0 20" stroke="#007a3d" stroke-width="5"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="2.5"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="4"/>'),
+ 'Cataluña':stripes(['#f9d616','#f9d616','#d71920','#f9d616','#d71920','#f9d616','#d71920','#f9d616']),
+ 'Galicia':svg('<rect width="30" height="20" fill="#fff"/><path d="M0 0L30 20" stroke="#168bd1" stroke-width="6"/>'),
+ 'Andalucía':stripes(['#fff','#168b48','#fff']),
+ 'Navarra':svg('<rect width="30" height="20" fill="#d71920"/><rect x="12" y="5" width="6" height="10" rx="1" fill="#f5d442"/><path d="M15 4V16M10 10H20" stroke="#f5d442" stroke-width="1.5"/>'),
+ 'La Rioja':stripes(['#e53935','#fff','#168b48','#f5d442']),
+ 'Aragón':stripes(['#f5d21b','#d71920','#f5d21b','#d71920','#f5d21b','#d71920','#f5d21b']),
+ 'Comunitat Valenciana':svg('<rect width="30" height="20" fill="#f4d21f"/><path d="M0 0H8V20H0Z" fill="#1761a0"/><path d="M8 0H30V3H8ZM8 5H30V8H8ZM8 10H30V13H8ZM8 15H30V18H8Z" fill="#d71920"/>'),
+ 'Región de Murcia':svg('<rect width="30" height="20" fill="#d71920"/><rect y="10" width="30" height="10" fill="#f4d21f"/><g fill="#fff"><circle cx="5" cy="5" r="1.5"/><circle cx="11" cy="5" r="1.5"/><circle cx="17" cy="5" r="1.5"/><circle cx="23" cy="5" r="1.5"/></g>'),
+ 'Castilla-La Mancha':svg('<rect width="12" height="20" fill="#d71920"/><rect x="12" width="18" height="20" fill="#fff"/><path d="M3 6H9V14H3Z" fill="#f4d21f"/>'),
+ 'Castilla y León':svg('<rect width="15" height="10" fill="#d71920"/><rect x="15" width="15" height="10" fill="#fff"/><rect y="10" width="15" height="10" fill="#fff"/><rect x="15" y="10" width="15" height="10" fill="#d71920"/>'),
+ 'Comunidad de Madrid':svg('<rect width="30" height="20" fill="#d71920"/><g fill="#fff"><circle cx="6" cy="5" r="1.2"/><circle cx="14" cy="5" r="1.2"/><circle cx="22" cy="5" r="1.2"/><circle cx="10" cy="14" r="1.2"/><circle cx="18" cy="14" r="1.2"/></g>'),
+ 'Extremadura':svg('<rect width="30" height="20" fill="#168b48"/><rect y="6.7" width="30" height="6.6" fill="#fff"/><rect y="13.3" width="30" height="6.7" fill="#111"/>'),
+ 'Asturias':svg('<rect width="30" height="20" fill="#0066a1"/><path d="M15 1V19" stroke="#f5d21b" stroke-width="3"/><path d="M12 7L18 13M18 7L12 13" stroke="#f5d21b" stroke-width="1.5"/>'),
+ 'Cantabria':svg('<rect width="30" height="20" fill="#fff"/><rect width="30" height="10" fill="#d71920"/><path d="M15 0V20" stroke="#1761a0" stroke-width="2"/>'),
+ 'Illes Balears':svg('<rect width="30" height="20" fill="#f5d21b"/><rect width="10" height="20" fill="#d71920"/><rect width="7" height="9" fill="#d71920"/>'),
+ 'Canarias':svg('<rect width="10" height="20" fill="#fff"/><rect x="10" width="10" height="20" fill="#1761a0"/><rect x="20" width="10" height="20" fill="#f5d21b"/>'),
+ 'Ceuta':svg('<rect width="30" height="20" fill="#fff"/><path d="M0 0L30 20M30 0L0 20" stroke="#111" stroke-width="5"/><path d="M0 0L30 20M30 0L0 20" stroke="#d71920" stroke-width="2"/>'),
+ 'Melilla':svg('<rect width="30" height="20" fill="#1761a0"/><path d="M0 0H30V20H0Z" fill="none" stroke="#fff" stroke-width="1"/><g fill="#fff"><circle cx="15" cy="10" r="3"/></g>'),
+ 'Portugal':svg('<rect width="12" height="20" fill="#168b48"/><rect x="12" width="18" height="20" fill="#d71920"/><circle cx="12" cy="10" r="3.5" fill="#f5d21b"/>')
+ };
+ return flags[region]||'';
+}
+function countryFlag(region){
+ const flags={'España':'🇪🇸','Portugal':'🇵🇹','francia':'🇫🇷','france':'🇫🇷','italia':'🇮🇹','italy':'🇮🇹','alemania':'🇩🇪','germany':'🇩🇪','reino unido':'🇬🇧','united kingdom':'🇬🇧','andorra':'🇦🇩','suiza':'🇨🇭','switzerland':'🇨🇭','paises bajos':'🇳🇱','netherlands':'🇳🇱','belgica':'🇧🇪','belgium':'🇧🇪','austria':'🇦🇹','luxemburgo':'🇱🇺','luxembourg':'🇱🇺','dinamarca':'🇩🇰','denmark':'🇩🇰','suecia':'🇸🇪','sweden':'🇸🇪','noruega':'🇳🇴','norway':'🇳🇴','estados unidos':'🇺🇸','united states':'🇺🇸','canada':'🇨🇦','canadá':'🇨🇦','mexico':'🇲🇽','méxico':'🇲🇽','brasil':'🇧🇷','brazil':'🇧🇷'};
+ return flags[String(region||'').toLowerCase()]||'🌍';
 }
 function provinceBadge(e){
- const p=provinceInfo(e);if(!p)return '<span class="province-badge">🇪🇸 Provincia sin determinar</span>';
- const red=['Álava','Navarra','La Rioja','Zaragoza','Huesca','Teruel','Murcia','Málaga','Cádiz','Sevilla','Granada','Almería','Huelva','Córdoba','Jaén','Madrid','Alicante','Castellón'];
- const c=red.includes(p)?'#c83232':'#d5ad24';
- return '<span class="province-badge"><i class="province-flag" style="--flag:'+c+'"><b></b><b></b><b></b></i>'+esc(p)+'</span>';
-}
-
-function communityFor(e){
- const t=((e.place||'')+' '+(e.name||'')).toLowerCase();
- const groups={
- 'País Vasco':['vitoria','gasteiz','zarautz','zuia','bilbao','donost','san sebastian','getxo','gipuzkoa','bizkaia','álava','alava'],
- 'Navarra':['pamplona','iruña','navarra','tudela'], 'La Rioja':['calahorra','logroño','rioja'],
- 'Aragón':['zaragoza','huesca','teruel','alcañiz'], 'Cataluña':['banyoles','barcelona','tarragona','girona','lleida','salou','catalu'],
- 'Comunitat Valenciana':['peñíscola','peniscola','la nucía','nucia','alicante','valencia','castellón','castellon','orihuela','águilas'],
- 'Región de Murcia':['murcia','archena','yecla','calasparra','lorca','cartagena','águilas','fuente álamo','portmán','pacheco'],
- 'Andalucía':['almería','roquetas','sevilla','málaga','cadiz','cádiz','granada','huelva','jaén','cordoba','córdoba'],
- 'Castilla-La Mancha':['albacete','hellín','tomelloso','alcázar','riopar','riópar','cuenca','pálmaces','criptana','júcar','ciudad real'],
- 'Castilla y León':['vinuesa','valladolid','burgos','león','salamanca','segovia','soria','zamora','ávila','palencia'],
- 'Galicia':['vimianzo','vilalba','vedra','santiago','muros','porriño','porriño','naron','narón','lugo','allariz','as pontes','ourense','pontevedra','a coruña'],
- 'Comunidad de Madrid':['madrid','casa de campo'], 'Extremadura':['mérida','merida','cáceres','badajoz'],
- 'Asturias':['gijón','oviedo','asturias'], 'Cantabria':['santander','cantabria'],
- 'Illes Balears':['mallorca','menorca','ibiza','palma'], 'Canarias':['tenerife','gran canaria','lanzarote','fuerteventura','canarias']};
- for(const [region,terms] of Object.entries(groups))if(terms.some(x=>t.includes(x)))return region;
- if(e.country==='Portugal')return 'Portugal'; return 'Sin determinar';
+ const region=communityFor(e),flag=communityFlag(region);
+ if(flag)return '<span class="province-badge">'+flag+esc(region)+'</span>';
+ if(region==='España')return '<span class="province-badge">🇪🇸 España</span>';
+ if(region==='Portugal')return '<span class="province-badge">'+communityFlag('Portugal')+'Portugal</span>';
+ if(region!=='Sin determinar')return '<span class="province-badge">'+countryFlag(region)+esc(region)+'</span>';
+ return '<span class="province-badge">🌍 Ubicación por determinar</span>';
 }
 function distanceGroup(e){const d=(e.distance||'').toLowerCase();if(d.includes('super'))return 'Supersprint';if(d.includes('sprint'))return 'Sprint';if(d.includes('olímp')||d.includes('olimp'))return 'Olímpica';if(d.includes('media')||d.includes('70.3')||d.includes('half'))return 'Media distancia';if(d.includes('larga')||d.includes('ironman')||d.includes('full'))return 'Larga distancia';if(d.includes('cross')||d.includes('gravel'))return 'Cross';return 'Otras'}
 function render(){
@@ -465,7 +513,7 @@ function render(){
  let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort(compareEventDate);
  document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
- <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${provinceBadge(e)} · ${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
+ <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${provinceBadge(e)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
  <div class="status-row"><span class="section-label">Fecha</span>${statusPill(e.dateStatus||'Por verificar','date')}<span class="section-label">Dorsales</span>${statusPill(e.availability||'Por verificar')}</div>
  ${e.status&&e.status!=='Por verificar'?`<div class="meta">${esc(e.status)}</div>`:''}
  ${e.cost?`<div class="meta">Coste indicado: ${esc(e.cost)} €</div>`:''}
