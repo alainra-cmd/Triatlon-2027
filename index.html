@@ -325,6 +325,7 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
  <input id="search" placeholder="Buscar prueba, localidad o distancia…">
  <details class="sources-dropdown" id="sourcesDropdown">
   <summary>☷ Mis fuentes del calendario <span class="small">· desplegar</span></summary>
+   <div id="calendarSourceList"></div>
  </details>
  <div id="eventList"></div>
  <button class="primary" style="width:100%;margin-top:8px" id="addEvent">＋ Añadir una prueba</button>
@@ -382,7 +383,6 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
  <div class="card" id="calendarSourcesCard">
   <b>Fuentes del calendario</b>
   <p class="small">Añade fuentes y busca posibles pruebas nuevas. La extracción depende del formato y de los bloqueos de cada web; siempre revisarás los resultados antes de incorporarlos.</p>
-  <div id="calendarSourceList"></div>
   <p class="small">Una sola búsqueda combina tus páginas guardadas, calendarios oficiales, federaciones, World Triathlon, Europe Triathlon, IRONMAN, Challenge y noticias de organizadores.</p>
   <button class="primary unified-search-button" id="runUnifiedSearch" type="button" style="width:100%;margin:8px 0">⌕ Buscar nuevas pruebas en todas las fuentes</button>
   <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i><span class="progress-label" id="scanProgressText">0 % · Preparando búsqueda…</span></div></div>
