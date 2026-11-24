@@ -215,7 +215,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 
 <style id="community-flag-style">
 .province-badge{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-weight:750;color:#c8dbea}
-.community-flag{width:25px;height:17px;flex:0 0 25px;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px #ffffff45}
+.community-flag{width:25px;height:17px;flex:0 0 25px;object-fit:cover;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px #ffffff45}
 .day-race-meta .province-badge{margin:2px 0}
 </style>
 </head>
@@ -464,34 +464,32 @@ function communityFor(e){
  return 'Sin determinar';
 }
 function communityFlag(region){
- const svg=body=>'<svg class="community-flag" viewBox="0 0 60 40" role="img" aria-label="Bandera de '+esc(region)+'" xmlns="http://www.w3.org/2000/svg">'+body+'</svg>';
- const rect=(x,y,w,h,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+c+'"/>';
- const line=(d,c,w)=>'<path d="'+d+'" fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-linecap="butt"/>';
- const coat=(x,y,scale=1)=>'<g transform="translate('+x+' '+y+') scale('+scale+')"><path d="M0 0H20V15Q20 25 10 31Q0 25 0 15Z" fill="#f6d34a" stroke="#7d4b16" stroke-width="1.2"/><path d="M2 2H18V15Q18 22 10 28Q2 22 2 15Z" fill="#c92332"/><path d="M2 10H18V15H2Z" fill="#f6d34a"/><path d="M6 5H14M6 18H14" stroke="#fff" stroke-width="1.5"/></g>';
- const stripes=colors=>svg(colors.map((c,i)=>rect(0,i*40/colors.length,60,40/colors.length+0.15,c)).join(''));
- const flags={
- 'País Vasco':svg(rect(0,0,60,40,'#d50000')+line('M0 0L60 40M60 0L0 40','#fff',9)+line('M0 0L60 40M60 0L0 40','#00843d',4)+line('M30 0V40M0 20H60','#fff',8)),
- 'Cataluña':svg(rect(0,0,60,40,'#f6d21b')+Array.from({length:4},(_,i)=>rect(0,4+i*9,60,4,'#c8102e')).join('')),
- 'Galicia':svg(rect(0,0,60,40,'#fff')+line('M0 0L60 40','#168bd1',9)),
- 'Andalucía':stripes(['#fff','#168b45','#fff']),
- 'Navarra':svg(rect(0,0,60,40,'#c8102e')+coat(20,4,.95)),
- 'La Rioja':stripes(['#e53935','#fff','#168b48','#f5d442']),
- 'Aragón':svg(rect(0,0,60,40,'#f6d21b')+Array.from({length:4},(_,i)=>rect(0,4+i*9,60,4,'#c8102e')).join('')+coat(22,5,.8)),
- 'Comunitat Valenciana':svg(rect(0,0,60,40,'#f6d21b')+rect(0,0,15,40,'#1761a0')+Array.from({length:4},(_,i)=>rect(15,3+i*9,45,4,'#c8102e')).join('')),
- 'Región de Murcia':svg(rect(0,0,60,40,'#c8102e')+rect(0,20,60,20,'#f5d21b')+Array.from({length:4},(_,i)=>'<circle cx="'+(9+i*10)+'" cy="10" r="2.5" fill="#fff"/>').join('')),
- 'Castilla-La Mancha':svg(rect(0,0,25,40,'#c8102e')+rect(25,0,35,40,'#fff')+coat(3,5,.9)),
- 'Castilla y León':svg(rect(0,0,30,20,'#c8102e')+rect(30,0,30,20,'#fff')+rect(0,20,30,20,'#fff')+rect(30,20,30,20,'#c8102e')+coat(5,2,.65)+coat(35,22,.65)),
- 'Comunidad de Madrid':svg(rect(0,0,60,40,'#c8102e')+Array.from({length:7},(_,i)=>'<circle cx="'+(9+(i%3)*20)+'" cy="'+(7+Math.floor(i/3)*12)+'" r="2.2" fill="#fff"/>').join('')),
- 'Extremadura':stripes(['#168b48','#fff','#111']),
- 'Asturias':svg(rect(0,0,60,40,'#0066a1')+line('M30 1V39','#f5d21b',5)+line('M24 12L36 24M36 12L24 24','#f5d21b',2)),
- 'Cantabria':svg(rect(0,0,60,20,'#c8102e')+rect(0,20,60,20,'#fff')+line('M30 0V40','#1761a0',3)),
- 'Illes Balears':svg(rect(0,0,60,40,'#f5d21b')+rect(0,0,18,40,'#c8102e')+rect(0,0,18,18,'#c8102e')+coat(3,2,.48)),
- 'Canarias':svg(rect(0,0,20,40,'#fff')+rect(20,0,20,40,'#1761a0')+rect(40,0,20,40,'#f5d21b')),
- 'Ceuta':svg(rect(0,0,60,40,'#fff')+line('M0 0L60 40M60 0L0 40','#111',7)+line('M0 0L60 40M60 0L0 40','#c8102e',3)),
- 'Melilla':svg(rect(0,0,60,40,'#1761a0')+'<circle cx="30" cy="20" r="8" fill="#fff"/><circle cx="30" cy="20" r="4" fill="#c8102e"/>'),
- 'Portugal':svg(rect(0,0,24,40,'#168b48')+rect(24,0,36,40,'#d71920')+'<circle cx="24" cy="20" r="8" fill="#f5d21b" stroke="#9b6b18" stroke-width="1.2"/><circle cx="24" cy="20" r="4.5" fill="#fff" stroke="#c8102e" stroke-width="1"/>')
+ const files={
+ 'País Vasco':'Flag of the Basque Country.svg',
+ 'Cataluña':'Flag of Catalonia.svg',
+ 'Galicia':'Flag of Galicia.svg',
+ 'Andalucía':'Flag of Andalusia.svg',
+ 'Navarra':'Flag of Navarre.svg',
+ 'La Rioja':'Flag of La Rioja (with coat of arms).svg',
+ 'Aragón':'Flag of Aragon.svg',
+ 'Comunitat Valenciana':'Flag of the Valencian Community.svg',
+ 'Región de Murcia':'Flag of the Region of Murcia.svg',
+ 'Castilla-La Mancha':'Flag of Castilla-La Mancha.svg',
+ 'Castilla y León':'Flag of Castile and León.svg',
+ 'Comunidad de Madrid':'Flag of the Community of Madrid.svg',
+ 'Extremadura':'Flag of Extremadura.svg',
+ 'Asturias':'Flag of Asturias.svg',
+ 'Cantabria':'Flag of Cantabria.svg',
+ 'Illes Balears':'Flag of the Balearic Islands.svg',
+ 'Canarias':'Flag of the Canary Islands.svg',
+ 'Ceuta':'Flag of Ceuta.svg',
+ 'Melilla':'Flag of Melilla.svg',
+ 'Portugal':'Flag of Portugal.svg'
  };
- return flags[region]||'';
+ const file=files[region];
+ if(!file)return '';
+ const url='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(file)+'?width=90';
+ return '<img class="community-flag" src="'+url+'" alt="Bandera de '+esc(region)+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'🌍\'">';
 }
 function countryFlag(region){
  const flags={'España':'🇪🇸','Portugal':'🇵🇹','francia':'🇫🇷','france':'🇫🇷','italia':'🇮🇹','italy':'🇮🇹','alemania':'🇩🇪','germany':'🇩🇪','reino unido':'🇬🇧','united kingdom':'🇬🇧','andorra':'🇦🇩','suiza':'🇨🇭','switzerland':'🇨🇭','paises bajos':'🇳🇱','netherlands':'🇳🇱','belgica':'🇧🇪','belgium':'🇧🇪','austria':'🇦🇹','luxemburgo':'🇱🇺','luxembourg':'🇱🇺','dinamarca':'🇩🇰','denmark':'🇩🇰','suecia':'🇸🇪','sweden':'🇸🇪','noruega':'🇳🇴','norway':'🇳🇴','estados unidos':'🇺🇸','united states':'🇺🇸','canada':'🇨🇦','canadá':'🇨🇦','mexico':'🇲🇽','méxico':'🇲🇽','brasil':'🇧🇷','brazil':'🇧🇷'};
@@ -622,7 +620,7 @@ document.getElementById('addSourceForm').addEventListener('submit',e=>{e.prevent
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
 
 // Fotografías de localidades: carga todas las tarjetas; solo acepta coincidencia textual de localidad.
-const photoCacheKey='triathlon2027_photo_cache_v4';
+const photoCacheKey='triathlon2027_photo_cache_v5';
 function readPhotoCache(){try{return JSON.parse(localStorage.getItem(photoCacheKey)||'{}')}catch(_){return {}}}
 const photoCache=readPhotoCache();
 function normPhotoText(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
@@ -635,11 +633,28 @@ function localityMatch(page,place){
  const visual=/(landscape|cityscape|aerial|panorama|building|architecture|bridge|coast|beach|lake|river|mountain|park|stadium|harbour|harbor|town|village|street|square|monument|castle|view of|skyline)/;
  return titleMatch&&visual.test(all);
 }
-function sportFallback(type){const t=String(type||'').toLowerCase();if(t.includes('duatl'))return '🏃🚴';if(t.includes('acuat'))return '🏊🏃';if(t.includes('triatl'))return '🏊🚴🏃';return '🏁';}
-function photoFallback(type,place){return '<div class="event-photo-fallback sport-photo-fallback" aria-label="Imagen deportiva de '+esc(place||'la prueba')+'">'+sportFallback(type)+'</div>';}
+function sportFallback(type){
+ const t=String(type||'').toLowerCase();
+ if(t.includes('duatl'))return 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=240&q=75';
+ if(t.includes('acuat'))return 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=240&q=75';
+ if(t.includes('triatl'))return 'https://images.unsplash.com/photo-1541625602330-2277e4c46182?auto=format&fit=crop&w=240&q=75';
+ return 'https://images.unsplash.com/photo-1541625602330-2277e4c46182?auto=format&fit=crop&w=240&q=75';
+}
+function photoFallback(type,place){
+ const url=sportFallback(type);
+ return '<img class="event-photo" src="'+url+'" alt="Imagen representativa de '+esc(type||'triatlón')+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=&quot;event-photo-fallback&quot;>🏁</div>\'">';
+}
 async function hydrateEventPhotos(events){
  const cards=[...document.querySelectorAll('[data-photo-place]')];
- cards.forEach(w=>{const place=w.dataset.photoPlace,type=w.dataset.photoType||'Triatlón';w.innerHTML=photoFallback(type,place);});
+ cards.forEach(w=>{
+  const place=w.dataset.photoPlace,type=w.dataset.photoType||'Triatlón';
+  const ev=(events||[]).find(e=>String(e.id)===String(w.dataset.photoId));
+  const real=ev&&(ev.imageUrl||ev.image||ev.photoUrl||ev.bannerUrl||ev.logoUrl);
+  const safe=typeof real==='string'&&/^https?:\/\//i.test(real)?real:'';
+  w.innerHTML=safe
+   ? '<img class="event-photo" src="'+esc(safe)+'" alt="Imagen de '+esc(ev.name||place)+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\''+sportFallback(type)+'\'">'
+   : photoFallback(type,place);
+ });
 }
 // Búsqueda asistida de nuevas competiciones: importa feeds JSON/CSV directamente y prueba extracción ligera vía proxy para webs HTML.
 function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])|\b(0?[1-9]|[12]\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.]2027\b/);if(!m)return '';if(m[1])return `2027-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;return `2027-${String(m[5]).padStart(2,'0')}-${String(m[4]).padStart(2,'0')}`;}
@@ -1055,7 +1070,7 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 </body></html>
 
 <style id="v161-header-photo-panels">
-/* Mantener la fotografía principal original y hacer más transparentes los tres indicadores. */
+/* Mantener fotografía principal y cuadros translúcidos; banderas oficiales y miniaturas por modalidad. */
 header .stat{
  background:rgba(4,13,24,.34)!important;
  border:1px solid rgba(255,255,255,.48)!important;
