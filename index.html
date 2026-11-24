@@ -202,7 +202,7 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 </head>
 <body>
 <header>
- <span class="app-version" aria-label="Versión de la aplicación">V15.9</span>
+ <span class="app-version" aria-label="Versión de la aplicación">V16.0</span>
  <div class="stats">
   <div class="stat"><b id="countInterested">0</b><span>ME INTERESAN</span></div>
   <div class="stat"><b id="countRegistered">0</b><span>INSCRITO</span></div>
@@ -278,13 +278,6 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <span><i class="legend-swatch day-work"></i>Trabajo</span>
  </div>
  <div id="workMonthGrid" class="work-month-grid" aria-label="Días del mes"></div>
- <div class="status-grid">
-  <div class="status-tile"><b id="workDaysCount">0</b><span>DÍAS LIBRES IMPORTADOS</span></div>
-  <div class="status-tile"><b id="workMatchesCount">0</b><span>PRUEBAS EN DÍA LIBRE</span></div>
-  <div class="status-tile"><b id="workEventsCount">0</b><span>PRUEBAS CON FECHA</span></div>
- </div>
- <h3>Coincidencias por meses</h3><p class="small">Pruebas agrupadas por mes y cruzadas con el estado laboral del día de la competición.</p><div id="workMatchList"></div>
- <h3>Fechas libres importadas</h3><div id="workDaysList"></div>
 </section>
 <section id="reminders" class="panel">
  <h2>Avisos y recordatorios</h2><p class="sub">Crea avisos para aperturas, cierres de inscripción y días de carrera.</p>
@@ -491,16 +484,9 @@ function shiftFrom(x){const raw=String(x.shift||x.turn||x.turno||x.type||'').toU
 let workCalendarMonth=0;
 function renderWorkCalendar(){
  const days=Array.isArray(data.workCalendar)?data.workCalendar:[];
- const offDays=days.filter(x=>['free','vacation'].includes(normalizeWorkType(x.type)));
- const daySet=new Set(offDays.map(x=>x.date));
  const dated=data.events.filter(e=>e.date);
- const matches=dated.filter(e=>daySet.has(e.date));
- const count=document.getElementById('workDaysCount');if(!count)return;
- count.textContent=offDays.length;
- document.getElementById('workMatchesCount').textContent=matches.length;
- document.getElementById('workEventsCount').textContent=dated.length;
- const nWork=days.filter(x=>normalizeWorkType(x.type)==='work').length,nX=days.filter(x=>normalizeWorkType(x.type)==='x').length,nVac=days.filter(x=>normalizeWorkType(x.type)==='vacation').length;
- document.getElementById('workCalendarStatus').textContent=days.length?`Calendario cargado: ${offDays.length} días libres (${nVac} vacaciones), ${nWork} jornadas de trabajo y ${nX} activaciones X. ${data.workCalendarName||''}`:'Todavía no has importado tu calendario laboral.';
+ const nWork=days.filter(x=>normalizeWorkType(x.type)==='work').length,nX=days.filter(x=>normalizeWorkType(x.type)==='x').length,nVac=days.filter(x=>normalizeWorkType(x.type)==='vacation').length,nFree=days.filter(x=>normalizeWorkType(x.type)==='free').length;
+ document.getElementById('workCalendarStatus').textContent=days.length?`Calendario cargado: ${nFree} días libres, ${nVac} vacaciones, ${nWork} jornadas de trabajo y ${nX} activaciones X. ${data.workCalendarName||''}`:'Todavía no has importado tu calendario laboral.';
  const monthNames=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
  const workByDate=new Map(days.map(d=>[d.date,d]));
  const grid=document.getElementById('workMonthGrid'),monthTitle=document.getElementById('workMonthTitle');
@@ -524,20 +510,7 @@ function renderWorkCalendar(){
   }
   grid.innerHTML=headers+cells.join('');
  }
- const eventsByMonth=Array.from({length:12},()=>[]);
- dated.forEach(e=>{const d=workByDate.get(e.date);if(d){const m=Number(e.date.slice(5,7))-1;if(m>=0&&m<12)eventsByMonth[m].push({event:e,day:d});}});
- document.getElementById('workMatchList').innerHTML=monthNames.map((month,i)=>{
-  const items=eventsByMonth[i].sort((a,b)=>a.event.date.localeCompare(b.event.date));
-  const freeCount=items.filter(x=>['free','vacation'].includes(normalizeWorkType(x.day.type))).length;
-  const badge=items.length?`${items.length} ${items.length===1?'fecha':'fechas'} · ${freeCount} ${freeCount===1?'libre':'libres'}`:'Sin coincidencias';
-  const body=items.length?items.map(({event:e,day:d})=>{
-   const t=normalizeWorkType(d.type),label=d.label||({free:'Día libre',work:'Jornada de trabajo',vacation:'Vacaciones',x:'Activación posible (X)'}[t]);
-   const cls=t==='free'||t==='vacation'?'off-day':(t==='x'?'work-x':'');
-   return `<div class="card ${cls}"><b>${esc(e.name)}</b><div class="meta">${dateLabel(e.date)} · ${esc(e.place||'Localidad pendiente')} · ${esc(label)}${d.shift?' · Turno '+esc(d.shift):''}</div></div>`;
-  }).join(''):'<div class="empty">No hay pruebas con fecha laboral importada este mes.</div>';
-  return `<section class="month-match"><div class="month-match-head"><b>${month}</b><span>${badge}</span></div>${body}</section>`;
- }).join('');
- document.getElementById('workDaysList').innerHTML=days.length?days.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(d=>{const t=normalizeWorkType(d.type),label=d.label||({free:'Día libre',work:'Jornada de trabajo',vacation:'Vacaciones',x:'Activación posible (X)'}[t]);return `<div class="source-item"><div><b>${dateLabel(d.date)}</b><br><span class="work-type ${t}">${esc(label)}${d.shift?' · Turno '+esc(d.shift):''}</span></div></div>`}).join(''):'<div class="empty">Sin fechas importadas.</div>';
+
 }
 function parseWorkCalendar(text,ext){
  const rows=[];
