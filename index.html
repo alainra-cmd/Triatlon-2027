@@ -149,6 +149,12 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 #myraces .season-registered .meta{color:#b9d8c9!important}
 #myraces .season-interested .meta{color:#e5c9a9!important}
 #calendarSourcesCard a{color:#65c9f5;overflow-wrap:anywhere}
+.sources-dropdown{margin:9px 0 12px;border:1px solid #31516a;border-radius:12px;background:#10283b;overflow:hidden}
+.sources-dropdown summary{cursor:pointer;list-style:none;padding:11px 13px;color:#dff4ff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sources-dropdown summary::-webkit-details-marker{display:none}
+.sources-dropdown summary:after{content:"＋";color:#65c9f5;font-size:18px}
+.sources-dropdown[open] summary:after{content:"−"}
+.sources-dropdown #calendarSourceList{padding:0 12px 10px}
 .source-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #2b4054;font-size:13px}
 .source-item:last-child{border-bottom:0}
 .source-item .source-meta{min-width:0;overflow-wrap:anywhere}
@@ -317,6 +323,9 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
  </div>
  <div class="total-counter"><span><b>Total de pruebas en el listado</b><br><small id="filteredCountLabel">Mostrando todas las pruebas</small></span><strong id="eventCount">0</strong></div>
  <input id="search" placeholder="Buscar prueba, localidad o distancia…">
+ <details class="sources-dropdown" id="sourcesDropdown">
+  <summary>☷ Mis fuentes del calendario <span class="small">· desplegar</span></summary>
+ </details>
  <div id="eventList"></div>
  <button class="primary" style="width:100%;margin-top:8px" id="addEvent">＋ Añadir una prueba</button>
  <p class="small">Las pruebas iniciales son una base editable de planificación. Verifica fechas, distancias y disponibilidad con el organizador antes de inscribirte.</p>
