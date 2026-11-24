@@ -198,6 +198,19 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 .total-counter strong{color:#9a4d00!important}
 .total-counter .small,.total-counter small{color:#a16207!important}
 
+
+.province-badge{display:inline-flex;align-items:center;gap:4px;margin:2px 0;color:#c6d8e7;font-size:10px;font-weight:750;white-space:nowrap}
+.province-flag{display:inline-flex;width:17px;height:12px;flex-direction:column;overflow:hidden;border:1px solid #ffffff70;border-radius:2px;box-shadow:0 1px 2px #0005}
+.province-flag b{display:block;flex:1;background:var(--flag)}.province-flag b:nth-child(2){background:#fff}
+.work-day.has-races{cursor:pointer;outline:1px solid #00d5df;outline-offset:-2px}.work-day.has-races:active{transform:scale(.97)}
+.day-races-backdrop{position:fixed;inset:0;z-index:1000;background:#020812c9;display:none;align-items:center;justify-content:center;padding:18px}
+.day-races-backdrop.open{display:flex}.day-races-modal{width:min(560px,100%);max-height:min(82vh,760px);overflow:auto;background:#0c1a2a;color:#f3f8ff;border:1px solid #2b5572;border-radius:18px;box-shadow:0 22px 70px #000b}
+.day-races-head{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:15px 17px;background:#103653;border-bottom:1px solid #31536c;z-index:1}
+.day-races-head h3{margin:0;font-size:17px}.day-races-close{border:0;background:transparent;color:#fff;font-size:25px}
+.day-races-body{padding:14px}.day-races-summary{font-size:12px;color:#b8cbd9;margin-bottom:12px}.day-race-item{padding:12px 0;border-bottom:1px solid #29445a}
+.day-race-title{font-weight:850;font-size:15px}.day-race-meta{font-size:12px;color:#bed0de;margin-top:4px}.day-race-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+@media(max-width:430px){.day-races-backdrop{padding:10px}.day-races-modal{max-height:86vh}}
+
 </style>
 </head>
 <body>
@@ -408,6 +421,19 @@ function statusPill(s,kind='availability'){
  if(s==='Inscripción aún no abierta')cls='blue';
  return `<span class="pill ${cls}">${esc(s||'Por verificar')}</span>`;
 }
+
+function provinceInfo(e){
+ const t=String((e.place||'')+' '+(e.name||'')).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+ const list=[['Álava',['vitoria','gasteiz','alava','zuia','llodio']],['Bizkaia',['bilbao','bizkaia','getxo','bermeo','durango']],['Gipuzkoa',['donost','san sebastian','gipuzkoa','zarautz','irun']],['Navarra',['pamplona','iruña','navarra','tudela']],['La Rioja',['logrono','calahorra','rioja']],['Zaragoza',['zaragoza']],['Huesca',['huesca']],['Teruel',['teruel']],['Barcelona',['barcelona']],['Girona',['girona','banyoles']],['Tarragona',['tarragona','salou']],['Lleida',['lleida']],['Alicante',['alicante','nucia','orihuela','elche']],['Valencia',['valencia']],['Castellón',['castellon','peniscola']],['Murcia',['murcia','cartagena','lorca']],['Málaga',['malaga']],['Cádiz',['cadiz']],['Sevilla',['sevilla']],['Granada',['granada']],['Almería',['almeria']],['Huelva',['huelva']],['Córdoba',['cordoba']],['Jaén',['jaen']],['Madrid',['madrid']],['Cantabria',['santander','laredo','cantabria']],['Asturias',['gijon','oviedo','asturias']],['A Coruña',['a coruna','santiago','muros']],['Pontevedra',['pontevedra','vigo']],['Lugo',['lugo']],['Ourense',['ourense']],['Valladolid',['valladolid']],['Burgos',['burgos']],['León',['leon']],['Salamanca',['salamanca']],['Segovia',['segovia']],['Soria',['soria']],['Zamora',['zamora']],['Ávila',['avila']],['Palencia',['palencia']],['Toledo',['toledo']],['Albacete',['albacete']],['Cuenca',['cuenca']],['Ciudad Real',['ciudad real']],['Illes Balears',['mallorca','menorca','ibiza','palma']],['Santa Cruz de Tenerife',['tenerife']],['Las Palmas',['gran canaria','lanzarote','fuerteventura']]];
+ for(const item of list){if(item[1].some(x=>t.includes(x)))return item[0];}return '';
+}
+function provinceBadge(e){
+ const p=provinceInfo(e);if(!p)return '<span class="province-badge">🇪🇸 Provincia sin determinar</span>';
+ const red=['Álava','Navarra','La Rioja','Zaragoza','Huesca','Teruel','Murcia','Málaga','Cádiz','Sevilla','Granada','Almería','Huelva','Córdoba','Jaén','Madrid','Alicante','Castellón'];
+ const c=red.includes(p)?'#c83232':'#d5ad24';
+ return '<span class="province-badge"><i class="province-flag" style="--flag:'+c+'"><b></b><b></b><b></b></i>'+esc(p)+'</span>';
+}
+
 function communityFor(e){
  const t=((e.place||'')+' '+(e.name||'')).toLowerCase();
  const groups={
@@ -439,7 +465,7 @@ function render(){
  let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort(compareEventDate);
  document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
- <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
+ <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${provinceBadge(e)} · ${esc(e.country)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
  <div class="status-row"><span class="section-label">Fecha</span>${statusPill(e.dateStatus||'Por verificar','date')}<span class="section-label">Dorsales</span>${statusPill(e.availability||'Por verificar')}</div>
  ${e.status&&e.status!=='Por verificar'?`<div class="meta">${esc(e.status)}</div>`:''}
  ${e.cost?`<div class="meta">Coste indicado: ${esc(e.cost)} €</div>`:''}
@@ -506,7 +532,7 @@ function renderWorkCalendar(){
    const raceText=events.length?`<span class="work-day-race">${esc(events.length>1?`${events.length} pruebas`:events[0].name)}</span>`:'';
    const state=shift?(shift.label||({free:'Día libre',vacation:'Vacaciones',work:'Jornada de trabajo',x:'Día X'}[type])):'Sin dato laboral';
    const label=`${day} de ${monthNames[workCalendarMonth]}: ${state}${events.length?`; ${events.map(e=>e.name).join(', ')}`:''}`;
-   cells.push(`<div class="work-day ${cls}" title="${esc(label)}" aria-label="${esc(label)}"><span class="work-day-number">${day}</span>${raceText}</div>`);
+   const clickable=events.length>0&&isOff;const clickAttrs=clickable?`role="button" tabindex="0" data-open-day="${date}"`:``;cells.push(`<div class="work-day ${cls}${clickable?" has-races":""}" ${clickAttrs} title="${esc(label)}" aria-label="${esc(label)}"><span class="work-day-number">${day}</span>${raceText}</div>`);
   }
   grid.innerHTML=headers+cells.join('');
  }
@@ -528,6 +554,16 @@ document.getElementById('workCalendarFile').addEventListener('change',async e=>{
  const f=e.target.files?.[0];if(!f)return;try{const ext=f.name.split('.').pop().toLowerCase();if(!['ics','csv','json'].includes(ext))throw new Error('Formato no compatible');const parsed=parseWorkCalendar(await f.text(),ext);if(!parsed.length)throw new Error('No se encontraron fechas de 2027 en el archivo');data.workCalendar=parsed;data.workCalendarName=f.name;save();alert(`Calendario laboral importado: ${parsed.filter(x=>['free','vacation'].includes(normalizeWorkType(x.type))).length} días libres/vacaciones, ${parsed.filter(x=>normalizeWorkType(x.type)==='work').length} jornadas de trabajo y ${parsed.filter(x=>normalizeWorkType(x.type)==='x').length} activaciones X.`);}catch(err){alert('No se ha podido importar el calendario. Usa un archivo ICS, CSV o JSON con fechas de 2027.');}e.target.value='';
 });
 document.getElementById('clearWorkCalendar').addEventListener('click',()=>{if(confirm('¿Quitar el calendario laboral importado?')){data.workCalendar=[];data.workCalendarName='';save();}});
+
+function openDayRaces(date){
+ const events=data.events.filter(e=>e.date===date).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'es'));if(!events.length)return;
+ const d=new Date(date+'T12:00:00');document.getElementById('dayRacesTitle').textContent='Pruebas del '+d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+ document.getElementById('dayRacesBody').innerHTML='<div class="day-races-summary"><span class="pill green">Día libre</span> · '+events.length+' '+(events.length===1?'prueba encontrada':'pruebas encontradas')+'</div>'+events.map(e=>'<article class="day-race-item"><div class="day-race-title">'+esc(e.name)+'</div><div class="day-race-meta">📍 '+esc(e.place)+' · '+provinceBadge(e)+'<br>🏊 '+esc(e.type||'Triatlón/duatlón')+' · '+esc(e.distance||'Distancia por confirmar')+'<br>Inscripción: '+esc(e.availability||'Por verificar')+' · Fecha: '+esc(e.dateStatus||'Por verificar')+'</div><div class="day-race-actions">'+(e.url?'<a class="secondary" href="'+esc(e.url)+'" target="_blank" rel="noopener">Ver prueba ↗</a>':'')+(e.sourceUrl?'<a class="secondary" href="'+esc(e.sourceUrl)+'" target="_blank" rel="noopener">Fuente ↗</a>':'')+'</div></article>').join('');
+ document.getElementById('dayRacesBackdrop').classList.add('open');
+}
+document.addEventListener('click',e=>{const day=e.target.closest('[data-open-day]');if(day){openDayRaces(day.dataset.openDay);return;}if(e.target.id==='dayRacesClose'||e.target.id==='dayRacesBackdrop')document.getElementById('dayRacesBackdrop').classList.remove('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('dayRacesBackdrop')?.classList.remove('open');const day=e.target.closest?.('[data-open-day]');if(day&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openDayRaces(day.dataset.openDay);}});
+
 document.addEventListener('click',e=>{const b=e.target.closest('[data-work-month]');if(!b)return;workCalendarMonth=Math.max(0,Math.min(11,workCalendarMonth+Number(b.dataset.workMonth)));renderWorkCalendar();});
 document.getElementById('addSourceForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('newSourceName').value.trim(),url=document.getElementById('newSourceUrl').value.trim();try{const u=new URL(url);if(!/^https?:$/.test(u.protocol))throw 0;if(!data.customSources)data.customSources=[];if(data.customSources.some(x=>x.url===u.href))throw 0;data.customSources.push({name,url:u.href,kind:'Añadida por ti'});e.target.reset();save();}catch(_){alert('Introduce una URL http o https válida y que no esté ya añadida.');}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
@@ -950,4 +986,5 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 .work-month-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 8px;padding:10px 12px;background:#10263a;border:1px solid #29445a;border-radius:14px}.work-month-nav h3{margin:0;text-align:center;flex:1}.work-month-nav button{width:44px;height:42px;padding:0;font-size:24px;line-height:1}.work-legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin:8px 2px 12px;font-size:11px;color:#a8bdcc}.work-legend span{display:inline-flex;align-items:center;gap:5px}.legend-swatch{display:inline-block;width:13px;height:13px;border-radius:4px;border:1px solid #9baab3}.work-month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;padding:8px;background:#10263a;border:1px solid #29445a;border-radius:14px}.work-weekday{text-align:center;font-size:11px;font-weight:800;color:#9bb0c4;padding:4px 0}.work-day{min-width:0;min-height:68px;padding:5px;border:1px solid #29445a;border-radius:9px;background:#152e43;color:#f2f7fb;overflow:hidden}.work-day.empty-cell{min-height:0;padding:0;border:0;background:transparent}.work-day-number{display:block;font-size:13px;font-weight:800}.work-day-race{display:block;margin-top:4px;font-size:9px;line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.work-day.day-empty{background:#f4f6f7;border-color:#dce4e9;color:#546575}.work-day.day-off{background:#fff;border-color:#dce4e9;color:#31485a}.work-day.race-free{background:#dff4e9;border-color:#61b487;color:#145c3a}.work-day.shift-x{background:#ffead1;border-color:#f2a447;color:#844400}.work-day.day-work{background:#15334a;border-color:#29445a;color:#dce9f1}.legend-swatch.day-off{background:#fff;border-color:#dce4e9}.legend-swatch.day-work{background:#15334a;border-color:#29445a}.legend-swatch.shift-x{background:#ffead1;border-color:#f2a447}.legend-swatch.race-free{background:#dff4e9;border-color:#61b487}
 @media(max-width:430px){.work-month-grid{gap:3px;padding:6px}.work-day{min-height:54px;padding:4px;border-radius:7px}.work-day-number{font-size:12px}.work-day-race{font-size:8px}.work-legend{font-size:10px;gap:6px 9px}}
 </style>
+<div id="dayRacesBackdrop" class="day-races-backdrop" role="dialog" aria-modal="true"><div class="day-races-modal"><div class="day-races-head"><h3 id="dayRacesTitle">Pruebas del día</h3><button class="day-races-close" id="dayRacesClose" aria-label="Cerrar">×</button></div><div class="day-races-body" id="dayRacesBody"></div></div></div>
 </body></html>
