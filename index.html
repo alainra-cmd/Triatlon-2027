@@ -337,13 +337,7 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
 <section id="workcalendar" class="panel">
  <h2>Calendario laboral 2027</h2>
  <p class="sub">Consulta tus días libres y las pruebas de triatlón mes a mes.</p>
- <div class="card">
-  <b>Importar calendario laboral</b>
-  <p class="small">Preparado para archivos de calendario .ICS, CSV o JSON. Se guardarán las fechas en este dispositivo y podrás sustituir el archivo cuando tengas una versión actualizada.</p>
-  <label for="workCalendarFile">Seleccionar archivo</label><input id="workCalendarFile" type="file" accept=".ics,.csv,.json,text/calendar,text/csv,application/json">
-  <p class="small" id="workCalendarStatus">Todavía no has importado tu calendario laboral.</p>
-  <button class="secondary" id="clearWorkCalendar" type="button">Quitar calendario importado</button>
- </div>
+>
  <div class="work-month-nav" aria-label="Navegación del calendario laboral">
   <button class="secondary" type="button" data-work-month="-1" aria-label="Mes anterior">‹</button>
   <h3 id="workMonthTitle">Enero 2027</h3>
@@ -356,6 +350,13 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
   <span><i class="legend-swatch day-work"></i>Trabajo</span>
  </div>
  <div id="workMonthGrid" class="work-month-grid" aria-label="Días del mes"></div>
+ <div class="card">
+  <b>Importar calendario laboral</b>
+  <p class="small">Preparado para archivos de calendario .ICS, CSV o JSON. Se guardarán las fechas en este dispositivo y podrás sustituir el archivo cuando tengas una versión actualizada.</p>
+  <label for="workCalendarFile">Seleccionar archivo</label><input id="workCalendarFile" type="file" accept=".ics,.csv,.json,text/calendar,text/csv,application/json">
+  <p class="small" id="workCalendarStatus">Todavía no has importado tu calendario laboral.</p>
+  <button class="secondary" id="clearWorkCalendar" type="button">Quitar calendario importado</button>
+ </div
 </section>
 <section id="reminders" class="panel">
  <h2>Avisos y recordatorios</h2><p class="sub">Crea avisos para aperturas, cierres de inscripción y días de carrera.</p>
