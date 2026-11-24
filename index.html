@@ -623,7 +623,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-source-del
 const photoCacheKey='triathlon2027_photo_cache_v6';
 function readPhotoCache(){try{return JSON.parse(localStorage.getItem(photoCacheKey)||'{}')}catch(_){return {}}}
 const photoCache=readPhotoCache();
-function normPhotoText(v){return String(v||'').replace(/<[^>]*>/g,' ').normalize('NFD').replace(/\\p{M}/gu,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function normPhotoText(v){return String(v||'').replace(/<[^>]*>/g,' ').normalize('NFD').split('').filter(ch=>{const n=ch.charCodeAt(0);return n<768||n>879}).join('').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
 function photoDescription(page){return page.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||''}
 function validLocalityPhoto(page,place){
  const title=normPhotoText(page.title||''),desc=normPhotoText(photoDescription(page)),all=title+' '+desc,target=normPhotoText(place);
