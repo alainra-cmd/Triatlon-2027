@@ -813,6 +813,7 @@ document.querySelectorAll('[data-quick-filter]').forEach(b=>b.addEventListener('
 document.querySelectorAll('[data-quick-tab]').forEach(b=>b.addEventListener('click',()=>openAppTab(b.dataset.quickTab)));
 document.getElementById('navQuickSearch')?.addEventListener('input',e=>{openAppTab('calendar');const f=document.getElementById('search');f.value=e.target.value;f.dispatchEvent(new Event('input',{bubbles:true}));});
 function updateQuickAccessCounts(){const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};put('quickRegisteredCount',data.events.filter(e=>e.registered).length);put('quickInterestedCount',data.events.filter(e=>e.interested).length);put('quickAlertsCount',data.reminders.filter(r=>!r.done).length);}
+updateQuickAccessCounts();
 
 ['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
