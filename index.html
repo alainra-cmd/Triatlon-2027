@@ -211,6 +211,38 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
 .day-race-title{font-weight:850;font-size:15px}.day-race-meta{font-size:12px;color:#bed0de;margin-top:4px}.day-race-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
 @media(max-width:430px){.day-races-backdrop{padding:10px}.day-races-modal{max-height:86vh}}
 
+
+/* V16.2 · navegación A+C: tarjetas principales y accesos rápidos fijos */
+body{padding-top:382px!important;padding-bottom:28px!important}
+html{scroll-padding-top:390px!important}
+nav.main-navigation{position:fixed!important;top:248px!important;left:0!important;right:0!important;bottom:auto!important;width:100%!important;z-index:120!important;display:flex!important;align-items:stretch!important;gap:7px!important;padding:8px 10px!important;overflow-x:auto!important;overflow-y:hidden!important;background:rgba(5,14,25,.98)!important;border:0!important;border-bottom:1px solid #1c5674!important;border-radius:0!important;box-shadow:0 5px 18px #0008!important;backdrop-filter:blur(16px)!important}
+nav.main-navigation button{display:flex!important;flex:1 0 102px!important;min-width:102px!important;min-height:66px!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:7px 8px!important;border:1px solid #087eae!important;border-radius:15px!important;background:linear-gradient(145deg,#102b42,#071827)!important;color:#e7f5ff!important;font-size:12px!important;font-weight:800!important;line-height:1.1!important;white-space:nowrap!important;box-shadow:inset 0 1px 0 #ffffff12,0 3px 9px #0005!important}
+nav.main-navigation button .nav-icon{display:block!important;font-size:25px!important;line-height:1!important}
+nav.main-navigation button.active{background:linear-gradient(145deg,#ff9d25,#e66b00)!important;border:1px solid #ffc36d!important;color:#fff!important;box-shadow:0 0 0 1px #ffb13c,0 4px 15px #ff8a1e66,inset 0 1px 0 #ffffff55!important}
+.quick-access{position:fixed!important;top:322px!important;left:0!important;right:0!important;z-index:119!important;display:flex!important;align-items:center!important;gap:8px!important;padding:8px 12px!important;min-height:60px!important;background:rgba(7,28,45,.98)!important;border-bottom:1px solid #24506c!important;box-shadow:0 5px 16px #0007!important}
+.quick-chip{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;flex:0 0 auto!important;min-height:42px!important;padding:8px 12px!important;border-radius:999px!important;font-size:13px!important;font-weight:800!important;white-space:nowrap!important;color:#fff!important}
+.quick-chip b{font-variant-numeric:tabular-nums}
+.quick-registered{background:#075b40!important;border:1px solid #38d996!important}
+.quick-interested{background:#b95c08!important;border:1px solid #ffb34f!important}
+.quick-alerts{background:#104d78!important;border:1px solid #54baff!important}
+.quick-search{display:flex!important;align-items:center!important;gap:8px!important;flex:1 1 220px!important;min-width:140px!important;height:42px!important;padding:0 12px!important;border:1px solid #91b7d1!important;border-radius:999px!important;background:#173b56!important;color:#e9f6ff!important;font-size:23px!important}
+.quick-search input{min-width:0!important;width:100%!important;margin:0!important;padding:7px 0!important;border:0!important;outline:0!important;background:transparent!important;color:#fff!important;font-size:13px!important;box-shadow:none!important}
+.quick-search input::placeholder{color:#d0e2ef!important}
+.quick-chip:focus-visible,nav.main-navigation button:focus-visible{outline:3px solid #fff!important;outline-offset:2px!important}
+@media(max-width:650px){
+ body{padding-top:352px!important}
+ html{scroll-padding-top:360px!important}
+ nav.main-navigation{top:218px!important;gap:6px!important;padding:7px 8px!important}
+ nav.main-navigation button{flex-basis:91px!important;min-width:91px!important;min-height:61px!important;padding:6px 6px!important;font-size:10px!important;border-radius:13px!important}
+ nav.main-navigation button .nav-icon{font-size:23px!important}
+ .quick-access{top:286px!important;gap:6px!important;padding:7px 8px!important;min-height:58px!important;overflow-x:auto!important}
+ .quick-chip{min-height:39px!important;padding:7px 9px!important;font-size:11px!important;gap:4px!important}
+ .quick-search{flex:1 0 150px!important;min-width:150px!important;height:39px!important;padding:0 9px!important}
+ .quick-search input{font-size:11px!important}
+}
+@media(max-width:380px){.quick-chip{padding:6px 7px!important;font-size:10px!important}.quick-access{gap:5px!important}}
+@media(prefers-reduced-motion:reduce){nav.main-navigation,nav.main-navigation button,.quick-chip{transition:none!important}}
+
 </style>
 
 <style id="community-flag-style">
@@ -228,14 +260,20 @@ nav button.active{background:#102b43!important;border-color:#1d4e70!important;co
   <div class="stat"><b id="countReminders">0</b><span>AVISOS ACTIVOS</span></div>
  </div>
 </header>
-<nav aria-label="Navegación principal">
+<nav aria-label="Navegación principal" class="main-navigation">
  <button class="active" data-tab="calendar"><span class="nav-icon">🏁</span><span>Pruebas</span></button>
- <button data-tab="map"><span class="nav-icon">🗺️</span><span>Mapa</span></button>
+ <button data-tab="map"><span class="nav-icon">📍</span><span>Mapa</span></button>
  <button data-tab="myraces"><span class="nav-icon">🏆</span><span>Mi temporada</span></button>
- <button data-tab="workcalendar"><span class="nav-icon">📅</span><span>Calendario</span></button>
+ <button data-tab="workcalendar"><span class="nav-icon">🗓️</span><span>Calendario</span></button>
  <button data-tab="reminders"><span class="nav-icon">🔔</span><span>Avisos</span></button>
- <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Datos</span></button>
+ <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Datos y ajustes</span></button>
 </nav>
+<div class="quick-access" role="group" aria-label="Accesos rápidos">
+ <button type="button" class="quick-chip quick-registered" data-quick-filter="registered"><span>✓</span> Inscrito <b id="quickRegisteredCount">0</b></button>
+ <button type="button" class="quick-chip quick-interested" data-quick-filter="interested"><span>★</span> Me interesa <b id="quickInterestedCount">0</b></button>
+ <button type="button" class="quick-chip quick-alerts" data-quick-tab="reminders"><span>♟</span> Avisos <b id="quickAlertsCount">0</b></button>
+ <label class="quick-search"><span aria-hidden="true">⌕</span><input id="navQuickSearch" type="search" placeholder="Buscar prueba, lugar o provincia…" aria-label="Buscar prueba, lugar o provincia"></label>
+</div>
 <main>
 <section id="calendar" class="panel active">
  <div class="calendar-title-row"><div><h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p></div><button class="primary refresh-title-btn" id="refreshStatuses">Actualizar estado</button></div>
@@ -417,7 +455,7 @@ const hundredByHundred2027=[
 ].map((x,i)=>({id:'100x100half-2027-'+i,name:x.name,country:'España',type:'Triatlón',date:x.date,place:x.place,distance:'Varias distancias',interested:false,registered:false,cost:'',status:'Calendario oficial publicado',dateStatus:'Confirmada',availability:'Por verificar',checkedAt:'2026-11-14',sourceUrl:'https://100x100half.com/es/reglamento',url:'https://100x100half.com/',notes:'Modalidades anunciadas: '+x.distances+'. Inscripciones y disponibilidad por verificar en la web oficial.'}));
 let data=load();
 function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.events)){const ids=new Set(d.events.map(e=>e.id));d.events.push(...seed.filter(e=>!ids.has(e.id)),...extraSeed.filter(e=>!ids.has(e.id)),...franchiseSeed.filter(e=>!ids.has(e.id)&&!d.events.some(old=>old.name===e.name&&old.place===e.place&&old.date===e.date)));d.reminders=Array.isArray(d.reminders)?d.reminders:[];d.fired=Array.isArray(d.fired)?d.fired:[];d.customSources=Array.isArray(d.customSources)?d.customSources:[];d.workCalendar=Array.isArray(d.workCalendar)?d.workCalendar:[];return d}}catch(e){}return {events:[...seed,...extraSeed,...franchiseSeed],reminders:[],fired:[],customSources:[],workCalendar:[]}}
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
+function save(){updateQuickAccessCounts();localStorage.setItem(KEY,JSON.stringify(data));render();if(document.getElementById('map')?.classList.contains('active'))renderMap()}
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function compareEventDate(a,b){const da=/^\d{4}-\d{2}-\d{2}$/.test(a.date||'')?a.date:'9999-99-99';const db=/^\d{4}-\d{2}-\d{2}$/.test(b.date||'')?b.date:'9999-99-99';return da.localeCompare(db)||String(a.name||'').localeCompare(String(b.name||''),'es');}
 function dateLabel(s){if(!s)return 'Fecha pendiente';let d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}
@@ -770,6 +808,12 @@ function renderMap(){
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 // La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar();window.scrollTo({top:0,behavior:'smooth'});}));
+function openAppTab(tab){const b=document.querySelector('nav.main-navigation [data-tab="'+tab+'"]');if(b)b.click();}
+document.querySelectorAll('[data-quick-filter]').forEach(b=>b.addEventListener('click',()=>{openAppTab('calendar');const f=document.getElementById('interestFilter');f.value=b.dataset.quickFilter;f.dispatchEvent(new Event('input',{bubbles:true}));document.querySelectorAll('[data-quick-filter]').forEach(x=>x.classList.toggle('quick-selected',x===b));}));
+document.querySelectorAll('[data-quick-tab]').forEach(b=>b.addEventListener('click',()=>openAppTab(b.dataset.quickTab)));
+document.getElementById('navQuickSearch')?.addEventListener('input',e=>{openAppTab('calendar');const f=document.getElementById('search');f.value=e.target.value;f.dispatchEvent(new Event('input',{bubbles:true}));});
+function updateQuickAccessCounts(){const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};put('quickRegisteredCount',data.events.filter(e=>e.registered).length);put('quickInterestedCount',data.events.filter(e=>e.interested).length);put('quickAlertsCount',data.reminders.filter(r=>!r.done).length);}
+
 ['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
 document.addEventListener('click',e=>{
