@@ -259,6 +259,16 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
  nav.main-navigation button .nav-icon{font-size:14px!important}
 }
 
+
+/* Búsqueda unificada con progreso combinado */
+.unified-search-button{font-size:15px!important;min-height:46px!important;background:linear-gradient(105deg,#078ac5,#00bfc8)!important;color:#001522!important;border:1px solid #51e5ec!important}
+#scanProgressWrap{display:block;margin:10px 0 14px}
+#scanProgressWrap[hidden]{display:none}
+#scanProgressWrap .progress-track{height:34px;background:#132b40;border:1px solid #2c5875;border-radius:10px}
+#scanProgressFill{width:0;background:linear-gradient(90deg,#087ec0,#00d8c8)!important;transition:width .25s ease}
+#scanProgressText{font-size:12px}
+#webDiscoveryCard{margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+
 </style>
 
 <style id="community-flag-style">
@@ -364,15 +374,15 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
   <b>Fuentes del calendario</b>
   <p class="small">Añade fuentes y busca posibles pruebas nuevas. La extracción depende del formato y de los bloqueos de cada web; siempre revisarás los resultados antes de incorporarlos.</p>
   <div id="calendarSourceList"></div>
-  <button class="secondary" id="scanCalendarSources" type="button" style="width:100%;margin:8px 0">⌕ Buscar nuevas pruebas en mis fuentes</button>
-  <p class="small" id="scanSourcesStatus">Busca calendarios estructurados y páginas accesibles. Los resultados se revisan antes de añadirlos.</p>
-  <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i><span class="progress-label" id="scanProgressText">0 % · 0 de 0 fuentes</span></div></div>
+  <p class="small">Una sola búsqueda combina tus páginas guardadas, calendarios oficiales, federaciones, World Triathlon, Europe Triathlon, IRONMAN, Challenge y noticias de organizadores.</p>
+  <button class="primary unified-search-button" id="runUnifiedSearch" type="button" style="width:100%;margin:8px 0">⌕ Buscar nuevas pruebas en todas las fuentes</button>
+  <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i><span class="progress-label" id="scanProgressText">0 % · Preparando búsqueda…</span></div></div>
+  <p class="small" id="scanSourcesStatus">Todavía no se ha iniciado una búsqueda conjunta.</p>
+  <button class="hidden" id="scanCalendarSources" type="button" aria-hidden="true" tabindex="-1"></button>
   <div id="sourceScanResults" class="scan-results"></div>
-  <div class="web-discovery card" id="webDiscoveryCard">
-   <b>Buscador web de nuevas competiciones</b>
-   <p class="small">Busca en calendarios federativos, World Triathlon, Europe Triathlon, IRONMAN, Challenge y noticias de organizadores. Los resultados externos se muestran como candidatos: revisa siempre la fuente antes de incorporarlos.</p>
-   <button class="primary" id="discoverWebNow" type="button" style="width:100%">⌕ Buscar en Internet ahora</button>
-   <p class="small" id="webDiscoveryStatus">Última búsqueda: todavía no realizada.</p>
+  <div class="web-discovery" id="webDiscoveryCard">
+   <p class="small hidden" id="webDiscoveryStatus">Última búsqueda: todavía no realizada.</p>
+   <button class="hidden" id="discoverWebNow" type="button" aria-hidden="true" tabindex="-1"></button>
    <div id="webDiscoveryResults" class="scan-results"></div>
   </div>
   <form id="addSourceForm">
@@ -723,8 +733,9 @@ function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.
 function candidateId(name,place,date){return 'scan-'+btoa(unescape(encodeURIComponent(`${name}|${place}|${date}`))).replace(/[^a-z0-9]/gi,'').slice(0,24).toLowerCase()}
 function showScanCandidates(items){const box=document.getElementById('sourceScanResults');if(!box)return;box.innerHTML=items.length?items.map((x,i)=>`<div class="scan-candidate"><b>${esc(x.name)}</b><div class="meta">${dateLabel(x.date)} · ${esc(x.place)} · ${esc(x.sourceName)}</div><button class="secondary" data-scan-add="${i}">Añadir al calendario</button></div>`).join(''):'<div class="small">No se han encontrado pruebas nuevas verificables en las fuentes consultadas.</div>';box._items=items;}
 document.getElementById('scanCalendarSources')?.addEventListener('click',async()=>{
+ window.sourceScanProgress=0;window.updateCombinedSearchProgress?.('source',0,'Consultando tus fuentes…');
  const status=document.getElementById('scanSourcesStatus'),btn=document.getElementById('scanCalendarSources');btn.disabled=true;status.textContent='Buscando en las fuentes guardadas…';let found=[];const progressWrap=document.getElementById('scanProgressWrap'),progressFill=document.getElementById('scanProgressFill'),progressText=document.getElementById('scanProgressText');progressWrap.hidden=false;
- const sources=(data.customSources||[]);const total=sources.length+1;let completed=0;const tick=()=>{const pct=total?Math.round(completed/total*100):100;progressFill.style.width=pct+'%';progressText.textContent=`${pct} % · ${completed} de ${total} fuentes procesadas`;};tick();
+ const sources=(data.customSources||[]);const total=sources.length+1;let completed=0;const tick=()=>{const pct=total?Math.round(completed/total*100):100;window.updateCombinedSearchProgress?.('source',pct,`Fuentes propias: ${pct}%`);};tick();
  // Fuente 100x100Half integrada en la búsqueda general, sin botón exclusivo.
  const builtIn=hundredByHundred2027.filter(e=>!data.events.some(old=>old.name===e.name&&old.date===e.date&&old.place===e.place));found.push(...builtIn.map(e=>({...e,sourceName:'100x100Half'})));completed++;tick();
  for(const src of sources){try{
@@ -732,7 +743,7 @@ document.getElementById('scanCalendarSources')?.addEventListener('click',async()
   if(/\.json(?:$|\?)/i.test(src.url)||/\.csv(?:$|\?)/i.test(src.url)){let arr;if(/\.csv(?:$|\?)/i.test(src.url)){const lines=raw.split(/\r?\n/);const headers=(lines.shift()||'').split(/[;,]/).map(x=>x.trim().toLowerCase());arr=lines.map(line=>{const cols=line.split(/[;,]/);const o={};headers.forEach((h,i)=>o[h]=(cols[i]||'').trim().replace(/^\"|\"$/g,''));return {date:o.date||o.fecha||o.start,name:o.name||o.nombre||o.title||o.prueba,place:o.place||o.city||o.localidad||o.location,distance:o.distance||o.distancia||o.modality,type:o.type||o.tipo,url:o.url||o.link};});}else{const parsed=JSON.parse(raw);arr=Array.isArray(parsed)?parsed:(parsed.events||parsed.races||parsed.days||[]);}for(const v of arr){const date=String(v.date||v.fecha||v.start||'').slice(0,10);const name=v.name||v.nombre||v.title||v.event||v.prueba;if(/^2027-\d\d-\d\d$/.test(date)&&name){const place=v.place||v.city||v.localidad||v.location||'Localidad por confirmar';found.push({id:candidateId(name,place,date),name,country:v.country||'España',type:v.type||v.tipo||'Triatlón',date,place,distance:v.distance||v.distancia||v.modality||'Por confirmar',sourceUrl:src.url,url:v.url||v.link||src.url,availability:'Por verificar',dateStatus:'Pendiente de verificar',status:'Detectada en fuente externa',sourceName:src.name});}}}
   else {const doc=new DOMParser().parseFromString(raw,'text/html');const links=[...doc.querySelectorAll('a[href]')];for(const a of links){const label=(a.textContent||'').trim().replace(/\s+/g,' ');if(label.length<8||label.length>130)continue;const context=(a.parentElement?.textContent||label).trim().replace(/\s+/g,' ');const date=scanDate(context);if(!date||!/triatl|duatl|aquatl|ironman|challenge|race|carrera|competici/i.test(context+' '+label))continue;const place=(context.match(/(?:en|@|–|-|·)\s*([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ'’ -]{2,35})/)||[])[1]||'Localidad por confirmar';found.push({id:candidateId(label,place,date),name:label,country:'España',type:/duatl/i.test(context)?'Duatlón':'Triatlón',date,place,distance:'Por confirmar',sourceUrl:src.url,url:new URL(a.getAttribute('href'),src.url).href,availability:'Por verificar',dateStatus:'Pendiente de verificar',status:'Detectada en página; revisar datos',sourceName:src.name});}}
  }catch(_){}finally{completed++;tick();}}
- const seen=new Set();found=found.filter(x=>{const k=`${x.name}|${x.date}|${x.place}`.toLowerCase();if(seen.has(k)||data.events.some(e=>`${e.name}|${e.date}|${e.place}`.toLowerCase()===k))return false;seen.add(k);return true;});showScanCandidates(found);status.textContent=`Búsqueda terminada: ${found.length} posibles pruebas nuevas. Revisa cada resultado antes de añadirlo. Algunas webs pueden bloquear la consulta o requerir una fuente estructurada.`;progressFill.style.width='100%';progressText.textContent=`100 % · ${total} de ${total} fuentes procesadas`;btn.disabled=false;
+ const seen=new Set();found=found.filter(x=>{const k=`${x.name}|${x.date}|${x.place}`.toLowerCase();if(seen.has(k)||data.events.some(e=>`${e.name}|${e.date}|${e.place}`.toLowerCase()===k))return false;seen.add(k);return true;});showScanCandidates(found);status.textContent=`Búsqueda terminada: ${found.length} posibles pruebas nuevas. Revisa cada resultado antes de añadirlo. Algunas webs pueden bloquear la consulta o requerir una fuente estructurada.`;window.updateCombinedSearchProgress?.('source',100,`Fuentes propias: 100% (${total} procesadas)`);btn.disabled=false;
 });
 document.addEventListener('click',e=>{const b=e.target.closest('[data-scan-add]');if(!b)return;const box=document.getElementById('sourceScanResults'),items=box?box._items||[]:[],x=items[Number(b.dataset.scanAdd)];if(!x)return;const {sourceName,...event}=x;event.interested=false;event.registered=false;event.cost='';event.notes='Importada desde fuente externa; comprobar fecha, distancia y localidad con el organizador.';data.events.push(event);items.splice(Number(b.dataset.scanAdd),1);showScanCandidates(items);save();});
 
@@ -818,6 +829,22 @@ function renderMap(){
 }
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 // La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
+window.updateCombinedSearchProgress=(phase,pct,label)=>{
+ const state=window._combinedSearchProgress||(window._combinedSearchProgress={source:0,web:0});
+ state[phase]=Math.max(state[phase]||0,Math.min(100,Math.max(0,pct)));
+ const total=Math.round((state.source+state.web)/2),fill=document.getElementById('scanProgressFill'),txt=document.getElementById('scanProgressText'),wrap=document.getElementById('scanProgressWrap');
+ if(fill)fill.style.width=total+'%';if(txt)txt.textContent=total+' % · '+label;if(wrap)wrap.hidden=false;
+};
+document.getElementById('runUnifiedSearch')?.addEventListener('click',()=>{
+ const main=document.getElementById('runUnifiedSearch'),own=document.getElementById('scanCalendarSources'),web=document.getElementById('discoverWebNow');
+ if(!own||!web)return;
+ main.disabled=true;main.textContent='Buscando en todas las fuentes…';
+ window._combinedSearchProgress={source:0,web:0};window.updateCombinedSearchProgress('source',0,'Preparando fuentes…');window.updateCombinedSearchProgress('web',0,'Preparando búsqueda web…');
+ document.getElementById('scanSourcesStatus').textContent='Consulta conjunta en curso. Los resultados aparecerán agrupados por origen.';
+ own.click();web.click();
+ const check=()=>{if(!own.disabled&&!web.disabled){main.disabled=false;main.textContent='⌕ Buscar nuevas pruebas en todas las fuentes';window.updateCombinedSearchProgress('source',100,'Búsqueda conjunta terminada');window.updateCombinedSearchProgress('web',100,'Búsqueda conjunta terminada');document.getElementById('scanSourcesStatus').textContent='Búsqueda conjunta finalizada. Revisa los resultados de ambas fuentes antes de añadir pruebas.';return;}setTimeout(check,350);};
+ setTimeout(check,350);
+});
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar();window.scrollTo({top:0,behavior:'smooth'});}));
 
 
@@ -1086,7 +1113,7 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
  }
  async function loadCurated(){try{const r=await fetch('./discovery-feed.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error();const f=await r.json();return Array.isArray(f.candidates)?f.candidates:[];}catch(_){return [];}}
  async function liveSearch(){
-  const results=[];
+  const results=[];window.updateCombinedSearchProgress?.('web',0,'Búsqueda web: 0%');
   for(let i=0;i<queries.length;i++){
    const rss='https://www.bing.com/news/search?q='+encodeURIComponent(queries[i])+'&format=rss';
    try{
@@ -1102,7 +1129,7 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
      results.push({name:title.slice(0,150),date,place:pm?pm[1].trim():'',country:'Por determinar',type:/duatl/i.test(text)?'Duatlón':(/aquatl/i.test(text)?'Acuatlón':'Triatlón'),distance:'Por confirmar',url,sourceUrl:url,sourceName:'Búsqueda web · Bing News',confidence:'discovery',availability:'Por verificar',dateStatus:date?'Pendiente de verificar':'Sin fecha extraída'});
     });
    }catch(_){}
-   status.textContent='Buscando en Internet… '+(i+1)+'/'+queries.length+' consultas';
+   status.textContent='Buscando en Internet… '+(i+1)+'/'+queries.length+' consultas';window.updateCombinedSearchProgress?.('web',Math.round((i+1)/queries.length*100),'Búsqueda web: '+Math.round((i+1)/queries.length*100)+'%');
   }
   return results;
  }
@@ -1112,7 +1139,7 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
    const [curated,live]=await Promise.all([loadCurated(),liveSearch()]);const all=[...curated,...live],seen=new Set(),unique=[];
    all.forEach(x=>{const k=norm(x.name)+'|'+(x.date||'')+'|'+norm(x.place||'');if(!x.name||seen.has(k)||duplicate(x))return;seen.add(k);unique.push({...x,id:x.id||candidateId(x.name,x.place||'',x.date||'')});});
    unique.sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));render(unique);
-   status.textContent='Búsqueda finalizada: '+unique.length+' candidatos nuevos. Los resultados externos necesitan revisión; los calendarios oficiales se identifican por separado.';
+   status.textContent='Búsqueda finalizada: '+unique.length+' candidatos nuevos. Los resultados externos necesitan revisión; los calendarios oficiales se identifican por separado.';window.updateCombinedSearchProgress?.('web',100,'Búsqueda web completada');
   }catch(e){status.textContent='No se pudo completar la búsqueda. Comprueba la conexión e inténtalo de nuevo.';}
   finally{btn.disabled=false;}
  });
