@@ -68,7 +68,7 @@ def date_from(text):
  return ""
 
 def fetch(url):
- r=session.get(url,timeout=22,allow_redirects=True)
+ r=session.get(url,timeout=(5,12),allow_redirects=True)
  r.raise_for_status()
  return r.url,r.headers.get("content-type","").lower(),r.content
 
@@ -165,6 +165,26 @@ def extract_cards(soup,source,page_url):
   if item:out.append(item)
  return out
 
+def extract_paragraphs(soup,source,page_url):
+ out=[]
+ for node in soup.find_all(["p","li"]):
+  text=clean(node.get_text(" ",strip=True))
+  if len(text)<18 or len(text)>420 or not SPORT.search(text):continue
+  date=date_from(text)
+  if not date:continue
+  m=re.search(r"\\b\\d{1,2}\\s+(?:de\\s+)?(?:January|February|March|April|May|June|July|August|September|October|November|December|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|diciembre|janeiro|fevereiro|março|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\\s+(?:de\\s+)?2027\\b|\\b(?:20)27[-/.]\\d{1,2}[-/.]\\d{1,2}\\b|\\b\\d{1,2}[./-]\\d{1,2}[./-]2027\\b",text,re.I)
+  if not m:continue
+  before=text[:m.start()].strip(" ,;:·-")
+  after=text[m.end():].strip(" ,;:·-")
+  name=before if len(before)>5 and SPORT.search(before) else (after if len(after)>5 else text)
+  if len(name)>150:name=name[:150]
+  place=""
+  pm=re.search(r"\\b(?:en|in|em|at)\\s+([A-ZÁÉÍÓÚÑ][\\wÁÉÍÓÚÑáéíóúñ'’ -]{2,35})",text)
+  if pm:place=pm.group(1).strip()
+  item=event_obj(name,date,place,source,page_url,text,infer_country(text))
+  if item:out.append(item)
+ return out
+
 def candidate_links(soup,base,source):
  domain=urlparse(base).netloc
  found=[]
@@ -200,7 +220,7 @@ def scan_source(source):
   pages.append((final,ctype,body))
   if "pdf" not in ctype and not body[:4]==b"%PDF":
    soup=BeautifulSoup(body,"html.parser")
-   for link in candidate_links(soup,final,source)[:8]:
+   for link in candidate_links(soup,final,source)[:5]:
     try:
      u,ct,b=fetch(link);pages.append((u,ct,b));time.sleep(.25)
     except Exception:pass
@@ -212,7 +232,7 @@ def scan_source(source):
   soup=BeautifulSoup(body,"html.parser")
   found.extend(jsonld_events(soup,source,url))
   found.extend(extract_tables(soup,source,url))
-  found.extend(extract_cards(soup,source,url))
+  found.extend(extract_cards(soup,source,url))\n  found.extend(extract_paragraphs(soup,source,url))
  # Franchise pages are explicitly filtered to Europe by the provider's own region selection where available.
  if source["id"]=="challenge-europe":
   found=[x for x in found if norm(x.get("country","")) in EUROPE or x.get("country")=="Europe"]
