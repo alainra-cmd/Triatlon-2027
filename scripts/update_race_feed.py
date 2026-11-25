@@ -14,25 +14,26 @@ SOURCES = [
  {"id":"fetri","name":"FETRI · España","country":"España","kind":"federation","url":"https://triatlon.org/"},
  {"id":"fetri-2027-calendar","name":"FETRI · Calendario nacional e internacional 2027","country":"España","kind":"federation","url":"https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"},
  {"id":"andalucia","name":"Federación Andaluza","country":"España","kind":"regional","url":"https://triatlonandalucia.org/"},
- {"id":"aragon","name":"Federación Aragonesa","country":"España","kind":"regional","url":"https://www.triatlonaragon.org/"},
- {"id":"asturias","name":"Federación Asturiana","country":"España","kind":"regional","url":"https://triatlonasturias.es/"},
+ {"id":"aragon","name":"Federación Aragonesa · Competiciones","country":"España","kind":"regional","url":"https://www.triatlonaragon.org/Competiciones"},
+ {"id":"asturias","name":"Federación Asturiana · Eventos","country":"España","kind":"regional","url":"https://triatlonasturias.es/events/"},
  {"id":"baleares","name":"Federació Balear","country":"España","kind":"regional","url":"https://fetrib.com/"},
  {"id":"canarias","name":"Federación Canaria","country":"España","kind":"regional","url":"https://www.fecantri.org/"},
  {"id":"cantabria","name":"Federación Cántabra","country":"España","kind":"regional","url":"https://fetricantabria.com/"},
  {"id":"clm","name":"Federación Castilla-La Mancha","country":"España","kind":"regional","url":"https://www.triatlonclm.org/"},
  {"id":"cyl","name":"Federación Castilla y León","country":"España","kind":"regional","url":"https://www.triatloncastillayleon.com/"},
  {"id":"cataluna","name":"Federació Catalana","country":"España","kind":"regional","url":"https://www.triatlo.org/competicions/?idany=2027&oficial=0"},
- {"id":"euskadi","name":"Euskadiko Triatloi Federazioa","country":"España","kind":"regional","url":"https://triatloi.org/es/"},
+ {"id":"euskadi","name":"Euskadiko Triatloi Federazioa · Calendario","country":"España","kind":"regional","url":"https://triatloi.org/es/calendario/"},
  {"id":"extremadura","name":"Federación Extremeña","country":"España","kind":"regional","url":"https://triatlonextremadura.com/"},
  {"id":"galicia","name":"Federación Galega","country":"España","kind":"regional","url":"https://fegatri.org/"},
- {"id":"madrid","name":"Federación Madrileña","country":"España","kind":"regional","url":"https://triatlonmadrid.org/"},
- {"id":"murcia","name":"Federación de Murcia","country":"España","kind":"regional","url":"https://trimurcia.es/"},
+ {"id":"madrid","name":"Federación Madrileña · Calendario","country":"España","kind":"regional","url":"https://triatlonmadrid.org/competiciones/calendario/"},
+ {"id":"murcia","name":"Federación de Murcia · Calendario provisional 2027 (PDF)","country":"España","kind":"regional","url":"https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf"},
  {"id":"navarra","name":"Federación Navarra","country":"España","kind":"regional","url":"https://www.navarratriatlon.com/"},
  {"id":"rioja","name":"Federación Riojana","country":"España","kind":"regional","url":"https://fertriatlon.com/"},
  {"id":"valencia","name":"Federació Comunitat Valenciana","country":"España","kind":"regional","url":"https://www.triatlocv.org/"},
  {"id":"ceuta","name":"Federación de Ceuta","country":"España","kind":"regional","url":"https://fetriceuta.wixsite.com/fetriceuta"},
  {"id":"melilla","name":"Federación Melillense","country":"España","kind":"regional","url":"https://melillatriatlon.es/"},
  {"id":"portugal","name":"Federação de Triatlo de Portugal","country":"Portugal","kind":"federation","url":"https://www.federacao-triatlo.pt/"},
+ {"id":"euskadi-entries","name":"Euskadi · Inscripciones federativas (RockTheSport)","country":"España","kind":"regional","url":"https://inscripciones.triatloi.org/es/events"},
  {"id":"ironman-europe","name":"IRONMAN · Europa (web oficial)","country":"Europe","kind":"franchise","url":"https://www.ironman.com/races"},
  {"id":"ironman-directory","name":"IRONMAN · Directorio europeo de contraste","country":"Europe","kind":"supplemental","url":"https://findmytris.com/races/continent/europe"},
  {"id":"challenge-europe","name":"Challenge Family · Europa","country":"Europe","kind":"franchise","url":"https://challengefamily.com/races/?_continent=europe"},
@@ -279,14 +280,22 @@ def parse_fetri_2027(source):
 
 def candidate_links(soup,base,source):
  domain=urlparse(base).netloc.lower().removeprefix("www.")
- found=[]
+ ranked={}
  for a in soup.find_all("a",href=True):
   href=urljoin(base,a["href"]).split("#")[0]
   p=urlparse(href)
   host=p.netloc.lower().removeprefix("www.")
   if p.scheme not in ("http","https") or not (host==domain or host.endswith("."+domain)):continue
-  if LINK_WORDS.search(href+" "+a.get_text(" ",strip=True)) and href not in found:found.append(href)
- return found[:12]
+  label=clean(a.get_text(" ",strip=True))
+  combined=(href+" "+label).lower()
+  if not LINK_WORDS.search(combined):continue
+  score=0
+  if re.search(r"calend|calendar|egutegi|competic|event|prova|prueba",label,re.I):score+=8
+  if re.search(r"calend|calendar|egutegi|competic|event|prova|prueba",p.path,re.I):score+=6
+  if re.search(r"2027|temporada|tempada",combined,re.I):score+=4
+  if p.path.lower().endswith(".pdf"):score+=5
+  if href not in ranked or score>ranked[href]:ranked[href]=score
+ return [u for u,_ in sorted(ranked.items(),key=lambda item:(-item[1],item[0]))[:20]]
 
 def parse_pdf(content,source,url):
  out=[]
@@ -311,12 +320,13 @@ def scan_source(source):
  try:
   final,ctype,body=fetch(source["url"])
   pages.append((final,ctype,body))
+  failed_links=[]
   if "pdf" not in ctype and not body[:4]==b"%PDF":
    soup=BeautifulSoup(body,"html.parser")
-   for link in candidate_links(soup,final,source)[:5]:
+   for link in candidate_links(soup,final,source)[:12]:
     try:
-     u,ct,b=fetch(link);pages.append((u,ct,b));time.sleep(.25)
-    except Exception:pass
+     u,ct,b=fetch(link);pages.append((u,ct,b));time.sleep(.2)
+    except Exception as e:failed_links.append(urlparse(link).path+": "+str(e)[:90])
  except Exception as e:
   return [],{"id":source["id"],"name":source["name"],"status":"error","message":str(e)[:180],"pages":0,"events":0}
  found=[]
@@ -339,7 +349,9 @@ def scan_source(source):
   k=(norm(x["name"]),x["date"],norm(x["place"]))
   unique[k]=x
  items=list(unique.values())
- return items,{"id":source["id"],"name":source["name"],"status":"ok" if items else "no_events_found","message":"Extracción completada" if items else "Página consultada; no se pudo reconocer un calendario estructurado","pages":len(pages),"events":len(items)}
+ message="Extracción completada" if items else "Se han consultado "+str(len(pages))+" páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión."
+ if failed_links:message+=" Enlaces secundarios fallidos: "+"; ".join(failed_links[:3])
+ return items,{"id":source["id"],"name":source["name"],"status":"ok" if items else "needs_review","message":message,"pages":len(pages),"events":len(items),"failedLinks":len(failed_links)}
 
 def main():
  all_events=[];reports=[]
