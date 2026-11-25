@@ -73,6 +73,7 @@ def fetch(url):
 
 def event_obj(name,date,place,source,url,kind="",country=None,dist=""):
  if not name or not date:return None
+ if source['id']=='ironman-europe' and (not country or norm(country) not in EUROPE):return None
  name=clean(name)[:180]
  if not SPORT.search(name+" "+kind):return None
  if source["kind"]=="franchise" and source["id"]=="ironman-europe" and country and norm(country) not in EUROPE:return None
