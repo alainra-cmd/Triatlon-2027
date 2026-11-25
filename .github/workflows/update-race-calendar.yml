@@ -1,5 +1,7 @@
 name: Actualizar calendario de triatlón
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: "17 */12 * * *"
@@ -16,6 +18,10 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install requests beautifulsoup4 pypdf
+      - name: Validar sintaxis y ejecutar pruebas automáticas
+        run: |
+          python -m py_compile scripts/update_race_feed.py scripts/test_update_race_feed.py
+          python -m unittest discover -s scripts -p 'test_*.py' -v
       - name: Extraer calendarios oficiales
         run: python scripts/update_race_feed.py
       - name: Publicar feed si hay cambios
