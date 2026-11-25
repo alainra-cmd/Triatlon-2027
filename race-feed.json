@@ -1,10 +1,26 @@
 {
-  "generatedAt": "2026-11-25T18:36:08.918684+00:00",
+  "generatedAt": "2026-11-25T18:42:02.960155+00:00",
   "season": 2027,
   "sourceCount": 25,
   "successfulSources": 8,
-  "failedSources": 2,
+  "failedSources": 3,
   "events": [
+    {
+      "id": "challenge-europe-a59407935cc986",
+      "name": "Turku",
+      "date": "",
+      "place": "Turku",
+      "country": "Finland",
+      "type": "Triatlón",
+      "distance": "Middle distance, Junior Challenge, Super sprint distance",
+      "franchise": "Challenge",
+      "url": "https://challengefamily.com/races/?_triathlon=middle-distance",
+      "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
+      "sourceName": "Challenge Family · Europa",
+      "dateStatus": "Fecha pendiente de confirmación",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
     {
       "id": "andalucia-8fb80ac8a3e31a",
       "name": "VIII Gala del Triatlón Onubense 2026 en La Rábida (Palos de la Frontera)",
@@ -1190,6 +1206,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "ironman-directory-caff5d3bde5e52",
+      "name": "5150 Kraichgau",
+      "date": "2027-05-23",
+      "place": "Kraichgau",
+      "country": "Germany",
+      "type": "Triatlón",
+      "distance": "5150",
+      "franchise": "IRONMAN",
+      "url": "https://findmytris.com/events/5150-kraichgau",
+      "sourceUrl": "https://findmytris.com/races/continent/europe",
+      "sourceName": "IRONMAN · Directorio europeo de contraste",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "ironman-directory-2c4c781519b1fe",
       "name": "IRONMAN 70.3 Aix-en-Provence",
       "date": "2027-05-23",
@@ -1633,6 +1665,22 @@
       "url": "https://www.triatlo.org/competicions/informacio/?idcompeticio=27090",
       "sourceUrl": "https://www.triatlo.org/competicions/?idany=2027&oficial=0",
       "sourceName": "Federació Catalana",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-directory-822b77d2d6dac6",
+      "name": "5150 Westfriesland",
+      "date": "2027-06-20",
+      "place": "Hoorn",
+      "country": "Netherlands",
+      "type": "Triatlón",
+      "distance": "5150",
+      "franchise": "IRONMAN",
+      "url": "https://findmytris.com/events/5150-westfriesland",
+      "sourceUrl": "https://findmytris.com/races/continent/europe",
+      "sourceName": "IRONMAN · Directorio europeo de contraste",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -2337,6 +2385,22 @@
       "url": "https://www.triatlo.org/competicions/informacio/?idcompeticio=270450",
       "sourceUrl": "https://www.triatlo.org/competicions/?idany=2027&oficial=0",
       "sourceName": "Federació Catalana",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-directory-205c90d037228f",
+      "name": "5150 Erkner",
+      "date": "2027-09-11",
+      "place": "Erkner",
+      "country": "Germany",
+      "type": "Triatlón",
+      "distance": "5150",
+      "franchise": "IRONMAN",
+      "url": "https://findmytris.com/events/5150-erkner",
+      "sourceUrl": "https://findmytris.com/races/continent/europe",
+      "sourceName": "IRONMAN · Directorio europeo de contraste",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -3122,9 +3186,9 @@
     {
       "id": "rioja",
       "name": "Federación Riojana",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
+      "status": "error",
+      "message": "403 Client Error: Forbidden for url: https://fertriatlon.com/",
+      "pages": 0,
       "events": 0
     },
     {
@@ -3173,7 +3237,7 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 6,
-      "events": 49
+      "events": 52
     },
     {
       "id": "challenge-europe",
@@ -3181,7 +3245,7 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 6,
-      "events": 11
+      "events": 12
     }
   ]
 }
