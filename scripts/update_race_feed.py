@@ -233,7 +233,8 @@ def scan_source(source):
   soup=BeautifulSoup(body,"html.parser")
   found.extend(jsonld_events(soup,source,url))
   found.extend(extract_tables(soup,source,url))
-  found.extend(extract_cards(soup,source,url))\n  found.extend(extract_paragraphs(soup,source,url))
+  found.extend(extract_cards(soup,source,url))
+  found.extend(extract_paragraphs(soup,source,url))
  # Franchise pages are explicitly filtered to Europe by the provider's own region selection where available.
  if source["id"]=="challenge-europe":
   found=[x for x in found if norm(x.get("country","")) in EUROPE or x.get("country")=="Europe"]
