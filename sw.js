@@ -1,5 +1,5 @@
 /* Actualización de lógica de banderas y comunidades; se conserva caché V16.1. */
-const CACHE='triatlon-2027-v16-5-auto-feed-1';
+const CACHE='triatlon-2027-v16-5-federation-scan-1';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','./hero-triatlon.jpg','./fondo-alain.jpg','./cabecera-alain-triatlon-2027.jpg','./apple-touch-icon.png','./favicon.png','./fuente-carrera.png','./fuente-ciclismo.jpg','./fuente-natacion.jpg','./icon-1024.png','./status-feed.json','./race-feed.json'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  const cache=await caches.open(CACHE);
