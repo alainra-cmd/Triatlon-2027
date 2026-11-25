@@ -386,8 +386,8 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
   <div id="officialRaceCandidates" class="scan-results"></div>
  </div>
  <div class="card">
-  <b>Fuentes oficiales incluidas</b>
-  <p class="small">El listado identifica las páginas que consulta el extractor. Si una web bloquea el acceso o no publica fechas reconocibles, quedará marcada como incidencia: no se contabilizará como consulta correcta.</p>
+  <b>Fuentes oficiales y directorios de contraste</b>
+  <p class="small">El listado separa las federaciones y organizadores oficiales de los directorios externos usados como contraste. Si una web bloquea el acceso o no publica fechas reconocibles, quedará marcada como incidencia y no se dará por consultada correctamente.</p>
   <div class="sources-dropdown" id="sourcesDropdown">
    <button type="button" id="toggleSources" aria-expanded="false" aria-controls="calendarSourceList" onclick="const list=document.getElementById('calendarSourceList');const opening=list.hidden;list.hidden=!opening;this.setAttribute('aria-expanded',String(opening));this.querySelector('.sources-chevron').textContent=opening?'−':'＋';">☷ Ver todas las fuentes <span class="sources-chevron">＋</span></button>
    <div id="calendarSourceList" hidden></div>
@@ -619,6 +619,7 @@ const defaultCalendarSources=[
  {name:'Federación Melillense de Triatlón',url:'https://melillatriatlon.es/',kind:'Federación ciudad autónoma · Melilla'},
  {name:'Federação de Triatlo de Portugal',url:'https://www.federacao-triatlo.pt/',kind:'Federación nacional · Portugal'},
  {name:'IRONMAN · Calendario europeo',url:'https://www.ironman.com/races',kind:'Circuito internacional · Europa'},
+ {name:'IRONMAN · Directorio europeo de contraste',url:'https://findmytris.com/races/continent/europe',kind:'Directorio externo de apoyo · Europa'},
  {name:'Challenge Family · Calendario europeo',url:'https://challengefamily.com/races/?_continent=europe',kind:'Circuito internacional · Europa'},
  {name:'Planeta Triatlón',url:'https://planetatriatlon.com/',kind:'Medio especializado'},
  {name:'Kirolprobak',url:'https://www.kirolprobak.com/',kind:'Calendario de eventos'},
