@@ -172,14 +172,14 @@ def extract_paragraphs(soup,source,page_url):
   if len(text)<18 or len(text)>420 or not SPORT.search(text):continue
   date=date_from(text)
   if not date:continue
-  m=re.search(r"\\b\\d{1,2}\\s+(?:de\\s+)?(?:January|February|March|April|May|June|July|August|September|October|November|December|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|janeiro|fevereiro|março|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\\s+(?:de\\s+)?2027\\b|\\b(?:20)27[-/.]\\d{1,2}[-/.]\\d{1,2}\\b|\\b\\d{1,2}[./-]\\d{1,2}[./-]2027\\b",text,re.I)
+  m=re.search(r"\b\d{1,2}\s+(?:de\s+)?(?:January|February|March|April|May|June|July|August|September|October|November|December|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|janeiro|fevereiro|março|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s+(?:de\s+)?2027\b|\b(?:20)27[-/.]\d{1,2}[-/.]\d{1,2}\b|\b\d{1,2}[./-]\d{1,2}[./-]2027\b",text,re.I)
   if not m:continue
   before=text[:m.start()].strip(" ,;:·-")
   after=text[m.end():].strip(" ,;:·-")
   name=before if len(before)>5 and SPORT.search(before) else (after if len(after)>5 else text)
   if len(name)>150:name=name[:150]
   place=""
-  pm=re.search(r"\\b(?:en|in|em|at)\\s+([A-ZÁÉÍÓÚÑ][\\wÁÉÍÓÚÑáéíóúñ'’ -]{2,35})",text)
+  pm=re.search(r"\b(?:en|in|em|at)\s+([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ'’ -]{2,35})",text)
   if pm:place=pm.group(1).strip()
   item=event_obj(name,date,place,source,page_url,text,infer_country(text))
   if item:out.append(item)
