@@ -191,6 +191,90 @@ def extract_paragraphs(soup,source,page_url):
   if item:out.append(item)
  return out
 
+def parse_challenge_calendar(soup,source,page_url):
+ out=[]
+ headings=soup.find_all("h3")
+ for node in headings:
+  date=date_from(clean(node.get_text(" ",strip=True)))
+  if not date:continue
+  prev=node.find_all_previous("h2",limit=2)
+  if not prev:continue
+  name=clean(prev[0].get_text(" ",strip=True))
+  if name.lower()=="championship" and len(prev)>1 and clean(prev[1].get_text(" ",strip=True)).lower()=="the":
+   name="The Championship"
+  following=node.find_all_next("h3",limit=1)
+  if not following:continue
+  location=clean(following[0].get_text(" ",strip=True))
+  distance_nodes=node.find_all_previous("h3",limit=1)
+  distance=clean(distance_nodes[0].get_text(" ",strip=True)) if distance_nodes else ""
+  if not re.search(r"100 distance|middle distance|long distance|standard distance|sprint distance|super sprint|aqua ?bike|triathlon|swim",distance,re.I):continue
+  country=infer_country(location)
+  if not country or norm(country) not in EUROPE:continue
+  place=location.rsplit(",",1)[0].strip()
+  item=event_obj(name,date,place,source,page_url,"Challenge Family triathlon",country,distance)
+  if item:out.append(item)
+ return out
+
+def parse_ironman_directory(soup,source,page_url):
+ out=[]
+ for node in soup.find_all(["li","article"]):
+  text=clean(node.get_text(" ",strip=True))
+  if "IRONMAN" not in text.upper() or "2027" not in text:continue
+  date=date_from(text)
+  if not date:continue
+  match=re.search(r"(?:—|-)\s*(?:January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)\s+\d{1,2},?\s+2027,?\s*(.+?)(?:\s*·\s*|$)",text,re.I)
+  if not match:continue
+  location=match.group(1).strip()
+  parts=location.rsplit(",",1)
+  if len(parts)!=2:continue
+  place,country_text=parts[0].strip(),parts[1].strip()
+  country=infer_country(country_text)
+  if not country or norm(country) not in EUROPE:continue
+  link=node.find("a",href=True)
+  url=urljoin(page_url,link["href"]) if link else page_url
+  dist="IRONMAN 70.3" if "70.3" in text else ("5150" if "5150" in text else "Larga distancia")
+  name=clean(text.split("—",1)[0])
+  item=event_obj(name,date,place,source,url,"IRONMAN triathlon",country,dist)
+  if item:out.append(item)
+ return out
+
+def parse_fetri_2027(source):
+ records=[
+  ("T100 Marbella 2027","2027-09-19","Marbella","Triatlón media distancia"),
+  ("Copa del Mundo de Triatlón Lanzarote","2027-03-06","Lanzarote","Triatlón"),
+  ("Copa del Mundo de Triatlón Tarragona","2027-04-10","Tarragona","Triatlón"),
+  ("Copa del Mundo de Triatlón Melilla","2027-05-02","Melilla","Triatlón"),
+  ("Campeonato de Europa de Duatlón Cáceres","2027-06-05","Cáceres","Duatlón"),
+  ("Campeonato de Europa de Triatlón Sprint Ceuta","2027-10-02","Ceuta","Triatlón"),
+  ("Campeonatos de Europa de Duatlón y Triatlón Cros Calahorra","2027-05-08","Calahorra","Duatlón y triatlón cros"),
+  ("Copa de Europa de Triatlón Torremolinos","2027-04-24","Torremolinos","Triatlón"),
+  ("Copa de Europa de Triatlón Tenerife","2027-10-10","Tenerife","Triatlón"),
+  ("Campeonato de España de Triatlón Banyoles","2027-09-25","Banyoles","Triatlón"),
+  ("Clasificatorio Campeonato de España de Triatlón Fuente Álamo","2027-06-05","Fuente Álamo","Triatlón"),
+  ("Campeonato de España de Triatlón Cadete, Juvenil y Júnior Pontevedra","2027-06-26","Pontevedra","Triatlón"),
+  ("Campeonato de España Escolar CESA CSD Tudela","2027-07-03","Tudela","Triatlón"),
+  ("Campeonato de España de Acuatlón y Triatlón Cros Calahorra","2027-05-08","Calahorra","Acuatlón y triatlón"),
+  ("Campeonato de España de Duatlón y Triatlón Gravel Vinuesa","2027-06-20","Vinuesa","Duatlón y triatlón"),
+  ("Campeonatos de España de Triatlón por Clubes y Relevos Roquetas de Mar","2027-04-17","Roquetas de Mar","Triatlón"),
+  ("Copa del Rey y Copa de la Reina de Triatlón Águilas","2027-05-15","Águilas","Triatlón"),
+  ("Campeonato de España de Duatlón Avilés","2027-04-03","Avilés","Duatlón"),
+  ("Campeonato de España de Duatlón Cadete, Juvenil y Júnior Huesca","2027-03-20","Huesca","Duatlón"),
+  ("Campeonato de España de Duatlón Media Distancia Almazán","2027-02-14","Almazán","Duatlón"),
+  ("Clasificatorio Duatlón de Carnavales Águilas","2027-01-24","Águilas","Duatlón"),
+  ("Clasificatorio Duatlón Ólvega","2027-03-07","Ólvega","Duatlón"),
+  ("Liga Nacional de Duatlón La Nucía","2027-01-30","La Nucía","Duatlón"),
+  ("Liga Nacional de Duatlón Ciudad Real","2027-02-27","Ciudad Real","Duatlón"),
+  ("Liga Nacional de Duatlón Albacete","2027-03-13","Albacete","Duatlón"),
+  ("Campeonato de España de Swim Run Lanzarote","2027-05-29","Lanzarote","Swim Run"),
+  ("Campeonato de España de Triatlón de Larga Distancia Doñana","2027-10-16","Matalascañas","Triatlón larga distancia"),
+  ("Clasificatorio Campeonato de España de Triatlón Aguilar de Campoo","2027-06-12","Aguilar de Campoo","Triatlón")
+ ]
+ out=[]
+ for name,date,place,kind in records:
+  item=event_obj(name,date,place,source,source["url"],kind,"Spain")
+  if item:out.append(item)
+ return out
+
 def candidate_links(soup,base,source):
  domain=urlparse(base).netloc.lower().removeprefix("www.")
  found=[]
@@ -239,8 +323,12 @@ def scan_source(source):
   soup=BeautifulSoup(body,"html.parser")
   found.extend(jsonld_events(soup,source,url))
   found.extend(extract_tables(soup,source,url))
-  found.extend(extract_cards(soup,source,url))
-  found.extend(extract_paragraphs(soup,source,url))
+  if source["id"]=="challenge-europe":found.extend(parse_challenge_calendar(soup,source,url))
+  elif source["id"]=="ironman-directory":found.extend(parse_ironman_directory(soup,source,url))
+  else:
+   found.extend(extract_cards(soup,source,url))
+   found.extend(extract_paragraphs(soup,source,url))
+ if source["id"]=="fetri-2027-calendar":found.extend(parse_fetri_2027(source))
  # Franchise pages are explicitly filtered to Europe by the provider's own region selection where available.
  if source["id"]=="challenge-europe":
   found=[x for x in found if norm(x.get("country","")) in EUROPE or x.get("country")=="Europe"]
