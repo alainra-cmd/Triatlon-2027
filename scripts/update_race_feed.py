@@ -85,8 +85,8 @@ def infer_country(text):
  return ""
 
 def event_obj(name,date,place,source,url,kind="",country=None,dist=""):
- if not name or not date:return None
- if source['id']=='ironman-europe' and (not country or norm(country) not in EUROPE):return None
+ if not name or (not date and source["id"]!="challenge-europe"):return None
+ if source["id"]=="ironman-europe" and (not country or norm(country) not in EUROPE):return None
  name=clean(name)[:180]
  if re.search(r"\b(curso|course|formacion|formación|training|clinic|webinar)\b",name,re.I):return None
  if not SPORT.search(name+" "+kind):return None
@@ -96,7 +96,7 @@ def event_obj(name,date,place,source,url,kind="",country=None,dist=""):
  "country":country or source["country"],"type":"Duatlón" if re.search("duatl|duath",kind+" "+name,re.I) else ("Acuatlón" if re.search("aquatl",kind+" "+name,re.I) else "Triatlón"),
  "distance":clean(dist)[:80] or "Por confirmar","franchise":"IRONMAN" if source["id"].startswith("ironman-") else ("Challenge" if source["id"]=="challenge-europe" else ""),
  "url":url or source["url"],"sourceUrl":source["url"],"sourceName":source["name"],
- "dateStatus":"Pendiente de verificar","availability":"Por verificar","status":"Extraída de calendario oficial; revisar cambios"}
+ "dateStatus":"Fecha pendiente de confirmación" if not date else "Pendiente de verificar","availability":"Por verificar","status":"Extraída de calendario oficial; revisar cambios"}
 
 def jsonld_events(soup,source,page_url):
  out=[]
@@ -195,8 +195,10 @@ def parse_challenge_calendar(soup,source,page_url):
  out=[]
  headings=soup.find_all("h3")
  for node in headings:
-  date=date_from(clean(node.get_text(" ",strip=True)))
-  if not date:continue
+  heading_text=clean(node.get_text(" ",strip=True))
+  date=date_from(heading_text)
+  pending_date=not date and bool(re.search(r"to be confirmed|\\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) 2027\\b",heading_text,re.I))
+  if not date and not pending_date:continue
   prev=node.find_all_previous("h2",limit=2)
   if not prev:continue
   name=clean(prev[0].get_text(" ",strip=True))
@@ -219,7 +221,7 @@ def parse_ironman_directory(soup,source,page_url):
  out=[]
  for node in soup.find_all(["li","article"]):
   text=clean(node.get_text(" ",strip=True))
-  if "IRONMAN" not in text.upper() or "2027" not in text:continue
+  if ("IRONMAN" not in text.upper() and "5150" not in text.upper()) or "2027" not in text:continue
   date=date_from(text)
   if not date:continue
   match=re.search(r"(?:—|-)\s*(?:January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)\s+\d{1,2},?\s+2027,?\s*(.+?)(?:\s*·\s*|$)",text,re.I)
