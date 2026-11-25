@@ -61,7 +61,7 @@ def date_from(text):
    day,mo,y=map(int,m.group(4,5,6))
   if y==YEAR and 1<=mo<=12 and 1<=day<=31:return f"{y:04d}-{mo:02d}-{day:02d}"
  # English/Spanish/Portuguese month-name dates
- m=re.search(r"\b(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|janeiro|fevereiro|março|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s+2027\b",t,re.I)
+ m=re.search(r"\b(\d{1,2})\s+(?:de\s+)?(January|February|March|April|May|June|July|August|September|October|November|December|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|janeiro|fevereiro|março|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s+(?:de\s+)?2027\b",t,re.I)
  if m:
   mo=MONTHS.get(m.group(2).lower())
   if mo:return f"2027-{mo:02d}-{int(m.group(1)):02d}"
