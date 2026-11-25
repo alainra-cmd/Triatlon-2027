@@ -604,16 +604,31 @@ function render(){
 
 const defaultCalendarSources=[
  {name:'FETRI · Federación Española de Triatlón',url:'https://triatlon.org/',kind:'Federación nacional'},
+ {name:'Federación Andaluza de Triatlón',url:'https://triatlonandalucia.org/',kind:'Federación autonómica · Andalucía'},
+ {name:'Federación Aragonesa de Triatlón',url:'https://www.triatlonaragon.org/',kind:'Federación autonómica · Aragón'},
+ {name:'Federación de Triatlón del Principado de Asturias',url:'https://triatlonasturias.es/',kind:'Federación autonómica · Asturias'},
+ {name:'Federació de Triatló de les Illes Balears',url:'https://fetrib.com/',kind:'Federación autonómica · Illes Balears'},
+ {name:'Federación Canaria de Triatlón',url:'https://www.fecantri.org/',kind:'Federación autonómica · Canarias'},
+ {name:'Federación Cántabra de P.M. y Triatlón',url:'https://fetricantabria.com/',kind:'Federación autonómica · Cantabria'},
+ {name:'Federación de Triatlón Castilla-La Mancha',url:'https://www.triatlonclm.org/',kind:'Federación autonómica · Castilla-La Mancha'},
+ {name:'Federación de Triatlón y P.M. de Castilla y León',url:'https://www.triatloncastillayleon.com/',kind:'Federación autonómica · Castilla y León'},
+ {name:'Federació Catalana de Triatló',url:'https://www.triatlo.org/',kind:'Federación autonómica · Cataluña'},
+ {name:'Euskadiko Triatloi Federazioa',url:'https://triatloi.org/',kind:'Federación autonómica · País Vasco'},
+ {name:'Federación Extremeña de Triatlón',url:'https://triatlonextremadura.com/',kind:'Federación autonómica · Extremadura'},
+ {name:'Federación Gallega de Triatlón y P.M.',url:'https://fegatri.org/',kind:'Federación autonómica · Galicia'},
+ {name:'Federación Madrileña de Triatlón',url:'https://triatlonmadrid.org/',kind:'Federación autonómica · Comunidad de Madrid'},
+ {name:'Federación de Triatlón de la Región de Murcia',url:'https://trimurcia.es/',kind:'Federación autonómica · Región de Murcia'},
+ {name:'Federación Navarra de Triatlón',url:'https://www.navarratriatlon.com/',kind:'Federación autonómica · Navarra'},
+ {name:'Federación Riojana de Triatlón',url:'https://fertriatlon.com/',kind:'Federación autonómica · La Rioja'},
+ {name:'Federació de Triatló de la Comunitat Valenciana',url:'https://www.triatlocv.org/',kind:'Federación autonómica · Comunitat Valenciana'},
+ {name:'Federación de Triatlón de Ceuta',url:'https://fetriceuta.wixsite.com/fetriceuta',kind:'Federación ciudad autónoma · Ceuta'},
+ {name:'Federación Melillense de Triatlón',url:'https://melillatriatlon.es/',kind:'Federación ciudad autónoma · Melilla'},
  {name:'Planeta Triatlón',url:'https://planetatriatlon.com/',kind:'Medio especializado'},
  {name:'Kirolprobak',url:'https://www.kirolprobak.com/',kind:'Calendario de eventos'},
  {name:'100x100Half',url:'https://100x100half.com/',kind:'Organizador · Calendario 2027'},
  {name:'RockTheSport',url:'https://www.rockthesport.com/',kind:'Plataforma de inscripciones'},
  {name:'IRONMAN',url:'https://www.ironman.com/races',kind:'Organizador'},
- {name:'Challenge Family',url:'https://www.challenge-family.com/races/',kind:'Organizador'},
- {name:'Federación Catalana de Triatlón',url:'https://www.triatlo.org/',kind:'Federación autonómica'},
- {name:'Federación Gallega de Triatlón',url:'https://fegatri.org/',kind:'Federación autonómica'},
- {name:'Federación de Triatlón de la Región de Murcia',url:'https://trimurcia.es/',kind:'Federación autonómica'},
- {name:'Federación de Triatlón de Castilla-La Mancha',url:'https://triatlonclm.org/',kind:'Federación autonómica'}
+ {name:'Challenge Family',url:'https://www.challenge-family.com/races/',kind:'Organizador'}
 ];
 function renderCalendarSources(){
  const el=document.getElementById('calendarSourceList');if(!el)return;
