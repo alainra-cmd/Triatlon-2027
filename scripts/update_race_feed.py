@@ -33,7 +33,8 @@ SOURCES = [
  {"id":"ceuta","name":"Federación de Ceuta","country":"España","kind":"regional","url":"https://fetriceuta.wixsite.com/fetriceuta"},
  {"id":"melilla","name":"Federación Melillense","country":"España","kind":"regional","url":"https://melillatriatlon.es/"},
  {"id":"portugal","name":"Federação de Triatlo de Portugal","country":"Portugal","kind":"federation","url":"https://www.federacao-triatlo.pt/"},
- {"id":"ironman-europe","name":"IRONMAN · Europa","country":"Europe","kind":"franchise","url":"https://www.ironman.com/races"},
+ {"id":"ironman-europe","name":"IRONMAN · Europa (web oficial)","country":"Europe","kind":"franchise","url":"https://www.ironman.com/races"},
+ {"id":"ironman-directory","name":"IRONMAN · Directorio europeo de contraste","country":"Europe","kind":"supplemental","url":"https://findmytris.com/races/continent/europe"},
  {"id":"challenge-europe","name":"Challenge Family · Europa","country":"Europe","kind":"franchise","url":"https://challengefamily.com/races/?_continent=europe"},
 ]
 DATE_RE = re.compile(r"(20(?:26|27|28))[-/.](\d{1,2})[-/.](\d{1,2})|\b(\d{1,2})[./-](\d{1,2})[./-](20(?:26|27|28))\b")
@@ -83,12 +84,13 @@ def event_obj(name,date,place,source,url,kind="",country=None,dist=""):
  if not name or not date:return None
  if source['id']=='ironman-europe' and (not country or norm(country) not in EUROPE):return None
  name=clean(name)[:180]
+ if re.search(r"\b(curso|course|formacion|formación|training|clinic|webinar)\b",name,re.I):return None
  if not SPORT.search(name+" "+kind):return None
  if source["kind"]=="franchise" and source["id"]=="ironman-europe" and country and norm(country) not in EUROPE:return None
  return {"id":source["id"]+"-"+hashlib.sha1((norm(name)+date+norm(place)).encode("utf-8")).hexdigest()[:14],
  "name":name,"date":date,"place":clean(place)[:100] or "Localidad por confirmar",
  "country":country or source["country"],"type":"Duatlón" if re.search("duatl|duath",kind+" "+name,re.I) else ("Acuatlón" if re.search("aquatl",kind+" "+name,re.I) else "Triatlón"),
- "distance":clean(dist)[:80] or "Por confirmar","franchise":"IRONMAN" if source["id"]=="ironman-europe" else ("Challenge" if source["id"]=="challenge-europe" else ""),
+ "distance":clean(dist)[:80] or "Por confirmar","franchise":"IRONMAN" if source["id"].startswith("ironman-") else ("Challenge" if source["id"]=="challenge-europe" else ""),
  "url":url or source["url"],"sourceUrl":source["url"],"sourceName":source["name"],
  "dateStatus":"Pendiente de verificar","availability":"Por verificar","status":"Extraída de calendario oficial; revisar cambios"}
 
