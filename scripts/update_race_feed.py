@@ -12,6 +12,7 @@ YEAR = 2027
 HEADERS = {"User-Agent": "Triatlon2027CalendarBot/1.0 (+https://github.com/alainra-cmd/Triatlon-2027)"}
 SOURCES = [
  {"id":"fetri","name":"FETRI · España","country":"España","kind":"federation","url":"https://triatlon.org/"},
+ {"id":"fetri-2027-calendar","name":"FETRI · Calendario nacional e internacional 2027","country":"España","kind":"federation","url":"https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"},
  {"id":"andalucia","name":"Federación Andaluza","country":"España","kind":"regional","url":"https://triatlonandalucia.org/"},
  {"id":"aragon","name":"Federación Aragonesa","country":"España","kind":"regional","url":"https://www.triatlonaragon.org/"},
  {"id":"asturias","name":"Federación Asturiana","country":"España","kind":"regional","url":"https://triatlonasturias.es/"},
@@ -161,7 +162,7 @@ def candidate_links(soup,base,source):
  for a in soup.find_all("a",href=True):
   href=urljoin(base,a["href"]).split("#")[0]
   p=urlparse(href)
-  if p.scheme not in ("http","https") or p.netloc!=domain:continue
+  if p.scheme not in ("http","https") or not (p.netloc==domain or p.netloc.endswith("."+domain)):continue
   if LINK_WORDS.search(href+" "+a.get_text(" ",strip=True)) and href not in found:found.append(href)
  return found[:12]
 
