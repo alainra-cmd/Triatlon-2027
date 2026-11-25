@@ -74,5 +74,14 @@ class RaceFeedTests(unittest.TestCase):
         source = {"id":"fetri","name":"FETRI","country":"Spain","kind":"federation","url":"https://triatlon.org/"}
         self.assertIsNone(race_feed.event_obj("Curso Oficial Técnico de Triatlón FETRI Nivel 1 - 2027","2027-01-09","Madrid",source,source["url"],"triatlón"))
 
+    def test_catalan_federation_calendar_table(self):
+        from bs4 import BeautifulSoup
+        source = {"id":"cataluna","name":"Federació Catalana","country":"España","kind":"regional","url":"https://www.triatlo.org/competicions/?idany=2027&oficial=0"}
+        html = """<table><tr><th>DATA</th><th>NOM</th><th>TIPUS</th><th>POBLACIÓ</th></tr><tr><td>17/01/2027</td><td>XVII DUATLÓ DE GRANOLLERS</td><td>Duatló de Carretera</td><td>MONTMELÓ</td></tr></table>"""
+        events = race_feed.extract_tables(BeautifulSoup(html,"html.parser"),source,source["url"])
+        self.assertEqual(len(events),1)
+        self.assertEqual(events[0]["name"],"XVII DUATLÓ DE GRANOLLERS")
+        self.assertEqual(events[0]["place"],"MONTMELÓ")
+
 if __name__ == "__main__":
     unittest.main()
