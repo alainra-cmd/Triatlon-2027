@@ -186,12 +186,13 @@ def extract_paragraphs(soup,source,page_url):
  return out
 
 def candidate_links(soup,base,source):
- domain=urlparse(base).netloc
+ domain=urlparse(base).netloc.lower().removeprefix("www.")
  found=[]
  for a in soup.find_all("a",href=True):
   href=urljoin(base,a["href"]).split("#")[0]
   p=urlparse(href)
-  if p.scheme not in ("http","https") or not (p.netloc==domain or p.netloc.endswith("."+domain)):continue
+  host=p.netloc.lower().removeprefix("www.")
+  if p.scheme not in ("http","https") or not (host==domain or host.endswith("."+domain)):continue
   if LINK_WORDS.search(href+" "+a.get_text(" ",strip=True)) and href not in found:found.append(href)
  return found[:12]
 
