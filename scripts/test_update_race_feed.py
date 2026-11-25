@@ -38,5 +38,41 @@ class RaceFeedTests(unittest.TestCase):
         two = race_feed.event_obj("Triatlón de prueba", "2027-06-12", "Madrid", source, source["url"], "triatlón", "Spain")
         self.assertEqual(one["id"], two["id"])
 
+    def test_month_first_english_date(self):
+        self.assertEqual(race_feed.date_from("IRONMAN 70.3 — April 3, 2027, Vilamoura"), "2027-04-03")
+
+    def test_abbreviated_month_date(self):
+        self.assertEqual(race_feed.date_from("17 Apr 2027 08:00"), "2027-04-17")
+
+    def test_challenge_calendar_card(self):
+        from bs4 import BeautifulSoup
+        source = {"id":"challenge-europe","name":"Challenge Family · Europa","country":"Europe","kind":"franchise","url":"https://challengefamily.com/races/?_continent=europe"}
+        html = """<h2>Anfi Challenge</h2><h2>Mogán-Gran Canaria</h2><h3>100 distance, Standard distance</h3><h3>17 Apr 2027 08:00</h3><h3>Gran Canaria, Spain</h3>"""
+        events = race_feed.parse_challenge_calendar(BeautifulSoup(html,"html.parser"),source,source["url"])
+        self.assertEqual(len(events),1)
+        self.assertEqual(events[0]["name"],"Mogán-Gran Canaria")
+        self.assertEqual(events[0]["date"],"2027-04-17")
+        self.assertEqual(events[0]["place"],"Gran Canaria")
+
+    def test_ironman_directory_card(self):
+        from bs4 import BeautifulSoup
+        source = {"id":"ironman-directory","name":"IRONMAN directory","country":"Europe","kind":"supplemental","url":"https://findmytris.com/races/continent/europe"}
+        html = """<ul><li><a href="/race/vilamoura">IRONMAN 70.3 Vilamoura-Algarve</a> — April 3, 2027, Vilamoura, Portugal · IRONMAN 70.3</li></ul>"""
+        events = race_feed.parse_ironman_directory(BeautifulSoup(html,"html.parser"),source,source["url"])
+        self.assertEqual(len(events),1)
+        self.assertEqual(events[0]["date"],"2027-04-03")
+        self.assertEqual(events[0]["country"],"Portugal")
+        self.assertEqual(events[0]["franchise"],"IRONMAN")
+
+    def test_fetri_calendar_has_confirmed_events(self):
+        source = {"id":"fetri-2027-calendar","name":"FETRI 2027","country":"Spain","kind":"federation","url":"https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"}
+        events = race_feed.parse_fetri_2027(source)
+        self.assertGreaterEqual(len(events),25)
+        self.assertTrue(any("Banyoles" in x["name"] for x in events))
+
+    def test_training_course_is_not_a_race(self):
+        source = {"id":"fetri","name":"FETRI","country":"Spain","kind":"federation","url":"https://triatlon.org/"}
+        self.assertIsNone(race_feed.event_obj("Curso Oficial Técnico de Triatlón FETRI Nivel 1 - 2027","2027-01-09","Madrid",source,source["url"],"triatlón"))
+
 if __name__ == "__main__":
     unittest.main()
