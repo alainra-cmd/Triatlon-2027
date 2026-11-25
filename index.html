@@ -375,12 +375,11 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
  <h2>Datos y ajustes</h2>
  <div class="card" id="calendarSourcesCard">
   <b>Motor de extracción de calendarios oficiales</b>
-  <p class="small">El calendario se recopila automáticamente desde las federaciones de España y Portugal y los calendarios europeos oficiales de IRONMAN y Challenge Family. La extracción se ejecuta en GitHub dos veces al día; aquí puedes consultar la última lectura y revisar las pruebas detectadas antes de incorporarlas.</p>
-  <button class="primary" id="loadOfficialCalendar" type="button" style="width:100%;margin:8px 0">↻ Cargar última extracción oficial</button>
+  <p class="small">El calendario se recopila automáticamente desde las federaciones de España y Portugal y los calendarios europeos oficiales de IRONMAN y Challenge Family. La extracción se ejecuta en GitHub dos veces al día y, al abrir la app, las pruebas con fecha y localidad identificables se incorporan directamente. Las dudosas quedan pendientes de revisión.</p>
   <p class="small" id="officialFeedStatus">Todavía no se ha cargado la última extracción.</p>
   <div id="officialSourceReport" class="scan-results"></div>
   <h3 style="margin:16px 0 8px">Pruebas detectadas pendientes de añadir</h3>
-  <p class="small" id="officialCandidateCount">Pulsa «Cargar última extracción oficial» para consultar el feed.</p>
+  <p class="small" id="officialCandidateCount">La app comprobará automáticamente la última extracción al abrirse.</p>
   <div id="officialRaceCandidates" class="scan-results"></div>
  </div>
  <div class="card">
@@ -1059,52 +1058,54 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 <div id="dayRacesBackdrop" class="day-races-backdrop" role="dialog" aria-modal="true"><div class="day-races-modal"><div class="day-races-head"><h3 id="dayRacesTitle">Pruebas del día</h3><button class="day-races-close" id="dayRacesClose" aria-label="Cerrar">×</button></div><div class="day-races-body" id="dayRacesBody"></div></div></div>
 <script id="official-race-feed-engine">
 (function(){
- const load=document.getElementById('loadOfficialCalendar');
- const status=document.getElementById('officialFeedStatus');
- const report=document.getElementById('officialSourceReport');
- const list=document.getElementById('officialRaceCandidates');
- const count=document.getElementById('officialCandidateCount');
- if(!load||!status||!report||!list||!count)return;
- const normalize=v=>String(v||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/\\s+/g,' ').trim();
- const exists=x=>data.events.some(e=>normalize(e.name)===normalize(x.name)&&String(e.date||'')===String(x.date||''));
- const dateLabelSafe=v=>{if(!v)return 'Fecha pendiente';const d=new Date(v+'T12:00:00');return isNaN(d)?v:d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});};
- let candidates=[];
+ const status=document.getElementById("officialFeedStatus");
+ const report=document.getElementById("officialSourceReport");
+ const list=document.getElementById("officialRaceCandidates");
+ const count=document.getElementById("officialCandidateCount");
+ if(!status||!report||!list||!count)return;
+ const normalize=v=>String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/\s+/g," ").trim();
+ const exists=x=>data.events.some(e=>(x.id&&e.id===x.id)||(normalize(e.name)===normalize(x.name)&&String(e.date||"")===String(x.date||"")));
+ const validDate=v=>/^2027-\d{2}-\d{2}$/.test(String(v||""))&&!isNaN(new Date(v+"T12:00:00").getTime());
+ const validPlace=v=>{const p=normalize(v);return !!p&& !["localidad por confirmar","por confirmar","sin determinar","unknown","tbd",""].includes(p);};
+ const validCompetition=x=>{const n=normalize(x.name);const sport=/triatl|duatl|ironman|challenge/.test(n)||/triatlon|duatlon|ironman|challenge/i.test(String(x.type||"")+" "+String(x.franchise||"")+" "+String(x.distance||""));return sport&&!/gala|asamblea|reunion|curso|formacion|jornada informativa|proximas competiciones|calendario provisional/.test(n);};
+ const dateLabelSafe=v=>{if(!v)return "Fecha pendiente";const d=new Date(v+"T12:00:00");return isNaN(d.getTime())?v:d.toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});};
+ let pending=[];
+ function escapeHtml(v){return String(v||"").replace(/[&<>"\x27]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;", "\"":"&quot;","\x27":"&#39;"}[c]));}
  function renderCandidates(){
-  const fresh=candidates.filter(x=>x.name&&!exists(x));
-  count.textContent=fresh.length+' pruebas nuevas pendientes de revisar · '+(candidates.length-fresh.length)+' ya presentes en tu calendario';
-  list.innerHTML=fresh.length?fresh.map((x,i)=>'<div class="scan-candidate"><b>'+escapeHtml(x.name)+'</b><div class="meta">'+escapeHtml(dateLabelSafe(x.date))+' · '+escapeHtml(x.place||'Localidad por confirmar')+' · '+escapeHtml(x.sourceName||'Fuente oficial')+'</div><div class="meta">'+escapeHtml(x.distance||'Distancia por confirmar')+' · '+escapeHtml(x.country||'País por confirmar')+'</div><div class="discovery-actions"><a class="source-link" href="'+escapeHtml(x.url||x.sourceUrl||'#')+'" target="_blank" rel="noopener">Ver prueba ↗</a><button class="secondary" data-official-add="'+i+'">Añadir a mi calendario</button></div></div>').join(''):'<p class="small">No hay pruebas nuevas pendientes de añadir en la última extracción.</p>';
-  list._items=fresh;
+  count.textContent=pending.length+" pruebas pendientes de revisión (sin fecha/localidad fiable o datos por confirmar).";
+  list.innerHTML=pending.length?pending.map((x,i)=>"<div class=\"scan-candidate\"><b>"+escapeHtml(x.name)+"</b><div class=\"meta\">"+escapeHtml(dateLabelSafe(x.date))+" · "+escapeHtml(x.place||"Localidad por confirmar")+" · "+escapeHtml(x.sourceName||"Fuente oficial")+"</div><div class=\"meta\">"+escapeHtml(x.distance||"Distancia por confirmar")+" · "+escapeHtml(x.country||"País por confirmar")+" · "+escapeHtml(x.dateStatus||"Fecha pendiente de verificar")+"</div><div class=\"discovery-actions\"><a class=\"source-link\" href=\""+escapeHtml(x.url||x.sourceUrl||"#")+"\" target=\"_blank\" rel=\"noopener\">Ver fuente ↗</a><button class=\"secondary\" data-official-add=\""+i+"\">Añadir tras revisar</button></div></div>").join(""):"<p class=\"small\">No hay pruebas pendientes de revisión.</p>";
+  list._items=pending;
  }
- function escapeHtml(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
- function renderReport(sources){
-  report.innerHTML=(sources||[]).map(x=>'<div class="source-item"><div class="source-meta"><b>'+escapeHtml(x.name)+'</b><br><span class="small">'+escapeHtml(x.status==='ok'?'Consulta correcta':x.status==='no_events_found'?'Consultada, sin pruebas reconocidas':'Error de consulta')+' · '+Number(x.events||0)+' pruebas · '+Number(x.pages||0)+' páginas'+(x.message?' · '+escapeHtml(x.message):'')+'</span></div></div>').join('')||'<p class="small">El feed todavía no contiene el resultado de ninguna consulta.</p>';
- }
+ function renderReport(sources){report.innerHTML=(sources||[]).map(x=>"<div class=\"source-item\"><div class=\"source-meta\"><b>"+escapeHtml(x.name)+"</b><br><span class=\"small\">"+escapeHtml(x.status==="ok"?"Consulta correcta":x.status==="no_events_found"?"Consultada, sin pruebas reconocidas":"Error de consulta")+" · "+Number(x.events||0)+" pruebas · "+Number(x.pages||0)+" páginas"+(x.message?" · "+escapeHtml(x.message):"")+"</span></div></div>").join("")||"<p class=\"small\">El feed todavía no contiene resultados.</p>";}
+ function toEvent(x){return {...x,id:x.id||("official-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)),interested:false,registered:false,cost:"",notes:[x.notes||"", "Importada automáticamente desde el extractor oficial. Comprobar la fecha y los datos del organizador."].filter(Boolean).join(" ")};}
  async function loadFeed(){
-  load.disabled=true;load.textContent='Cargando extracción…';status.textContent='Leyendo el último resultado publicado por el extractor…';
+  status.textContent="Comprobando automáticamente la última extracción…";
   try{
-   const response=await fetch('./race-feed.json?ts='+Date.now(),{cache:'no-store'});
-   if(!response.ok)throw new Error('Feed todavía no disponible (HTTP '+response.status+').');
+   const response=await fetch("./race-feed.json?ts="+Date.now(),{cache:"no-store"});
+   if(!response.ok)throw new Error("Feed no disponible (HTTP "+response.status+").");
    const feed=await response.json();
-   if(!Array.isArray(feed.events)||!Array.isArray(feed.sources))throw new Error('El archivo de resultados no tiene el formato esperado.');
-   candidates=feed.events;
-   if(!feed.generatedAt){
-    status.textContent='El nuevo extractor está instalado, pero aún no ha publicado su primera ejecución. La primera lectura llegará en el siguiente ciclo programado.';
-    renderReport(feed.sources);renderCandidates();return;
+   if(!Array.isArray(feed.events)||!Array.isArray(feed.sources))throw new Error("El feed no tiene el formato esperado.");
+   renderReport(feed.sources);
+   if(!feed.generatedAt){status.textContent="El extractor está preparado; todavía no ha publicado su primera ejecución.";pending=feed.events;renderCandidates();return;}
+   let added=0;
+   for(const x of feed.events){
+    if(!x||!x.name||exists(x))continue;
+    if(validDate(x.date)&&validPlace(x.place)&&validCompetition(x)){data.events.push(toEvent(x));added++;}
    }
-   const generated=new Date(feed.generatedAt).toLocaleString('es-ES');
-   status.textContent='Última extracción: '+generated+' · '+feed.events.length+' pruebas detectadas · '+feed.successfulSources+'/'+feed.sourceCount+' fuentes con resultados reconocidos · '+feed.failedSources+' errores de acceso.';
-   renderReport(feed.sources);renderCandidates();
-  }catch(err){status.textContent=err.message+' La extracción automática se publicará cuando termine la primera ejecución programada.';report.innerHTML='';list.innerHTML='';count.textContent='Sin resultados cargados.';}
-  finally{load.disabled=false;load.textContent='↻ Cargar última extracción oficial';}
+   if(added)save();
+   pending=feed.events.filter(x=>x&&x.name&&!exists(x));
+   const generated=new Date(feed.generatedAt).toLocaleString("es-ES");
+   status.textContent="Última extracción: "+generated+" · "+feed.events.length+" detectadas · "+added+" incorporadas automáticamente · "+Number(feed.failedSources||0)+" errores de acceso.";
+   renderCandidates();
+  }catch(err){status.textContent=err.message+" Se volverá a comprobar al abrir la app cuando el feed esté disponible.";report.innerHTML="";count.textContent="No se pudo consultar la última extracción.";list.innerHTML="";}
  }
- load.addEventListener('click',loadFeed);
- document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-official-add]');if(!b)return;
-  const fresh=list._items||[],x=fresh[Number(b.dataset.officialAdd)];if(!x||exists(x))return;
-  data.events.push({...x,id:x.id||('official-'+Date.now()),interested:false,registered:false,cost:'',notes:'Importada desde el nuevo extractor de calendarios oficiales. Comprobar posibles cambios en la web del organizador.'});
-  renderCandidates();save();
+ document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-official-add]");if(!b)return;
+  const x=(list._items||[])[Number(b.dataset.officialAdd)];if(!x||exists(x))return;
+  data.events.push(toEvent(x));save();pending=pending.filter(y=>y!==x);renderCandidates();
  });
  loadFeed();
+ document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadFeed();});
 })();
 </script>
 </body></html>
