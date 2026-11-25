@@ -94,5 +94,12 @@ class RaceFeedTests(unittest.TestCase):
         self.assertEqual(events[0]["date"],"")
         self.assertEqual(events[0]["dateStatus"],"Fecha pendiente de confirmación")
 
+    def test_murcia_provisional_calendar_2027(self):
+        source = {"id":"murcia","name":"FTRM 2027","country":"España","kind":"regional","url":"https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf"}
+        events = race_feed.parse_murcia_2027(source)
+        self.assertEqual(len(events),25)
+        self.assertTrue(any(x["name"]=="Triatlón Cartagena" and x["date"]=="2027-05-29" for x in events))
+        self.assertTrue(all("provisional" in x["notes"].lower() for x in events))
+
 if __name__ == "__main__":
     unittest.main()
