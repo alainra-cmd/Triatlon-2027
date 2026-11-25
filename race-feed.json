@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-25T19:13:47.747640+00:00",
+  "generatedAt": "2026-11-25T20:12:31.192331+00:00",
   "season": 2027,
-  "sourceCount": 25,
-  "successfulSources": 8,
+  "sourceCount": 26,
+  "successfulSources": 11,
   "failedSources": 2,
   "events": [
     {
@@ -150,6 +150,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "aragon-ccc2ad29146591",
+      "name": "← Anterior H8 HYATLÓN ZARAGOZA ARENA 28 noviembre",
+      "date": "2027-01-17",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28246/h8-hyatlon-zaragoza-arena",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "fetri-2027-calendar-275729b0f5c225",
       "name": "Clasificatorio Duatlón de Carnavales Águilas",
       "date": "2027-01-24",
@@ -193,6 +209,22 @@
       "url": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceUrl": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceName": "FETRI · Calendario nacional e internacional 2027",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "aragon-75a79944dc734c",
+      "name": "← Anterior 100 x 100 SWIM STADIUM CASABLANCA 20 diciembre",
+      "date": "2027-01-30",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28244/100-x-100-swim-stadium-casablanca",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -294,6 +326,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "clm-ffad2b042b8e9a",
+      "name": "20 feb",
+      "date": "2027-02-20",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonclm.org/competicion/vii-duatlon-hellin-escolar#descripcion",
+      "sourceUrl": "https://www.triatlonclm.org/",
+      "sourceName": "Federación Castilla-La Mancha",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "clm-95470eafcc3b13",
       "name": "VII Duatlón Hellín",
       "date": "2027-02-20",
@@ -337,6 +385,22 @@
       "url": "https://www.triatlo.org/competicions/informacio/?idcompeticio=270090",
       "sourceUrl": "https://www.triatlo.org/competicions/?idany=2027&oficial=0",
       "sourceName": "Federació Catalana",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "aragon-c32981060a99d4",
+      "name": "← Anterior V Duatlón Sprint Rubielos de Mora 21 febrero 2027",
+      "date": "2027-02-21",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28259/v-duatlon-sprint-rubielos-de-mora",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -630,6 +694,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "aragon-01a6def844a538",
+      "name": "← Anterior Escolar I Duatlón Cros Escolar Titanes del Carbón 4 abril 2027",
+      "date": "2027-04-04",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28262/i-duatlon-cros-escolar-titanes-del-carbon",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "fetri-2027-calendar-2e1e68f9c856f7",
       "name": "Copa del Mundo de Triatlón Tarragona",
       "date": "2027-04-10",
@@ -678,6 +758,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "aragon-5ede66dbf43307",
+      "name": "← Anterior Escolar III Duatlón Cross Escolar Grisel 11 abril 2027",
+      "date": "2027-04-11",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28264/iii-duatlon-cross-escolar-grisel",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "fetri-2027-calendar-5b387732e0a118",
       "name": "Campeonatos de España de Triatlón por Clubes y Relevos Roquetas de Mar",
       "date": "2027-04-17",
@@ -718,9 +814,25 @@
       "type": "Triatlón",
       "distance": "100 distance, Standard distance",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_continent=europe",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "valencia-abd480701c84ff",
+      "name": "Sábado 17/04/2027 – VIII TRIATLON OLÍMPICO NO DRAFTING CANET DE BERENGUER",
+      "date": "2027-04-17",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "http://www.google.com/calendar/event?\n\n\t\taction=TEMPLATE\n\n\t\t&text=VIII TRIATLON OLÍMPICO NO DRAFTING CANET DE BERENGUER\n\t\t&dates=20270417T153000/20270417T173000\n\t\t&location=Plaza de los pescadores, Canet de Berenguer\n\t\t&trp=false\n\n\t\t&sprop=name:triatlocv.org",
+      "sourceUrl": "https://www.triatlocv.org/",
+      "sourceName": "Federació Comunitat Valenciana",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -758,6 +870,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "euskadi-entries-a3121a0c7be01a",
+      "name": "Zuia Duatloia 27 / Duatlón Zuia 27",
+      "date": "2027-04-17",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://inscripciones.triatloi.org/es/evento/zuia-duatloia-27-duatlon-zuia-27",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/events",
+      "sourceName": "Euskadi · Inscripciones federativas (RockTheSport)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "clm-ea2fbc2885a869",
       "name": "III Duatlón Estándar No Drafting Alcázar de San Juan",
       "date": "2027-04-18",
@@ -769,6 +897,22 @@
       "url": "https://www.triatlonclm.org/competicion/iii-duatlon-estandar-no-drafting-alcazar-de-san-juan",
       "sourceUrl": "https://www.triatlonclm.org/",
       "sourceName": "Federación Castilla-La Mancha",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-europe-665df367074e74",
+      "name": "IRONMAN 70.3 Valencia",
+      "date": "2027-04-18",
+      "place": "Valencia, Spain",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im703-valencia",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -833,6 +977,22 @@
       "url": "https://findmytris.com/events/im703-venice-jesolo",
       "sourceUrl": "https://findmytris.com/races/continent/europe",
       "sourceName": "IRONMAN · Directorio europeo de contraste",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "valencia-924bea45ddd3a3",
+      "name": "Domingo 25/04/2027 – XV INTERNATIONAL INFINITRI 113 TRIATHLON PEÑÍSCOLA",
+      "date": "2027-04-25",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "http://www.google.com/calendar/event?\n\n\t\taction=TEMPLATE\n\n\t\t&text=XV INTERNATIONAL INFINITRI 113 TRIATHLON PEÑÍSCOLA\n\t\t&dates=20270425T080000/20270425T100000\n\t\t&location=Avenida del Mar, 32, PEÑÍSCOLA\n\t\t&trp=false\n\n\t\t&sprop=name:triatlocv.org",
+      "sourceUrl": "https://www.triatlocv.org/",
+      "sourceName": "Federació Comunitat Valenciana",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1054,7 +1214,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Fun run, Standard distance",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_continent=europe",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -1105,6 +1265,22 @@
       "url": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceUrl": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceName": "FETRI · Calendario nacional e internacional 2027",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-europe-8667ff01b773c7",
+      "name": "IRONMAN Lanzarote",
+      "date": "2027-05-15",
+      "place": "Lanzarote, Spain",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im-lanzarote",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1174,6 +1350,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "ironman-europe-3c80eb36faaad3",
+      "name": "Salomon IRONMAN Lanzarote",
+      "date": "2027-05-15",
+      "place": "Lanzarote, Spain",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im-lanzarote",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "challenge-europe-e846a676e2e097",
       "name": "Cesenatico",
       "date": "2027-05-16",
@@ -1182,7 +1374,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Junior Challenge, Sprint distance",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -1278,7 +1470,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Junior Challenge, Kids run, Sprint distance, Standard distance, Tr",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -1297,6 +1489,22 @@
       "url": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceUrl": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceName": "FETRI · Calendario nacional e internacional 2027",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "valencia-5b32ea220b698e",
+      "name": "Sábado 29/05/2027 – SCOTT MEDITERRANEAN EPIC TRIATHLON / FULL, HALF & AQUABIKE",
+      "date": "2027-05-29",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "http://www.google.com/calendar/event?\n\n\t\taction=TEMPLATE\n\n\t\t&text=SCOTT MEDITERRANEAN EPIC TRIATHLON / FULL, HALF &amp; AQUABIKE\n\t\t&dates=20270529T080000/20270529T100000\n\t\t&location=Paseo del Mediterráneo, OROPESA DEL MAR\n\t\t&trp=false\n\n\t\t&sprop=name:triatlocv.org",
+      "sourceUrl": "https://www.triatlocv.org/",
+      "sourceName": "Federació Comunitat Valenciana",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1494,6 +1702,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "euskadi-entries-30182c930389ec",
+      "name": "VI HALF GASTEIZ 2027",
+      "date": "2027-06-05",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://inscripciones.triatloi.org/es/evento/vi-half-gasteiz-2027",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/events",
+      "sourceName": "Euskadi · Inscripciones federativas (RockTheSport)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "ironman-directory-8b0c8d9d6930ea",
       "name": "IRONMAN 70.3 Bolton",
       "date": "2027-06-06",
@@ -1537,6 +1761,22 @@
       "url": "https://findmytris.com/events/im703-tours",
       "sourceUrl": "https://findmytris.com/races/continent/europe",
       "sourceName": "IRONMAN · Directorio europeo de contraste",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-europe-3de6aa909af57b",
+      "name": "IRONMAN 70.3 Tours Métropole - Loire Valley",
+      "date": "2027-06-06",
+      "place": "Tours, France",
+      "country": "France",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im703-tours",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1606,6 +1846,54 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "euskadi-entries-9ace6b8f747fea",
+      "name": "Preinscripción para el sorteo de dorsales de la TradeInn Zarauzko Triatloia 2027 que se celebrara el 12 de junio. La inscripción al sorteo sera de 3 €",
+      "date": "2027-06-12",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://inscripciones.triatloi.org/es/evento/tradeinn-zarauzko-triatloia-2027-aurre-izenematea",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/events",
+      "sourceName": "Euskadi · Inscripciones federativas (RockTheSport)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "euskadi-entries-77a9052cbdea27",
+      "name": "TRADEINN ZARAUZKO TRIATLOIA 2027 Sábado, 12 de junio de 2027 Zarautz. Gipuzkoa Triatlon Media distancia",
+      "date": "2027-06-12",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "TRADEINN ZARAUZKO TRIATLOIA 2027 Sábado, 12 de junio de 2027 Zarautz. Gipuzkoa T",
+      "franchise": "",
+      "url": "https://inscripciones.triatloi.org/es/evento/tradeinn-zarauzko-triatloia-2027",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/events",
+      "sourceName": "Euskadi · Inscripciones federativas (RockTheSport)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "euskadi-entries-9c98701610cc59",
+      "name": "TradeInn Zarauzko Triatloia 2027 (Preinscripción) Sábado, 12 de junio de 2027 Zarautz. Gipuzkoa Triatlon Distancia media Distancia media-olimpica Media distancia",
+      "date": "2027-06-12",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "TradeInn Zarauzko Triatloia 2027 (Preinscripción) Sábado, 12 de junio de 2027 Za",
+      "franchise": "",
+      "url": "https://inscripciones.triatloi.org/es/evento/tradeinn-zarauzko-triatloia-2027-aurre-izenematea",
+      "sourceUrl": "https://inscripciones.triatloi.org/es/events",
+      "sourceName": "Euskadi · Inscripciones federativas (RockTheSport)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "clm-d8d6ec54049e9b",
       "name": "XXII Triatlón Agramón",
       "date": "2027-06-12",
@@ -1649,6 +1937,22 @@
       "url": "https://findmytris.com/events/im-austria",
       "sourceUrl": "https://findmytris.com/races/continent/europe",
       "sourceName": "IRONMAN · Directorio europeo de contraste",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "aragon-a19cef650ba398",
+      "name": "← Anterior Escolar I Triatlón Cros Escolar Centro Natación Helios 19 junio 2027",
+      "date": "2027-06-19",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28270/i-triatlon-cros-escolar-centro-natacion-helios",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1710,7 +2014,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Junior Challenge, Sprint distance, Womens run",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -1838,9 +2142,25 @@
       "type": "Triatlón",
       "distance": "100 distance, Aqua bike, Fun run, Junior Challenge",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-europe-b38d2147e0b017",
+      "name": "Mainova IRONMAN Frankfurt European Championship",
+      "date": "2027-06-27",
+      "place": "Frankfurt, Germany",
+      "country": "Germany",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im-frankfurt",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1974,6 +2294,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "ironman-europe-a7dfd9c9b67e67",
+      "name": "IRONMAN 70.3 Jönköping",
+      "date": "2027-07-11",
+      "place": "Jonkoping, Sweden",
+      "country": "Sweden",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im703-jonkoping",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "ironman-directory-09d4b4f83b60d4",
       "name": "IRONMAN 70.3 Swansea",
       "date": "2027-07-11",
@@ -2038,6 +2374,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "aragon-799d4b2dcaf4ba",
+      "name": "← Anterior ★ Cto III TRIATLON SPRINT CIUDAD DE EJEA- CTO DE ARAGÓN DE TRIATLÓN SPRINT 2027 11 julio 2027",
+      "date": "2027-07-11",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28271/iii-triatlon-sprint-ciudad-de-ejea-cto-de-aragon-de-triatlon-sprint-2027",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "galicia-8a81c5b30c74ca",
       "name": "Triatlón Estrada Popular Oficial",
       "date": "2027-07-17",
@@ -2086,6 +2438,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "aragon-b92f2132a2e5fa",
+      "name": "← Anterior ★ Cto VI TRIATLÓN SUPERSPRINT DE BIOTA - Cto. de Aragón de Triatlón Supersprint 2027 25 julio 2027",
+      "date": "2027-07-25",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28272/vi-triatlon-supersprint-de-biota-cto-de-aragon-de-triatlon-supersprint-2027",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "ironman-directory-77b6a4691b503a",
       "name": "IRONMAN Tallinn",
       "date": "2027-08-07",
@@ -2097,6 +2465,22 @@
       "url": "https://findmytris.com/events/im-tallinn",
       "sourceUrl": "https://findmytris.com/races/continent/europe",
       "sourceName": "IRONMAN · Directorio europeo de contraste",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "ironman-europe-11e99e37f01aba",
+      "name": "IRONMAN 70.3 Leipzig",
+      "date": "2027-08-08",
+      "place": "Leipzig, Germany",
+      "country": "Germany",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "IRONMAN",
+      "url": "https://www.ironman.com/races/im703-leipzig",
+      "sourceUrl": "https://www.ironman.com/races",
+      "sourceName": "IRONMAN · Europa (web oficial)",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -2686,7 +3070,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Junior Challenge, Sprint distance, Standard distance",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -2782,7 +3166,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Junior Challenge, Kids run, Womens run",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -2878,7 +3262,7 @@
       "type": "Triatlón",
       "distance": "100 distance, Aqua bike, Junior Challenge, Sprint distance",
       "franchise": "Challenge",
-      "url": "https://challengefamily.com/races/",
+      "url": "https://challengefamily.com/races/?_triathlon=junior-challenge",
       "sourceUrl": "https://challengefamily.com/races/?_continent=europe",
       "sourceName": "Challenge Family · Europa",
       "dateStatus": "Pendiente de verificar",
@@ -3050,42 +3434,47 @@
     {
       "id": "fetri",
       "name": "FETRI · España",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 9 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión. Enlaces secundarios fallidos: /direccion-tecnica/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /grupos-edad/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /paratriatlon/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12)",
+      "pages": 9,
+      "events": 0,
+      "failedLinks": 4
     },
     {
       "id": "fetri-2027-calendar",
       "name": "FETRI · Calendario nacional e internacional 2027",
       "status": "ok",
-      "message": "Extracción completada",
-      "pages": 6,
-      "events": 28
+      "message": "Extracción completada Enlaces secundarios fallidos: /direccion-tecnica/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /grupos-edad/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /paratriatlon/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12)",
+      "pages": 10,
+      "events": 28,
+      "failedLinks": 3
     },
     {
       "id": "andalucia",
       "name": "Federación Andaluza",
       "status": "ok",
       "message": "Extracción completada",
-      "pages": 6,
-      "events": 3
+      "pages": 13,
+      "events": 3,
+      "failedLinks": 0
     },
     {
       "id": "aragon",
-      "name": "Federación Aragonesa",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "name": "Federación Aragonesa · Competiciones",
+      "status": "ok",
+      "message": "Extracción completada",
+      "pages": 13,
+      "events": 8,
+      "failedLinks": 0
     },
     {
       "id": "asturias",
-      "name": "Federación Asturiana",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 5,
-      "events": 0
+      "name": "Federación Asturiana · Eventos",
+      "status": "needs_review",
+      "message": "Se han consultado 6 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 6,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "baleares",
@@ -3098,58 +3487,65 @@
     {
       "id": "canarias",
       "name": "Federación Canaria",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 13 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 13,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "cantabria",
       "name": "Federación Cántabra",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
+      "status": "needs_review",
+      "message": "Se han consultado 5 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
       "pages": 5,
-      "events": 0
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "clm",
       "name": "Federación Castilla-La Mancha",
       "status": "ok",
       "message": "Extracción completada",
-      "pages": 6,
-      "events": 21
+      "pages": 13,
+      "events": 22,
+      "failedLinks": 0
     },
     {
       "id": "cyl",
       "name": "Federación Castilla y León",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 8 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 8,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "cataluna",
       "name": "Federació Catalana",
       "status": "ok",
       "message": "Extracción completada",
-      "pages": 6,
-      "events": 58
+      "pages": 13,
+      "events": 58,
+      "failedLinks": 0
     },
     {
       "id": "euskadi",
-      "name": "Euskadiko Triatloi Federazioa",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
+      "name": "Euskadiko Triatloi Federazioa · Calendario",
+      "status": "needs_review",
+      "message": "Se han consultado 6 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
       "pages": 6,
-      "events": 0
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "extremadura",
       "name": "Federación Extremeña",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
+      "status": "needs_review",
+      "message": "Se han consultado 4 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
       "pages": 4,
-      "events": 0
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "galicia",
@@ -3157,47 +3553,53 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 6,
-      "events": 9
+      "events": 9,
+      "failedLinks": 0
     },
     {
       "id": "madrid",
-      "name": "Federación Madrileña",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "name": "Federación Madrileña · Calendario",
+      "status": "needs_review",
+      "message": "Se han consultado 10 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 10,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "murcia",
-      "name": "Federación de Murcia",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "name": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "status": "needs_review",
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "navarra",
       "name": "Federación Navarra",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 11 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 11,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "rioja",
       "name": "Federación Riojana",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 8 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 8,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "valencia",
       "name": "Federació Comunitat Valenciana",
       "status": "ok",
       "message": "Extracción completada",
-      "pages": 6,
-      "events": 7
+      "pages": 13,
+      "events": 10,
+      "failedLinks": 0
     },
     {
       "id": "ceuta",
@@ -3210,42 +3612,56 @@
     {
       "id": "melilla",
       "name": "Federación Melillense",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 6,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 7 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 7,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "portugal",
       "name": "Federação de Triatlo de Portugal",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
+      "status": "needs_review",
+      "message": "Se han consultado 13 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 13,
+      "events": 0,
+      "failedLinks": 0
+    },
+    {
+      "id": "euskadi-entries",
+      "name": "Euskadi · Inscripciones federativas (RockTheSport)",
+      "status": "ok",
+      "message": "Extracción completada",
       "pages": 6,
-      "events": 0
+      "events": 5,
+      "failedLinks": 0
     },
     {
       "id": "ironman-europe",
       "name": "IRONMAN · Europa (web oficial)",
-      "status": "no_events_found",
-      "message": "Página consultada; no se pudo reconocer un calendario estructurado",
-      "pages": 3,
-      "events": 0
+      "status": "ok",
+      "message": "Extracción completada Enlaces secundarios fallidos: /news: 403 Client Error: Forbidden for url: https://www.ironman.com/news?f%5B0%5D=race-type%3AIRO; /news: 403 Client Error: Forbidden for url: https://www.ironman.com/news?f%5B0%5D=race-type%3AIRO",
+      "pages": 11,
+      "events": 7,
+      "failedLinks": 2
     },
     {
       "id": "ironman-directory",
       "name": "IRONMAN · Directorio europeo de contraste",
       "status": "ok",
       "message": "Extracción completada",
-      "pages": 6,
-      "events": 52
+      "pages": 13,
+      "events": 52,
+      "failedLinks": 0
     },
     {
       "id": "challenge-europe",
       "name": "Challenge Family · Europa",
       "status": "ok",
       "message": "Extracción completada",
-      "pages": 6,
-      "events": 12
+      "pages": 13,
+      "events": 12,
+      "failedLinks": 0
     }
   ]
 }
