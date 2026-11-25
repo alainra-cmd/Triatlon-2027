@@ -112,6 +112,8 @@ def jsonld_events(soup,source,page_url):
     place=loc.get("name","") if isinstance(loc,dict) else ""
     if isinstance(addr,dict):place=place or addr.get("addressLocality","")
     country=addr.get("addressCountry","") if isinstance(addr,dict) else ""
+    country={"ES":"Spain","PT":"Portugal","FR":"France","DE":"Germany","IT":"Italy","GB":"United Kingdom","NL":"Netherlands","BE":"Belgium","AT":"Austria","CH":"Switzerland","SE":"Sweden","NO":"Norway","DK":"Denmark","FI":"Finland","PL":"Poland"}.get(str(country).upper(),country)
+    country=country or infer_country(place+" "+str(x.get("description","")))
     out.append(event_obj(x.get("name"),date,place,source,x.get("url") or page_url,str(x.get("description","")),country))
    for v in x.values():
     if isinstance(v,(dict,list)):stack.append(v)
