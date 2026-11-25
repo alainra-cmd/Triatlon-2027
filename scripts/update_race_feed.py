@@ -21,7 +21,7 @@ SOURCES = [
  {"id":"cantabria","name":"Federación Cántabra","country":"España","kind":"regional","url":"https://fetricantabria.com/"},
  {"id":"clm","name":"Federación Castilla-La Mancha","country":"España","kind":"regional","url":"https://www.triatlonclm.org/"},
  {"id":"cyl","name":"Federación Castilla y León","country":"España","kind":"regional","url":"https://www.triatloncastillayleon.com/"},
- {"id":"cataluna","name":"Federació Catalana","country":"España","kind":"regional","url":"https://www.triatlo.org/"},
+ {"id":"cataluna","name":"Federació Catalana","country":"España","kind":"regional","url":"https://www.triatlo.org/competicions/?idany=2027&oficial=0"},
  {"id":"euskadi","name":"Euskadiko Triatloi Federazioa","country":"España","kind":"regional","url":"https://triatloi.org/es/"},
  {"id":"extremadura","name":"Federación Extremeña","country":"España","kind":"regional","url":"https://triatlonextremadura.com/"},
  {"id":"galicia","name":"Federación Galega","country":"España","kind":"regional","url":"https://fegatri.org/"},
@@ -42,7 +42,7 @@ MONTHS = {m.lower():i for i,m in enumerate(["","January","February","March","Apr
 MONTHS.update({"ene":1,"enero":1,"jan":1,"feb":2,"febrero":2,"mar":3,"marzo":3,"abr":4,"abril":4,"apr":4,"may":5,"mayo":5,"jun":6,"junio":6,"jul":7,"julio":7,"ago":8,"agosto":8,"aug":8,"sep":9,"septiembre":9,"oct":10,"octubre":10,"nov":11,"noviembre":11,"dic":12,"diciembre":12,"dez":12,"fevereiro":2,"março":3,"maio":5,"junho":6,"julho":7,"agosto":8,"setembro":9,"outubro":10,"novembro":11,"dezembro":12})
 EUROPE = {"spain","portugal","france","germany","italy","austria","belgium","netherlands","luxembourg","switzerland","united kingdom","ireland","sweden","norway","denmark","finland","estonia","latvia","lithuania","poland","czechia","slovakia","slovenia","croatia","hungary","romania","bulgaria","greece","cyprus","malta","iceland","serbia","montenegro","bosnia","albania","turkey"}
 SPORT = re.compile(r"triatl|duatl|aquatl|swim.?run|multisport|ironman|challenge|triathlon|race", re.I)
-LINK_WORDS = re.compile(r"calendar|calend|compet|evento|event|race|prova|prueba|agenda|circuit|inscri", re.I)
+LINK_WORDS = re.compile(r"calendar|calend|egutegi|compet|evento|event|race|prova|prueba|agenda|circuit|inscri", re.I)
 session = requests.Session()
 session.headers.update(HEADERS)
 
@@ -136,8 +136,8 @@ def extract_tables(soup,source,page_url):
    if len(cells)<2:continue
    vals=[clean(c) for c in cells];whole=" | ".join(vals);date=date_from(whole)
    if not date:continue
-   name_idx=next((i for i,h in enumerate(headers) if any(k in h for k in ["prova","prueba","evento","event","race","compet","nome"])),None)
-   place_idx=next((i for i,h in enumerate(headers) if any(k in h for k in ["local","cidade","city","lugar","location"])),None)
+   name_idx=next((i for i,h in enumerate(headers) if any(k in h for k in ["prova","prueba","evento","event","race","compet","nome","nom"])),None)
+   place_idx=next((i for i,h in enumerate(headers) if any(k in h for k in ["local","cidade","city","lugar","location","poblac"])),None)
    dist_idx=next((i for i,h in enumerate(headers) if "dist" in h),None)
    name=vals[name_idx] if name_idx is not None and name_idx<len(vals) else ""
    if not name:
