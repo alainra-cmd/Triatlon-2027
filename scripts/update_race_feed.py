@@ -72,6 +72,13 @@ def fetch(url):
  r.raise_for_status()
  return r.url,r.headers.get("content-type","").lower(),r.content
 
+def infer_country(text):
+ t=norm(text)
+ countries={"españa":"Spain","spain":"Spain","portugal":"Portugal","francia":"France","france":"France","alemania":"Germany","germany":"Germany","italia":"Italy","italy":"Italy","austria":"Austria","belgica":"Belgium","belgium":"Belgium","paises bajos":"Netherlands","netherlands":"Netherlands","suiza":"Switzerland","switzerland":"Switzerland","reino unido":"United Kingdom","united kingdom":"United Kingdom","irlanda":"Ireland","ireland":"Ireland","suecia":"Sweden","sweden":"Sweden","noruega":"Norway","norway":"Norway","dinamarca":"Denmark","denmark":"Denmark","finlandia":"Finland","finland":"Finland","polonia":"Poland","poland":"Poland","chequia":"Czechia","czechia":"Czechia","eslovaquia":"Slovakia","slovakia":"Slovakia","eslovenia":"Slovenia","slovenia":"Slovenia","croacia":"Croatia","croatia":"Croatia","hungria":"Hungary","hungary":"Hungary","grecia":"Greece","greece":"Greece","estonia":"Estonia","letonia":"Latvia","lituania":"Lithuania","malta":"Malta","chipre":"Cyprus","islandia":"Iceland"}
+ for key,value in countries.items():
+  if key in t:return value
+ return ""
+
 def event_obj(name,date,place,source,url,kind="",country=None,dist=""):
  if not name or not date:return None
  if source['id']=='ironman-europe' and (not country or norm(country) not in EUROPE):return None
