@@ -302,14 +302,12 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
 
 <main>
 <section id="calendar" class="panel active">
- <div class="calendar-title-row"><div><h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p></div><button class="primary refresh-title-btn" id="refreshStatuses">Actualizar estado</button></div>
+ <div class="calendar-title-row"><div><h2>Calendario de pruebas</h2><p class="sub">España y Portugal · Temporada 2027</p></div></div>
  <div class="status-grid">
   <button type="button" class="status-tile status-confirmed" id="openConfirmedEvents" aria-label="Mostrar pruebas con fecha confirmada"><b id="dateConfirmedCount">0</b><span>FECHAS CONFIRMADAS</span></button>
   <button type="button" class="status-tile status-open" id="openAvailableEvents" aria-label="Mostrar pruebas con plazas abiertas"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></button>
   <button type="button" class="status-tile status-sold" id="openSoldOutEvents" aria-label="Mostrar pruebas agotadas"><b id="soldOutCount">0</b><span>AGOTADAS</span></button>
  </div>
- <div class="refresh-bar"><div class="small" id="statusSyncLabel">Estado de las pruebas: pendiente de sincronizar.</div>
-  <div id="statusProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="statusProgressFill"></i><span class="progress-label" id="statusProgressText">0 % · 0 de 0 pruebas</span></div></div></div>
  <div class="toolbar">
   <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
   <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
@@ -810,7 +808,7 @@ async function refreshStatusFeed(showMessage=true){
  if(sl)sl.textContent='Último intento real: '+finished.toLocaleString('es-ES')+'. La fecha «Dato verificado» solo cambia cuando se detecta información explícita.';
  if(showMessage)alert(summary+' Las páginas consultadas sin información concluyente mantienen su estado anterior.');
 }
-document.getElementById('refreshStatuses').addEventListener('click',()=>refreshStatusFeed(true));
+// La consulta manual de fuentes se ha retirado de la pantalla principal.
 
 const placeCoords={
  'Empuriabrava':[42.246,3.123],'Sant Feliu de Guíxols':[41.782,3.03],'El Vendrell':[41.219,1.535],'Berga':[42.1,1.846],'Platja d’Aro':[41.817,3.067],'L’Estartit':[42.053,3.196],'Valencia':[39.4699,-0.3763],'Lanzarote':[29.0469,-13.5899],'Peñíscola':[40.3573,0.4068],'Alcúdia':[39.853,-3.121],'Salou':[41.076,-1.131],'Oropesa':[40.091,-0.141],'Vitoria-Gasteiz':[42.8467,-2.6727],'Burriana':[39.889,-0.085],'Zarautz':[43.284,-2.169],'Marbella':[36.510,-4.886],'Peguera':[39.538,2.448],'Murgia':[42.956,-2.82],'Vilamoura':[37.076,-8.118],'Moura':[38.14,-7.45],'Setúbal':[38.524,-8.888],'Beja':[38.015,-7.863],'Lisboa':[38.722,-9.139],'Cascais':[38.697,-9.421],'Famalicão':[41.407,-8.52],'Hamburg':[53.5511,9.9937],'Klagenfurt':[46.6247,14.3053],'Frankfurt':[50.1109,8.6821],'Les Sables-d’Olonne':[46.496, -1.784],'Thun':[46.758,7.628],'Tallinn':[59.437,24.7536],'Kalmar':[56.6634,16.3568],'Copenhagen':[55.6761,12.5683],'Vichy':[46.127,3.426],'Knokke-Heist':[51.34,3.24],'Nice':[43.7102,7.262],'Cervia':[44.261,12.35],'Tenby':[51.672, -4.704],'Calella':[41.613,2.657],'Jesolo':[45.533,12.644],'Aix-en-Provence':[43.5297,5.4474],'Bad Schönborn':[49.214,8.655],'St. Pölten':[48.204,15.625],'Alghero':[40.558,8.319],'Tours':[47.394,0.684],'Rapperswil':[47.226,8.818],'Bolton':[53.5769,-2.4282],'Hoorn':[52.642,5.06],'Elsinore':[56.036,12.613],'Swansea':[51.6214,-3.9436],'Jönköping':[57.7826,14.1618],'Remich':[49.545,6.367],'Leipzig':[51.3397,12.3731],'Duisburg':[51.4344,6.7623],'Zell am See':[47.323,12.796],'Erkner':[52.425,13.754],'Málaga':[36.7213,-4.4214],'Mogán':[27.883,-15.725],'Cesenatico':[44.2,12.4],'Šamorín':[48.03,17.31],'Gdańsk':[54.352,18.646],'Walchsee':[47.65,12.32],'Roth':[49.247,11.091],'Turku':[60.4518,22.2666],'Almere':[52.3508,5.2647],'Vieux Boucau':[43.789,-1.4],'Santa Margherita di Pula':[38.93,8.92],'Barcelona':[41.3874,2.1686]
