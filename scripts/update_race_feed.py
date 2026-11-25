@@ -321,11 +321,11 @@ def scan_source(source):
  for url,ct,body in pages:
   if "pdf" in ct or body[:4]==b"%PDF":found.extend(parse_pdf(body,source,url));continue
   soup=BeautifulSoup(body,"html.parser")
-  found.extend(jsonld_events(soup,source,url))
-  found.extend(extract_tables(soup,source,url))
   if source["id"]=="challenge-europe":found.extend(parse_challenge_calendar(soup,source,url))
   elif source["id"]=="ironman-directory":found.extend(parse_ironman_directory(soup,source,url))
   else:
+   found.extend(jsonld_events(soup,source,url))
+   found.extend(extract_tables(soup,source,url))
    found.extend(extract_cards(soup,source,url))
    found.extend(extract_paragraphs(soup,source,url))
  if source["id"]=="fetri-2027-calendar":found.extend(parse_fetri_2027(source))
