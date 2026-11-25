@@ -376,28 +376,22 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
 <section id="settings" class="panel">
  <h2>Datos y ajustes</h2>
  <div class="card" id="calendarSourcesCard">
-  <b>Fuentes del calendario</b>
-  <p class="small">Añade fuentes y busca posibles pruebas nuevas. La extracción depende del formato y de los bloqueos de cada web; siempre revisarás los resultados antes de incorporarlos.</p>
-  <p class="small">Una sola búsqueda combina tus páginas guardadas, calendarios oficiales, federaciones, World Triathlon, Europe Triathlon, IRONMAN, Challenge y noticias de organizadores.</p>
-  <button class="primary unified-search-button" id="runUnifiedSearch" type="button" style="width:100%;margin:8px 0">⌕ Buscar nuevas pruebas en todas las fuentes</button>
-  <div id="scanProgressWrap" class="progress-wrap" hidden><div class="progress-track"><i id="scanProgressFill"></i><span class="progress-label" id="scanProgressText">0 % · Preparando búsqueda…</span></div></div>
-  <p class="small" id="scanSourcesStatus">Todavía no se ha iniciado una búsqueda conjunta.</p>
-  <button class="hidden" id="scanCalendarSources" type="button" aria-hidden="true" tabindex="-1"></button>
-  <div id="sourceScanResults" class="scan-results"></div>
-  <div class="web-discovery" id="webDiscoveryCard">
-   <p class="small hidden" id="webDiscoveryStatus">Última búsqueda: todavía no realizada.</p>
-   <button class="hidden" id="discoverWebNow" type="button" aria-hidden="true" tabindex="-1"></button>
-   <div id="webDiscoveryResults" class="scan-results"></div>
-  </div>
- <div class="sources-dropdown" id="sourcesDropdown">
-  <button type="button" id="toggleSources" aria-expanded="false" aria-controls="calendarSourceList" onclick="const list=document.getElementById('calendarSourceList');const opening=list.hidden;list.hidden=!opening;this.setAttribute('aria-expanded',String(opening));this.querySelector('.sources-chevron').textContent=opening?'−':'＋';">☷ Mis fuentes del calendario <span class="sources-chevron">＋</span></button>
-  <div id="calendarSourceList" hidden></div>
+  <b>Motor de extracción de calendarios oficiales</b>
+  <p class="small">El calendario se recopila automáticamente desde las federaciones de España y Portugal y los calendarios europeos oficiales de IRONMAN y Challenge Family. La extracción se ejecuta en GitHub dos veces al día; aquí puedes consultar la última lectura y revisar las pruebas detectadas antes de incorporarlas.</p>
+  <button class="primary" id="loadOfficialCalendar" type="button" style="width:100%;margin:8px 0">↻ Cargar última extracción oficial</button>
+  <p class="small" id="officialFeedStatus">Todavía no se ha cargado la última extracción.</p>
+  <div id="officialSourceReport" class="scan-results"></div>
+  <h3 style="margin:16px 0 8px">Pruebas detectadas pendientes de añadir</h3>
+  <p class="small" id="officialCandidateCount">Pulsa «Cargar última extracción oficial» para consultar el feed.</p>
+  <div id="officialRaceCandidates" class="scan-results"></div>
  </div>
-  <form id="addSourceForm">
-   <label for="newSourceName">Nombre de la página</label><input id="newSourceName" required placeholder="Ej. Federación autonómica">
-   <label for="newSourceUrl">Dirección web (URL)</label><input id="newSourceUrl" type="url" required placeholder="https://…">
-   <button class="primary" type="submit">＋ Añadir página</button>
-  </form>
+ <div class="card">
+  <b>Fuentes oficiales incluidas</b>
+  <p class="small">El listado identifica las páginas que consulta el extractor. Si una web bloquea el acceso o no publica fechas reconocibles, quedará marcada como incidencia: no se contabilizará como consulta correcta.</p>
+  <div class="sources-dropdown" id="sourcesDropdown">
+   <button type="button" id="toggleSources" aria-expanded="false" aria-controls="calendarSourceList" onclick="const list=document.getElementById('calendarSourceList');const opening=list.hidden;list.hidden=!opening;this.setAttribute('aria-expanded',String(opening));this.querySelector('.sources-chevron').textContent=opening?'−':'＋';">☷ Ver todas las fuentes <span class="sources-chevron">＋</span></button>
+   <div id="calendarSourceList" hidden></div>
+  </div>
  </div>
  <div class="card">
   <b>Guardar una copia de seguridad</b><p class="small">Exporta tus pruebas, marcas y recordatorios a un archivo JSON. Guárdalo en Drive o en tus archivos.</p>
@@ -698,8 +692,7 @@ document.addEventListener('click',e=>{const day=e.target.closest('[data-open-day
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('dayRacesBackdrop')?.classList.remove('open');const day=e.target.closest?.('[data-open-day]');if(day&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openDayRaces(day.dataset.openDay);}});
 
 document.addEventListener('click',e=>{const b=e.target.closest('[data-work-month]');if(!b)return;workCalendarMonth=Math.max(0,Math.min(11,workCalendarMonth+Number(b.dataset.workMonth)));renderWorkCalendar();});
-document.getElementById('addSourceForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('newSourceName').value.trim(),url=document.getElementById('newSourceUrl').value.trim();try{const u=new URL(url);if(!/^https?:$/.test(u.protocol))throw 0;if(!data.customSources)data.customSources=[];if(data.customSources.some(x=>x.url===u.href))throw 0;data.customSources.push({name,url:u.href,kind:'Añadida por ti'});e.target.reset();save();}catch(_){alert('Introduce una URL http o https válida y que no esté ya añadida.');}});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-source-delete]');if(b){data.customSources=(data.customSources||[]).filter(x=>x.url!==b.dataset.sourceDelete);save();}});
+
 
 // Miniaturas: fotografía real de la localidad o del entorno, sin deportistas, carteles ni imágenes genéricas.
 const photoCacheKey='triathlon2027_photo_cache_v7';
@@ -752,23 +745,6 @@ async function hydrateEventPhotos(events){
  }));
 }
 // Búsqueda asistida de nuevas competiciones: importa feeds JSON/CSV directamente y prueba extracción ligera vía proxy para webs HTML.
-function scanDate(text){const m=text.match(/(?:20)?(27)[-/.](0?[1-9]|1[0-2])[-/.](0?[1-9]|[12]\d|3[01])|\b(0?[1-9]|[12]\d|3[01])[-/.](0?[1-9]|1[0-2])[-/.]2027\b/);if(!m)return '';if(m[1])return `2027-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;return `2027-${String(m[5]).padStart(2,'0')}-${String(m[4]).padStart(2,'0')}`;}
-function candidateId(name,place,date){return 'scan-'+btoa(unescape(encodeURIComponent(`${name}|${place}|${date}`))).replace(/[^a-z0-9]/gi,'').slice(0,24).toLowerCase()}
-function showScanCandidates(items){const box=document.getElementById('sourceScanResults');if(!box)return;box.innerHTML=items.length?items.map((x,i)=>`<div class="scan-candidate"><b>${esc(x.name)}</b><div class="meta">${dateLabel(x.date)} · ${esc(x.place)} · ${esc(x.sourceName)}</div><button class="secondary" data-scan-add="${i}">Añadir al calendario</button></div>`).join(''):'<div class="small">No se han encontrado pruebas nuevas verificables en las fuentes consultadas.</div>';box._items=items;}
-document.getElementById('scanCalendarSources')?.addEventListener('click',async()=>{
- window.sourceScanProgress=0;window.updateCombinedSearchProgress?.('source',0,'Consultando tus fuentes…');
- const status=document.getElementById('scanSourcesStatus'),btn=document.getElementById('scanCalendarSources');btn.disabled=true;status.textContent='Buscando en las fuentes guardadas…';let found=[];const progressWrap=document.getElementById('scanProgressWrap'),progressFill=document.getElementById('scanProgressFill'),progressText=document.getElementById('scanProgressText');progressWrap.hidden=false;
- const sources=(data.customSources||[]);const total=sources.length+1;let completed=0;const tick=()=>{const pct=total?Math.round(completed/total*100):100;window.updateCombinedSearchProgress?.('source',pct,`Fuentes propias: ${pct}%`);};tick();
- // Fuente 100x100Half integrada en la búsqueda general, sin botón exclusivo.
- const builtIn=hundredByHundred2027.filter(e=>!data.events.some(old=>old.name===e.name&&old.date===e.date&&old.place===e.place));found.push(...builtIn.map(e=>({...e,sourceName:'100x100Half'})));completed++;tick();
- for(const src of sources){try{
-  const prox=`https://api.allorigins.win/raw?url=${encodeURIComponent(src.url)}`;const res=await fetch(prox,{signal:AbortSignal.timeout(12000)});if(!res.ok)continue;const raw=await res.text();
-  if(/\.json(?:$|\?)/i.test(src.url)||/\.csv(?:$|\?)/i.test(src.url)){let arr;if(/\.csv(?:$|\?)/i.test(src.url)){const lines=raw.split(/\r?\n/);const headers=(lines.shift()||'').split(/[;,]/).map(x=>x.trim().toLowerCase());arr=lines.map(line=>{const cols=line.split(/[;,]/);const o={};headers.forEach((h,i)=>o[h]=(cols[i]||'').trim().replace(/^\"|\"$/g,''));return {date:o.date||o.fecha||o.start,name:o.name||o.nombre||o.title||o.prueba,place:o.place||o.city||o.localidad||o.location,distance:o.distance||o.distancia||o.modality,type:o.type||o.tipo,url:o.url||o.link};});}else{const parsed=JSON.parse(raw);arr=Array.isArray(parsed)?parsed:(parsed.events||parsed.races||parsed.days||[]);}for(const v of arr){const date=String(v.date||v.fecha||v.start||'').slice(0,10);const name=v.name||v.nombre||v.title||v.event||v.prueba;if(/^2027-\d\d-\d\d$/.test(date)&&name){const place=v.place||v.city||v.localidad||v.location||'Localidad por confirmar';found.push({id:candidateId(name,place,date),name,country:v.country||'España',type:v.type||v.tipo||'Triatlón',date,place,distance:v.distance||v.distancia||v.modality||'Por confirmar',sourceUrl:src.url,url:v.url||v.link||src.url,availability:'Por verificar',dateStatus:'Pendiente de verificar',status:'Detectada en fuente externa',sourceName:src.name});}}}
-  else {const doc=new DOMParser().parseFromString(raw,'text/html');const links=[...doc.querySelectorAll('a[href]')];for(const a of links){const label=(a.textContent||'').trim().replace(/\s+/g,' ');if(label.length<8||label.length>130)continue;const context=(a.parentElement?.textContent||label).trim().replace(/\s+/g,' ');const date=scanDate(context);if(!date||!/triatl|duatl|aquatl|ironman|challenge|race|carrera|competici/i.test(context+' '+label))continue;const place=(context.match(/(?:en|@|–|-|·)\s*([A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ'’ -]{2,35})/)||[])[1]||'Localidad por confirmar';found.push({id:candidateId(label,place,date),name:label,country:'España',type:/duatl/i.test(context)?'Duatlón':'Triatlón',date,place,distance:'Por confirmar',sourceUrl:src.url,url:new URL(a.getAttribute('href'),src.url).href,availability:'Por verificar',dateStatus:'Pendiente de verificar',status:'Detectada en página; revisar datos',sourceName:src.name});}}
- }catch(_){}finally{completed++;tick();}}
- const seen=new Set();found=found.filter(x=>{const k=`${x.name}|${x.date}|${x.place}`.toLowerCase();if(seen.has(k)||data.events.some(e=>`${e.name}|${e.date}|${e.place}`.toLowerCase()===k))return false;seen.add(k);return true;});showScanCandidates(found);status.textContent=`Búsqueda terminada: ${found.length} posibles pruebas nuevas. Revisa cada resultado antes de añadirlo. Algunas webs pueden bloquear la consulta o requerir una fuente estructurada.`;window.updateCombinedSearchProgress?.('source',100,`Fuentes propias: 100% (${total} procesadas)`);btn.disabled=false;
-});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-scan-add]');if(!b)return;const box=document.getElementById('sourceScanResults'),items=box?box._items||[]:[],x=items[Number(b.dataset.scanAdd)];if(!x)return;const {sourceName,...event}=x;event.interested=false;event.registered=false;event.cost='';event.notes='Importada desde fuente externa; comprobar fecha, distancia y localidad con el organizador.';data.events.push(event);items.splice(Number(b.dataset.scanAdd),1);showScanCandidates(items);save();});
 
 function statusTextFromHtml(html){
  const doc=new DOMParser().parseFromString(html,'text/html');
@@ -852,22 +828,6 @@ function renderMap(){
 }
 document.getElementById('mapCountry').addEventListener('change',renderMap);document.getElementById('mapAvailability').addEventListener('change',renderMap);
 // La cabecera mantiene siempre la misma altura: sin redimensionamiento al hacer scroll.
-window.updateCombinedSearchProgress=(phase,pct,label)=>{
- const state=window._combinedSearchProgress||(window._combinedSearchProgress={source:0,web:0});
- state[phase]=Math.max(state[phase]||0,Math.min(100,Math.max(0,pct)));
- const total=Math.round((state.source+state.web)/2),fill=document.getElementById('scanProgressFill'),txt=document.getElementById('scanProgressText'),wrap=document.getElementById('scanProgressWrap');
- if(fill)fill.style.width=total+'%';if(txt)txt.textContent=total+' % · '+label;if(wrap)wrap.hidden=false;
-};
-document.getElementById('runUnifiedSearch')?.addEventListener('click',()=>{
- const main=document.getElementById('runUnifiedSearch'),own=document.getElementById('scanCalendarSources'),web=document.getElementById('discoverWebNow');
- if(!own||!web)return;
- main.disabled=true;main.textContent='Buscando en todas las fuentes…';
- window._combinedSearchProgress={source:0,web:0};window.updateCombinedSearchProgress('source',0,'Preparando fuentes…');window.updateCombinedSearchProgress('web',0,'Preparando búsqueda web…');
- document.getElementById('scanSourcesStatus').textContent='Consulta conjunta en curso. Los resultados aparecerán agrupados por origen.';
- own.click();web.click();
- const check=()=>{if(!own.disabled&&!web.disabled){main.disabled=false;main.textContent='⌕ Buscar nuevas pruebas en todas las fuentes';window.updateCombinedSearchProgress('source',100,'Búsqueda conjunta terminada');window.updateCombinedSearchProgress('web',100,'Búsqueda conjunta terminada');document.getElementById('scanSourcesStatus').textContent='Búsqueda conjunta finalizada. Revisa los resultados de ambas fuentes antes de añadir pruebas.';return;}setTimeout(check,350);};
- setTimeout(check,350);
-});
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar();window.scrollTo({top:0,behavior:'smooth'});}));
 
 
@@ -1097,83 +1057,7 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 .web-discovery .candidate-tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:10px;font-weight:800;background:#59431b;color:#ffdf9a}
 .web-discovery .candidate-tag.official{background:#174535;color:#a8f0cb}
 </style>
-<script id="v156-discovery">
-(function(){
- const btn=document.getElementById('discoverWebNow');
- const status=document.getElementById('webDiscoveryStatus');
- const box=document.getElementById('webDiscoveryResults');
- if(!btn||!box||!status)return;
- const queries=[
-  'triatlón 2027 calendario pruebas España Portugal',
-  'duatlón 2027 calendario España Portugal',
-  'site:triathlon.org 2027 triathlon calendar Spain Europe',
-  'site:triatlon.org calendario 2027 triatlón',
-  'site:challenge-family.com 2027 races Europe',
-  'site:ironman.com/races 2027 Europe triathlon'
- ];
- function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();}
- function extractDate(s){
-  const t=String(s||'');
-  const months={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
-  let m=t.match(/\b(\d{1,2})\s*(?:-|–|to)\s*(\d{1,2})\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+2027\b/i);
-  if(m)return '2027-'+String(months[m[3].slice(0,3).toLowerCase()]).padStart(2,'0')+'-'+String(m[1]).padStart(2,'0');
-  m=t.match(/\b(\d{1,2})\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+2027\b/i);
-  if(m)return '2027-'+String(months[m[2].slice(0,3).toLowerCase()]).padStart(2,'0')+'-'+String(m[1]).padStart(2,'0');
-  m=t.match(/\b(\d{1,2})[/.\-](\d{1,2})[/.\-]2027\b/);
-  if(m)return '2027-'+String(m[2]).padStart(2,'0')+'-'+String(m[1]).padStart(2,'0');
-  return '';
- }
- function duplicate(x){const n=norm(x.name),p=norm(x.place),d=x.date||'';return data.events.some(e=>(d&&e.date===d&&norm(e.name)===n)||(d&&e.date===d&&p&&norm(e.place)===p));}
- function render(items){
-  box.innerHTML=items.length?items.map((x,i)=>{
-   const official=x.confidence==='official';
-   const date=x.date?dateLabel(x.date):'Fecha no extraída: consultar fuente';
-   const place=x.place||'Localidad por confirmar';
-   const canAdd=!!x.date&&!!x.place&&!duplicate(x);
-   return '<div class="discovery-item"><b>'+esc(x.name)+'</b><div class="discovery-meta">'+esc(date)+' · '+esc(place)+' · '+esc(x.sourceName||'Búsqueda web')+'</div><span class="candidate-tag '+(official?'official':'')+'">'+(official?'Calendario oficial publicado':'Candidato pendiente de revisión')+'</span><div class="discovery-actions"><a class="source-link" href="'+esc(x.url||'#')+'" target="_blank" rel="noopener">Ver fuente original ↗</a>'+(canAdd?'<button class="secondary" data-web-add="'+i+'">Revisar y añadir</button>':'<button class="secondary" disabled>'+(duplicate(x)?'Ya está en calendario':'Faltan datos para importar')+'</button>')+'</div></div>';
-  }).join(''):'<p class="small">No se han encontrado candidatos nuevos. Puedes repetir la búsqueda más tarde.</p>';
-  box._items=items;
- }
- async function loadCurated(){try{const r=await fetch('./discovery-feed.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error();const f=await r.json();return Array.isArray(f.candidates)?f.candidates:[];}catch(_){return [];}}
- async function liveSearch(){
-  const results=[];window.updateCombinedSearchProgress?.('web',0,'Búsqueda web: 0%');
-  for(let i=0;i<queries.length;i++){
-   const rss='https://www.bing.com/news/search?q='+encodeURIComponent(queries[i])+'&format=rss';
-   try{
-    const prox='https://api.allorigins.win/raw?url='+encodeURIComponent(rss);
-    const r=await fetch(prox,{signal:AbortSignal.timeout(10000),cache:'no-store'});if(!r.ok)continue;
-    const xml=new DOMParser().parseFromString(await r.text(),'text/xml');
-    [...xml.querySelectorAll('item')].forEach(item=>{
-     const title=(item.querySelector('title')?.textContent||'').trim();
-     const desc=(item.querySelector('description')?.textContent||'').replace(/<[^>]*>/g,' ').trim();
-     const url=(item.querySelector('link')?.textContent||'').trim();const text=title+' '+desc;
-     if(!/triatl|duatl|aquatl|ironman|challenge/i.test(text))return;
-     const date=extractDate(text);const pm=text.match(/\b(?:in|at|en)\s+([A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚÑáéíóúñ'’ -]{2,35})/);
-     results.push({name:title.slice(0,150),date,place:pm?pm[1].trim():'',country:'Por determinar',type:/duatl/i.test(text)?'Duatlón':(/aquatl/i.test(text)?'Acuatlón':'Triatlón'),distance:'Por confirmar',url,sourceUrl:url,sourceName:'Búsqueda web · Bing News',confidence:'discovery',availability:'Por verificar',dateStatus:date?'Pendiente de verificar':'Sin fecha extraída'});
-    });
-   }catch(_){}
-   status.textContent='Buscando en Internet… '+(i+1)+'/'+queries.length+' consultas';window.updateCombinedSearchProgress?.('web',Math.round((i+1)/queries.length*100),'Búsqueda web: '+Math.round((i+1)/queries.length*100)+'%');
-  }
-  return results;
- }
- btn.addEventListener('click',async()=>{
-  btn.disabled=true;status.textContent='Consultando calendarios oficiales y búsqueda web…';box.innerHTML='';
-  try{
-   const [curated,live]=await Promise.all([loadCurated(),liveSearch()]);const all=[...curated,...live],seen=new Set(),unique=[];
-   all.forEach(x=>{const k=norm(x.name)+'|'+(x.date||'')+'|'+norm(x.place||'');if(!x.name||seen.has(k)||duplicate(x))return;seen.add(k);unique.push({...x,id:x.id||candidateId(x.name,x.place||'',x.date||'')});});
-   unique.sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));render(unique);
-   status.textContent='Búsqueda finalizada: '+unique.length+' candidatos nuevos. Los resultados externos necesitan revisión; los calendarios oficiales se identifican por separado.';window.updateCombinedSearchProgress?.('web',100,'Búsqueda web completada');
-  }catch(e){status.textContent='No se pudo completar la búsqueda. Comprueba la conexión e inténtalo de nuevo.';}
-  finally{btn.disabled=false;}
- });
- document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-web-add]');if(!b)return;const items=box._items||[],x=items[Number(b.dataset.webAdd)];if(!x||!x.date||!x.place)return;
-  const ev={id:x.id||candidateId(x.name,x.place,x.date),name:x.name,date:x.date,place:x.place,country:x.country||'Por determinar',type:x.type||'Triatlón',distance:x.distance||'Por confirmar',franchise:x.franchise||'',url:x.url||x.sourceUrl||'',sourceUrl:x.sourceUrl||x.url||'',availability:'Por verificar',dateStatus:x.dateStatus||'Pendiente de verificar',status:'Candidato importado; verificar con organizador',checkedAt:'',interested:false,registered:false,cost:'',notes:'Descubierta mediante búsqueda web. Confirmar fecha, localidad, distancia e inscripción con la fuente original.'};
-  if(!data.events.some(e=>e.id===ev.id||((e.date||'')===ev.date&&norm(e.name)===norm(ev.name))))data.events.push(ev);
-  items.splice(Number(b.dataset.webAdd),1);render(items);save();
- });
-})();
-</script>
+
 
 <style id="v159-work-calendar-css">
 .month-match{margin:12px 0;padding:10px;border:1px solid #29465a;border-radius:14px;background:#0d1d2b}.month-match-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;color:#eaf5fc}.month-match-head span{font-size:11px;color:#a9c5d8}.month-match .card{margin:7px 0}.month-match .work-x{border-color:#b77b28;background:rgba(183,123,40,.12)}
@@ -1181,6 +1065,52 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 @media(max-width:430px){.work-month-grid{gap:3px;padding:6px}.work-day{min-height:54px;padding:4px;border-radius:7px}.work-day-number{font-size:12px}.work-day-race{font-size:8px}.work-legend{font-size:10px;gap:6px 9px}}
 </style>
 <div id="dayRacesBackdrop" class="day-races-backdrop" role="dialog" aria-modal="true"><div class="day-races-modal"><div class="day-races-head"><h3 id="dayRacesTitle">Pruebas del día</h3><button class="day-races-close" id="dayRacesClose" aria-label="Cerrar">×</button></div><div class="day-races-body" id="dayRacesBody"></div></div></div>
+<script id="official-race-feed-engine">
+(function(){
+ const load=document.getElementById('loadOfficialCalendar');
+ const status=document.getElementById('officialFeedStatus');
+ const report=document.getElementById('officialSourceReport');
+ const list=document.getElementById('officialRaceCandidates');
+ const count=document.getElementById('officialCandidateCount');
+ if(!load||!status||!report||!list||!count)return;
+ const normalize=v=>String(v||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/\\s+/g,' ').trim();
+ const exists=x=>data.events.some(e=>normalize(e.name)===normalize(x.name)&&String(e.date||'')===String(x.date||''));
+ const dateLabelSafe=v=>{if(!v)return 'Fecha pendiente';const d=new Date(v+'T12:00:00');return isNaN(d)?v:d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});};
+ let candidates=[];
+ function renderCandidates(){
+  const fresh=candidates.filter(x=>x.name&&!exists(x));
+  count.textContent=fresh.length+' pruebas nuevas pendientes de revisar · '+(candidates.length-fresh.length)+' ya presentes en tu calendario';
+  list.innerHTML=fresh.length?fresh.map((x,i)=>'<div class="scan-candidate"><b>'+escapeHtml(x.name)+'</b><div class="meta">'+escapeHtml(dateLabelSafe(x.date))+' · '+escapeHtml(x.place||'Localidad por confirmar')+' · '+escapeHtml(x.sourceName||'Fuente oficial')+'</div><div class="meta">'+escapeHtml(x.distance||'Distancia por confirmar')+' · '+escapeHtml(x.country||'País por confirmar')+'</div><div class="discovery-actions"><a class="source-link" href="'+escapeHtml(x.url||x.sourceUrl||'#')+'" target="_blank" rel="noopener">Ver prueba ↗</a><button class="secondary" data-official-add="'+i+'">Añadir a mi calendario</button></div></div>').join(''):'<p class="small">No hay pruebas nuevas pendientes de añadir en la última extracción.</p>';
+  list._items=fresh;
+ }
+ function escapeHtml(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ function renderReport(sources){
+  report.innerHTML=(sources||[]).map(x=>'<div class="source-item"><div class="source-meta"><b>'+escapeHtml(x.name)+'</b><br><span class="small">'+escapeHtml(x.status==='ok'?'Consulta correcta':x.status==='no_events_found'?'Consultada, sin pruebas reconocidas':'Error de consulta')+' · '+Number(x.events||0)+' pruebas · '+Number(x.pages||0)+' páginas'+(x.message?' · '+escapeHtml(x.message):'')+'</span></div></div>').join('')||'<p class="small">El feed todavía no contiene el resultado de ninguna consulta.</p>';
+ }
+ async function loadFeed(){
+  load.disabled=true;load.textContent='Cargando extracción…';status.textContent='Leyendo el último resultado publicado por el extractor…';
+  try{
+   const response=await fetch('./race-feed.json?ts='+Date.now(),{cache:'no-store'});
+   if(!response.ok)throw new Error('Feed todavía no disponible (HTTP '+response.status+').');
+   const feed=await response.json();
+   if(!Array.isArray(feed.events)||!Array.isArray(feed.sources))throw new Error('El archivo de resultados no tiene el formato esperado.');
+   candidates=feed.events;
+   const generated=feed.generatedAt?new Date(feed.generatedAt).toLocaleString('es-ES'):'fecha no disponible';
+   status.textContent='Última extracción: '+generated+' · '+feed.events.length+' pruebas detectadas · '+feed.successfulSources+'/'+feed.sourceCount+' fuentes con resultados reconocidos · '+feed.failedSources+' errores de acceso.';
+   renderReport(feed.sources);renderCandidates();
+  }catch(err){status.textContent=err.message+' La extracción automática se publicará cuando termine la primera ejecución programada.';report.innerHTML='';list.innerHTML='';count.textContent='Sin resultados cargados.';}
+  finally{load.disabled=false;load.textContent='↻ Cargar última extracción oficial';}
+ }
+ load.addEventListener('click',loadFeed);
+ document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-official-add]');if(!b)return;
+  const fresh=list._items||[],x=fresh[Number(b.dataset.officialAdd)];if(!x||exists(x))return;
+  data.events.push({...x,id:x.id||('official-'+Date.now()),interested:false,registered:false,cost:'',notes:'Importada desde el nuevo extractor de calendarios oficiales. Comprobar posibles cambios en la web del organizador.'});
+  renderCandidates();save();
+ });
+ loadFeed();
+})();
+</script>
 </body></html>
 
 <style id="v161-header-photo-panels">
