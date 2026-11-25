@@ -241,6 +241,43 @@ def parse_ironman_directory(soup,source,page_url):
   if item:out.append(item)
  return out
 
+def parse_murcia_2027(source):
+ # Calendario provisional FTRM 2027 publicado en PDF oficial.
+ records=[
+  ("Duatlón por Equipos","2027-01-16","Archena","Duatlón"),
+  ("Duatlón de Águilas · Clasificatorio y Regional","2027-01-24","Águilas","Duatlón"),
+  ("Duatlón de Menores","2027-01-31","Alcantarilla","Duatlón"),
+  ("Duatlón de Yecla","2027-02-14","Yecla","Duatlón"),
+  ("Duatlón Calasparra","2027-02-21","Calasparra","Duatlón"),
+  ("Duatlón de Lorca","2027-02-27","Lorca","Duatlón"),
+  ("Duatlón Orihuela","2027-03-06","Orihuela","Duatlón"),
+  ("Duatlón de Menores","2027-03-07","Caravaca de la Cruz","Duatlón"),
+  ("Duatlón Torre Pacheco","2027-03-14","Torre Pacheco","Duatlón"),
+  ("Triatlón San Pedro del Pinatar","2027-04-11","San Pedro del Pinatar","Triatlón"),
+  ("Final Escolar de Duatlón","2027-04-24","San Pedro del Pinatar","Duatlón"),
+  ("Triatlón Portman","2027-04-25","Portman (La Unión)","Triatlón"),
+  ("Triatlón Orihuela","2027-05-09","Orihuela","Triatlón"),
+  ("Triatlón de Águilas · Copa del Rey y C.E. Relevos","2027-05-15","Águilas","Triatlón"),
+  ("Final Escolar de Triatlón","2027-05-22","Sede por determinar","Triatlón"),
+  ("Triatlón Cartagena","2027-05-29","Cartagena","Triatlón"),
+  ("Triatlón de Fuente Álamo · Clasificatorio y Regional","2027-06-05","Fuente Álamo","Triatlón"),
+  ("Triatlón de Yecla","2027-06-20","Yecla","Triatlón"),
+  ("Triatlón de Menores","2027-06-26","Alhama de Murcia","Triatlón"),
+  ("Triatlón Blanca","2027-07-17","Blanca","Triatlón"),
+  ("Acuatlón Alguazas","2027-09-04","Alguazas","Acuatlón"),
+  ("Acuatlón Mazarrón","2027-09-12","Mazarrón","Acuatlón"),
+  ("Acuatlón Santomera","2027-09-18","Santomera","Acuatlón"),
+  ("Duatlón Cross La Unión","2027-10-24","La Unión","Duatlón"),
+  ("Duatlón Cross Santomera","2027-11-07","Santomera","Duatlón")
+ ]
+ out=[]
+ for name,date,place,kind in records:
+  item=event_obj(name,date,place,source,source["url"],kind,"Spain")
+  if item:
+   item["notes"]="Calendario provisional FTRM 2027; sujeto a actualizaciones."
+   out.append(item)
+ return out
+
 def parse_fetri_2027(source):
  records=[
   ("T100 Marbella 2027","2027-09-19","Marbella","Triatlón media distancia"),
@@ -341,6 +378,7 @@ def scan_source(source):
    found.extend(extract_cards(soup,source,url))
    found.extend(extract_paragraphs(soup,source,url))
  if source["id"]=="fetri-2027-calendar":found.extend(parse_fetri_2027(source))
+ if source["id"]=="murcia":found.extend(parse_murcia_2027(source))
  # Franchise pages are explicitly filtered to Europe by the provider's own region selection where available.
  if source["id"]=="challenge-europe":
   found=[x for x in found if norm(x.get("country","")) in EUROPE or x.get("country")=="Europe"]
