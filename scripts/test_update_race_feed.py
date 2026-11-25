@@ -57,12 +57,13 @@ class RaceFeedTests(unittest.TestCase):
     def test_ironman_directory_card(self):
         from bs4 import BeautifulSoup
         source = {"id":"ironman-directory","name":"IRONMAN directory","country":"Europe","kind":"supplemental","url":"https://findmytris.com/races/continent/europe"}
-        html = """<ul><li><a href="/race/vilamoura">IRONMAN 70.3 Vilamoura-Algarve</a> — April 3, 2027, Vilamoura, Portugal · IRONMAN 70.3</li></ul>"""
+        html = """<ul><li><a href="/race/vilamoura">IRONMAN 70.3 Vilamoura-Algarve</a> — April 3, 2027, Vilamoura, Portugal · IRONMAN 70.3</li><li><a href="/race/5150">5150 Kraichgau</a> — May 23, 2027, Kraichgau, Germany · 5150</li></ul>"""
         events = race_feed.parse_ironman_directory(BeautifulSoup(html,"html.parser"),source,source["url"])
-        self.assertEqual(len(events),1)
+        self.assertEqual(len(events),2)
         self.assertEqual(events[0]["date"],"2027-04-03")
         self.assertEqual(events[0]["country"],"Portugal")
         self.assertEqual(events[0]["franchise"],"IRONMAN")
+        self.assertEqual(events[1]["name"],"5150 Kraichgau")
 
     def test_fetri_calendar_has_confirmed_events(self):
         source = {"id":"fetri-2027-calendar","name":"FETRI 2027","country":"Spain","kind":"federation","url":"https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/"}
@@ -82,6 +83,16 @@ class RaceFeedTests(unittest.TestCase):
         self.assertEqual(len(events),1)
         self.assertEqual(events[0]["name"],"XVII DUATLÓ DE GRANOLLERS")
         self.assertEqual(events[0]["place"],"MONTMELÓ")
+
+    def test_challenge_event_without_exact_day_is_kept(self):
+        from bs4 import BeautifulSoup
+        source = {"id":"challenge-europe","name":"Challenge Family · Europa","country":"Europe","kind":"franchise","url":"https://challengefamily.com/races/?_continent=europe"}
+        html = """<h2>Challenge</h2><h2>Turku</h2><h3>Middle distance</h3><h3>To be confirmed</h3><h3>Turku, Finland</h3>"""
+        events = race_feed.parse_challenge_calendar(BeautifulSoup(html,"html.parser"),source,source["url"])
+        self.assertEqual(len(events),1)
+        self.assertEqual(events[0]["name"],"Turku")
+        self.assertEqual(events[0]["date"],"")
+        self.assertEqual(events[0]["dateStatus"],"Fecha pendiente de confirmación")
 
 if __name__ == "__main__":
     unittest.main()
