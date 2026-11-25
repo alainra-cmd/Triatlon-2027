@@ -1088,7 +1088,11 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
    const feed=await response.json();
    if(!Array.isArray(feed.events)||!Array.isArray(feed.sources))throw new Error('El archivo de resultados no tiene el formato esperado.');
    candidates=feed.events;
-   const generated=feed.generatedAt?new Date(feed.generatedAt).toLocaleString('es-ES'):'fecha no disponible';
+   if(!feed.generatedAt){
+    status.textContent='El nuevo extractor está instalado, pero aún no ha publicado su primera ejecución. La primera lectura llegará en el siguiente ciclo programado.';
+    renderReport(feed.sources);renderCandidates();return;
+   }
+   const generated=new Date(feed.generatedAt).toLocaleString('es-ES');
    status.textContent='Última extracción: '+generated+' · '+feed.events.length+' pruebas detectadas · '+feed.successfulSources+'/'+feed.sourceCount+' fuentes con resultados reconocidos · '+feed.failedSources+' errores de acceso.';
    renderReport(feed.sources);renderCandidates();
   }catch(err){status.textContent=err.message+' La extracción automática se publicará cuando termine la primera ejecución programada.';report.innerHTML='';list.innerHTML='';count.textContent='Sin resultados cargados.';}
