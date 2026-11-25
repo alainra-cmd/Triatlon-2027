@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build a verifiable race feed from official triathlon federation and franchise calendars."""
-import json, re, time, unicodedata
+import json, re, time, unicodedata, hashlib
 from datetime import datetime, timezone
 from urllib.parse import urljoin, urlparse
 import requests
@@ -76,7 +76,7 @@ def event_obj(name,date,place,source,url,kind="",country=None,dist=""):
  name=clean(name)[:180]
  if not SPORT.search(name+" "+kind):return None
  if source["kind"]=="franchise" and source["id"]=="ironman-europe" and country and norm(country) not in EUROPE:return None
- return {"id":source["id"]+"-"+str(abs(hash(norm(name)+date+norm(place)))%10**12),
+ return {"id":source["id"]+"-"+hashlib.sha1((norm(name)+date+norm(place)).encode("utf-8")).hexdigest()[:14],
  "name":name,"date":date,"place":clean(place)[:100] or "Localidad por confirmar",
  "country":country or source["country"],"type":"Duatlón" if re.search("duatl|duath",kind+" "+name,re.I) else ("Acuatlón" if re.search("aquatl",kind+" "+name,re.I) else "Triatlón"),
  "distance":clean(dist)[:80] or "Por confirmar","franchise":"IRONMAN" if source["id"]=="ironman-europe" else ("Challenge" if source["id"]=="challenge-europe" else ""),
@@ -129,7 +129,7 @@ def extract_tables(soup,source,page_url):
    a=row.find("a",href=True);url=urljoin(page_url,a["href"]) if a else page_url
    place=vals[place_idx] if place_idx is not None and place_idx<len(vals) else ""
    kind=whole
-   item=event_obj(name,date,place,source,url,kind,dist=vals[dist_idx] if dist_idx is not None and dist_idx<len(vals) else "")
+   item=event_obj(name,date,place,source,url,kind,infer_country(whole),vals[dist_idx] if dist_idx is not None and dist_idx<len(vals) else "")
    if item:out.append(item)
  return out
 
@@ -150,7 +150,7 @@ def extract_cards(soup,source,page_url):
   place=""
   loc=node.select_one('[class*="location"],[class*="place"],[itemprop="location"]')
   if loc:place=clean(loc.get_text(" ",strip=True))
-  item=event_obj(name,date,place,source,url,text)
+  item=event_obj(name,date,place,source,url,text,infer_country(text+" "+place))
   if item:out.append(item)
  return out
 
