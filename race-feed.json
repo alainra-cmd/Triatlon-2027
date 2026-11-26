@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-25T20:12:31.192331+00:00",
+  "generatedAt": "2026-11-26T22:32:44.202033+00:00",
   "season": 2027,
   "sourceCount": 26,
-  "successfulSources": 11,
-  "failedSources": 2,
+  "successfulSources": 12,
+  "failedSources": 3,
   "events": [
     {
       "id": "challenge-europe-a59407935cc986",
@@ -52,6 +52,55 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "valencia-36130de9f6f6d3",
+      "name": "Domingo 10/01/2027 – DUATLÓ CIRCUIT RICARDO TORMO CHESTE",
+      "date": "2027-01-10",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "http://www.google.com/calendar/event?\n\n\t\taction=TEMPLATE\n\n\t\t&text=DUATLÓ CIRCUIT RICARDO TORMO CHESTE\n\t\t&dates=20270110T093000/20270110T113000\n\t\t&location=CIRCUIT RICARDO TORMO, CHESTE\n\t\t&trp=false\n\n\t\t&sprop=name:triatlocv.org",
+      "sourceUrl": "https://www.triatlocv.org/",
+      "sourceName": "Federació Comunitat Valenciana",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "valencia-c5d3bdd5ad939b",
+      "name": "Lliga de Clubs Duatlón DUATLÓ CIRCUIT RICARDO TORMO CHESTE 10 de enero de 2027",
+      "date": "2027-01-10",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.rockthesport.com/es/evento/duatlon-cre-cheste-2027",
+      "sourceUrl": "https://www.triatlocv.org/",
+      "sourceName": "Federació Comunitat Valenciana",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-986839b3c09cff",
+      "name": "Duatlón por Equipos",
+      "date": "2027-01-16",
+      "place": "Archena",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "cataluna-fa558a15db7ca9",
@@ -182,6 +231,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-52bf082e9515b3",
+      "name": "Duatlón de Águilas · Clasificatorio y Regional",
+      "date": "2027-01-24",
+      "place": "Águilas",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "cataluna-3781731d9eed75",
       "name": "XIX DUATLÓ DE LA GARROTXA - CASTELLFOLLIT DE LA ROCA",
       "date": "2027-01-24",
@@ -228,6 +294,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-d2e7ab7bc16e84",
+      "name": "Duatlón de Menores",
+      "date": "2027-01-31",
+      "place": "Alcantarilla",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "cataluna-35500474fedd7f",
@@ -310,6 +393,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-5035f3a204e861",
+      "name": "Duatlón de Yecla",
+      "date": "2027-02-14",
+      "place": "Yecla",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "cataluna-4ad241a21f3250",
       "name": "XX DUATLÓ CIUTAT DEL PRAT",
       "date": "2027-02-14",
@@ -374,6 +474,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-813a15d9690a25",
+      "name": "Duatlón Calasparra",
+      "date": "2027-02-21",
+      "place": "Calasparra",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "cataluna-d34983327cb7d8",
       "name": "X DUATLO DE VILADECANS",
       "date": "2027-02-21",
@@ -406,6 +523,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-82d15507fd6b7f",
+      "name": "Duatlón de Lorca",
+      "date": "2027-02-27",
+      "place": "Lorca",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "fetri-2027-calendar-c5066deda6ed2f",
       "name": "Liga Nacional de Duatlón Ciudad Real",
       "date": "2027-02-27",
@@ -417,6 +551,22 @@
       "url": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceUrl": "https://triatlon.org/noticias/fetri-lanza-el-calendario-de-competiciones-nacionales-e-internacionales-en-el-ano-2027/",
       "sourceName": "FETRI · Calendario nacional e internacional 2027",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "aragon-e2edfffd542d9f",
+      "name": "← Anterior Toma de tiempos PNTD 2027 para Cadetes, Juvenil, Junior y Paratriatlón 27 febrero 2027",
+      "date": "2027-02-27",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonaragon.org/Competicion/28285/toma-de-tiempos-pntd-2027-para-cadetes-juvenil-junior-y-paratriatlon",
+      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
+      "sourceName": "Federación Aragonesa · Competiciones",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -468,6 +618,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-330d6b4f0bbd23",
+      "name": "Duatlón Orihuela",
+      "date": "2027-03-06",
+      "place": "Orihuela",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "cataluna-e89991e219b91c",
@@ -534,6 +701,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-73a9657c54385f",
+      "name": "Duatlón de Menores",
+      "date": "2027-03-07",
+      "place": "Caravaca de la Cruz",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "clm-c01ebd38185ff5",
       "name": "VI Duatlón San Pedro",
       "date": "2027-03-07",
@@ -580,6 +764,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-e34614f739e8da",
+      "name": "Duatlón Torre Pacheco",
+      "date": "2027-03-14",
+      "place": "Torre Pacheco",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "andalucia-6ff3b182eb620a",
@@ -756,6 +957,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-ad50152c6a8693",
+      "name": "Triatlón San Pedro del Pinatar",
+      "date": "2027-04-11",
+      "place": "San Pedro del Pinatar",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "aragon-5ede66dbf43307",
@@ -966,6 +1184,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-bb517771d15fac",
+      "name": "Final Escolar de Duatlón",
+      "date": "2027-04-24",
+      "place": "San Pedro del Pinatar",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "ironman-directory-41397312a0d1a1",
       "name": "IRONMAN 70.3 Venice-Jesolo",
       "date": "2027-04-24",
@@ -996,6 +1231,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-c4db7a73f55b23",
+      "name": "Triatlón Portman",
+      "date": "2027-04-25",
+      "place": "Portman (La Unión)",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "valencia-14e0b2397745d9",
@@ -1174,6 +1426,22 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "clm-76914b185d838a",
+      "name": "V Acuatlón Escolar La Roda_Escolar",
+      "date": "2027-05-08",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonclm.org/competicion/v-acuatlon-escolar-la-roda-escolar",
+      "sourceUrl": "https://www.triatlonclm.org/",
+      "sourceName": "Federación Castilla-La Mancha",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "clm-816e31d87ccb94",
       "name": "XI Triatlón Escolar Cuenca_Escolar",
       "date": "2027-05-08",
@@ -1236,6 +1504,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-bf5fe87100a320",
+      "name": "Triatlón Orihuela",
+      "date": "2027-05-09",
+      "place": "Orihuela",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "valencia-58fccaa0ad575f",
@@ -1366,6 +1651,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-0b19252780f7f6",
+      "name": "Triatlón de Águilas · Copa del Rey y C.E. Relevos",
+      "date": "2027-05-15",
+      "place": "Águilas",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "challenge-europe-e846a676e2e097",
       "name": "Cesenatico",
       "date": "2027-05-16",
@@ -1396,6 +1698,39 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "clm-0909c8d5a773ba",
+      "name": "Acuatlón Escolar Tomelloso_Escolar",
+      "date": "2027-05-22",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonclm.org/competicion/acuatlon-escolar-tomelloso-escolar",
+      "sourceUrl": "https://www.triatlonclm.org/",
+      "sourceName": "Federación Castilla-La Mancha",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-5066da4cd845c1",
+      "name": "Final Escolar de Triatlón",
+      "date": "2027-05-22",
+      "place": "Sede por determinar",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "ironman-directory-caff5d3bde5e52",
@@ -1494,20 +1829,21 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
-      "id": "valencia-5b32ea220b698e",
-      "name": "Sábado 29/05/2027 – SCOTT MEDITERRANEAN EPIC TRIATHLON / FULL, HALF & AQUABIKE",
+      "id": "murcia-dcdc561ee98d7c",
+      "name": "Triatlón Cartagena",
       "date": "2027-05-29",
-      "place": "Localidad por confirmar",
-      "country": "España",
+      "place": "Cartagena",
+      "country": "Spain",
       "type": "Triatlón",
       "distance": "Por confirmar",
       "franchise": "",
-      "url": "http://www.google.com/calendar/event?\n\n\t\taction=TEMPLATE\n\n\t\t&text=SCOTT MEDITERRANEAN EPIC TRIATHLON / FULL, HALF &amp; AQUABIKE\n\t\t&dates=20270529T080000/20270529T100000\n\t\t&location=Paseo del Mediterráneo, OROPESA DEL MAR\n\t\t&trp=false\n\n\t\t&sprop=name:triatlocv.org",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "valencia-3d8df9cfc556df",
@@ -1702,6 +2038,39 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-7672247e11e7a0",
+      "name": "Triatlón de Fuente Álamo · Clasificatorio y Regional",
+      "date": "2027-06-05",
+      "place": "Fuente Álamo",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
+      "id": "clm-256b35b8be6a4b",
+      "name": "V Acuatlón Escolar Toledo_Escolar",
+      "date": "2027-06-05",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonclm.org/competicion/v-acuatlon-escolar-toledo-escolar",
+      "sourceUrl": "https://www.triatlonclm.org/",
+      "sourceName": "Federación Castilla-La Mancha",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
       "id": "euskadi-entries-30182c930389ec",
       "name": "VI HALF GASTEIZ 2027",
       "date": "2027-06-05",
@@ -1823,6 +2192,22 @@
       "distance": "Por confirmar",
       "franchise": "",
       "url": "https://www.triatlonclm.org/competicion/triatlon-ciudad-tomelloso",
+      "sourceUrl": "https://www.triatlonclm.org/",
+      "sourceName": "Federación Castilla-La Mancha",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "clm-b1fa1ff0424a81",
+      "name": "XV Acuatlón Escolar Albacete_Escolar",
+      "date": "2027-06-06",
+      "place": "Localidad por confirmar",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://www.triatlonclm.org/competicion/xv-acuatlon-escolar-albacete-escolar",
       "sourceUrl": "https://www.triatlonclm.org/",
       "sourceName": "Federación Castilla-La Mancha",
       "dateStatus": "Pendiente de verificar",
@@ -2054,6 +2439,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-de484c1650adc2",
+      "name": "Triatlón de Yecla",
+      "date": "2027-06-20",
+      "place": "Yecla",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "fetri-2027-calendar-f3c40614cbc17b",
       "name": "Campeonato de España de Triatlón Cadete, Juvenil y Júnior Pontevedra",
       "date": "2027-06-26",
@@ -2068,6 +2470,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-0e973e8d5d3b5c",
+      "name": "Triatlón de Menores",
+      "date": "2027-06-26",
+      "place": "Alhama de Murcia",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "cataluna-85449a08ccaf37",
@@ -2390,6 +2809,39 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "galicia-f8b50a4d297500",
+      "name": "Acuatlón Menores Concello Narón",
+      "date": "2027-07-16",
+      "place": "Narón",
+      "country": "España",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://fegatri.org/calendario-provisional-de-probas-tempada-2027/",
+      "sourceUrl": "https://fegatri.org/",
+      "sourceName": "Federación Galega",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-92c83c6e8aecd5",
+      "name": "Triatlón Blanca",
+      "date": "2027-07-17",
+      "place": "Blanca",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "galicia-8a81c5b30c74ca",
       "name": "Triatlón Estrada Popular Oficial",
       "date": "2027-07-17",
@@ -2433,22 +2885,6 @@
       "url": "https://www.triatlonclm.org/competicion/xxxii-triatlon-palmaces",
       "sourceUrl": "https://www.triatlonclm.org/",
       "sourceName": "Federación Castilla-La Mancha",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
-      "id": "aragon-b92f2132a2e5fa",
-      "name": "← Anterior ★ Cto VI TRIATLÓN SUPERSPRINT DE BIOTA - Cto. de Aragón de Triatlón Supersprint 2027 25 julio 2027",
-      "date": "2027-07-25",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Duatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://www.triatlonaragon.org/Competicion/28272/vi-triatlon-supersprint-de-biota-cto-de-aragon-de-triatlon-supersprint-2027",
-      "sourceUrl": "https://www.triatlonaragon.org/Competiciones",
-      "sourceName": "Federación Aragonesa · Competiciones",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -2694,6 +3130,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-29764489f706a3",
+      "name": "Acuatlón Alguazas",
+      "date": "2027-09-04",
+      "place": "Alguazas",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "cataluna-37676e7c23b0ee",
       "name": "TRIATLÓ JOVE BALAGUER",
       "date": "2027-09-04",
@@ -2806,6 +3259,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-a41dbc2eb56b32",
+      "name": "Acuatlón Mazarrón",
+      "date": "2027-09-12",
+      "place": "Mazarrón",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "ironman-directory-24677acd864ac3",
       "name": "IRONMAN 70.3 Erkner",
       "date": "2027-09-12",
@@ -2868,6 +3338,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-840f87049dc2de",
+      "name": "Acuatlón Santomera",
+      "date": "2027-09-18",
+      "place": "Santomera",
+      "country": "Spain",
+      "type": "Triatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "ironman-directory-bd6e9b38c99373",
@@ -3254,6 +3741,23 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
+      "id": "murcia-627d425f01a1d7",
+      "name": "Duatlón Cross La Unión",
+      "date": "2027-10-24",
+      "place": "La Unión",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
+    },
+    {
       "id": "challenge-europe-d3008b4fab0b75",
       "name": "Forte Village",
       "date": "2027-10-24",
@@ -3316,6 +3820,23 @@
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
+    },
+    {
+      "id": "murcia-fbe76879ff2ef8",
+      "name": "Duatlón Cross Santomera",
+      "date": "2027-11-07",
+      "place": "Santomera",
+      "country": "Spain",
+      "type": "Duatlón",
+      "distance": "Por confirmar",
+      "franchise": "",
+      "url": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceUrl": "https://trimurcia.es/wp-content/uploads/2026/10/Calendario-Provisional-FTRM-2027.pdf",
+      "sourceName": "Federación de Murcia · Calendario provisional 2027 (PDF)",
+      "dateStatus": "Pendiente de verificar",
+      "availability": "Por verificar",
+      "status": "Extraída de calendario oficial; revisar cambios",
+      "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
       "id": "clm-87d26ef16cef75",
@@ -3508,7 +4029,7 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 13,
-      "events": 22,
+      "events": 26,
       "failedLinks": 0
     },
     {
@@ -3553,7 +4074,7 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 6,
-      "events": 9,
+      "events": 10,
       "failedLinks": 0
     },
     {
@@ -3568,29 +4089,28 @@
     {
       "id": "murcia",
       "name": "Federación de Murcia · Calendario provisional 2027 (PDF)",
-      "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "status": "ok",
+      "message": "Extracción completada",
       "pages": 1,
-      "events": 0,
+      "events": 25,
       "failedLinks": 0
     },
     {
       "id": "navarra",
       "name": "Federación Navarra",
       "status": "needs_review",
-      "message": "Se han consultado 11 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 11,
+      "message": "Se han consultado 12 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 12,
       "events": 0,
       "failedLinks": 0
     },
     {
       "id": "rioja",
       "name": "Federación Riojana",
-      "status": "needs_review",
-      "message": "Se han consultado 8 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 8,
-      "events": 0,
-      "failedLinks": 0
+      "status": "error",
+      "message": "403 Client Error: Forbidden for url: https://fertriatlon.com/",
+      "pages": 0,
+      "events": 0
     },
     {
       "id": "valencia",
@@ -3598,7 +4118,7 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 13,
-      "events": 10,
+      "events": 11,
       "failedLinks": 0
     },
     {
