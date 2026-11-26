@@ -42,7 +42,7 @@ DATE_RE = re.compile(r"(20(?:26|27|28))[-/.](\d{1,2})[-/.](\d{1,2})|\b(\d{1,2})[
 MONTHS = {m.lower():i for i,m in enumerate(["","January","February","March","April","May","June","July","August","September","October","November","December"]) if m}
 MONTHS.update({"ene":1,"enero":1,"jan":1,"feb":2,"febrero":2,"mar":3,"marzo":3,"abr":4,"abril":4,"apr":4,"may":5,"mayo":5,"jun":6,"junio":6,"jul":7,"julio":7,"ago":8,"agosto":8,"aug":8,"sep":9,"septiembre":9,"oct":10,"octubre":10,"nov":11,"noviembre":11,"dic":12,"diciembre":12,"dez":12,"fevereiro":2,"março":3,"maio":5,"junho":6,"julho":7,"agosto":8,"setembro":9,"outubro":10,"novembro":11,"dezembro":12})
 EUROPE = {"spain","portugal","france","germany","italy","austria","belgium","netherlands","luxembourg","switzerland","united kingdom","ireland","sweden","norway","denmark","finland","estonia","latvia","lithuania","poland","czechia","slovakia","slovenia","croatia","hungary","romania","bulgaria","greece","cyprus","malta","iceland","serbia","montenegro","bosnia","albania","turkey"}
-SPORT = re.compile(r"triatl|duatl|aquatl|swim.?run|multisport|ironman|challenge|triathlon|race", re.I)
+SPORT = re.compile(r"triatl|duatl|acuatl|aquatl|swim.?run|multisport|ironman|challenge|triathlon|race", re.I)
 LINK_WORDS = re.compile(r"calendar|calend|egutegi|compet|evento|event|race|prova|prueba|agenda|circuit|inscri", re.I)
 session = requests.Session()
 session.headers.update(HEADERS)
