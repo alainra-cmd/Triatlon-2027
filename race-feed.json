@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-27T01:49:37.882852+00:00",
+  "generatedAt": "2026-11-27T13:45:19.889967+00:00",
   "season": 2027,
   "sourceCount": 26,
   "successfulSources": 12,
-  "failedSources": 3,
+  "failedSources": 2,
   "events": [
     {
       "id": "challenge-europe-a59407935cc986",
@@ -4107,10 +4107,11 @@
     {
       "id": "rioja",
       "name": "Federación Riojana",
-      "status": "error",
-      "message": "403 Client Error: Forbidden for url: https://fertriatlon.com/",
-      "pages": 0,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 8 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 8,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "valencia",
