@@ -308,16 +308,18 @@ nav.main-navigation button.active{background:linear-gradient(110deg,#087db5,#075
   <button type="button" class="status-tile status-open" id="openAvailableEvents" aria-label="Mostrar pruebas con plazas abiertas"><b id="placesOpenCount">0</b><span>PLAZAS ABIERTAS</span></button>
   <button type="button" class="status-tile status-sold" id="openSoldOutEvents" aria-label="Mostrar pruebas agotadas"><b id="soldOutCount">0</b><span>AGOTADAS</span></button>
  </div>
- <div class="toolbar">
-  <select id="countryFilter"><option value="">Todos los países</option><option>España</option><option>Portugal</option></select>
-  <select id="typeFilter"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
-  <select id="distanceFilter"><option value="">Todas las distancias</option><option value="Supersprint">Supersprint</option><option value="Sprint">Sprint</option><option value="Olímpica">Olímpica</option><option value="Media distancia">Media distancia</option><option value="Larga distancia">Larga distancia</option><option value="Cross">Cross</option><option value="Otras">Otras</option></select>
-  <select id="communityFilter"><option value="">Todas las comunidades</option><option>Andalucía</option><option>Aragón</option><option>Asturias</option><option>Illes Balears</option><option>Canarias</option><option>Cantabria</option><option>Castilla-La Mancha</option><option>Castilla y León</option><option>Cataluña</option><option>Comunitat Valenciana</option><option>Extremadura</option><option>Galicia</option><option>Comunidad de Madrid</option><option>Región de Murcia</option><option>Navarra</option><option>País Vasco</option><option>La Rioja</option><option>Portugal</option><option>Sin determinar</option></select>
-  <select id="franchiseFilter"><option value="">Todas las organizaciones</option><option value="IRONMAN">IRONMAN</option><option value="Challenge">Challenge</option></select>
-  <select id="monthFilter"><option value="">Todos los meses</option><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option></select>
-  <select id="interestFilter"><option value="">Todas las pruebas</option><option value="interested">Me interesan</option><option value="registered">Inscrito</option></select>
-  <select id="availabilityFilter"><option value="">Cualquier estado</option><option value="Plazas disponibles">Con plazas</option><option value="Agotadas">Agotadas</option><option value="Lista de espera">Lista de espera</option><option value="Por verificar">Sin verificar</option></select>
- </div>
+ <details class="race-filter-panel" id="raceFilterPanel">
+  <summary><span>Filtros de pruebas</span><span class="filter-summary-hint">7 criterios</span></summary>
+  <div class="toolbar compact race-filter-grid">
+   <select id="typeFilter" aria-label="Disciplina"><option value="">Triatlón y duatlón</option><option>Triatlón</option><option>Duatlón</option></select>
+   <select id="distanceFilter" aria-label="Distancia"><option value="">Todas las distancias</option><option value="Supersprint">Supersprint</option><option value="Sprint">Sprint</option><option value="Olímpica">Olímpica</option><option value="Media distancia">Media distancia</option><option value="Larga distancia">Larga distancia</option><option value="Cross">Cross</option><option value="Otras">Otras</option></select>
+   <select id="communityFilter" aria-label="Comunidad autónoma"><option value="">Todas las comunidades</option><option>Andalucía</option><option>Aragón</option><option>Asturias</option><option>Illes Balears</option><option>Canarias</option><option>Cantabria</option><option>Castilla-La Mancha</option><option>Castilla y León</option><option>Cataluña</option><option>Comunitat Valenciana</option><option>Extremadura</option><option>Galicia</option><option>Comunidad de Madrid</option><option>Región de Murcia</option><option>Navarra</option><option>País Vasco</option><option>La Rioja</option><option>Portugal</option><option>Sin determinar</option></select>
+   <select id="franchiseFilter" aria-label="Organización"><option value="">Todas las organizaciones</option><option value="IRONMAN">IRONMAN</option><option value="Challenge">Challenge</option></select>
+   <select id="monthFilter" aria-label="Mes"><option value="">Todos los meses</option><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option></select>
+   <select id="interestFilter" aria-label="Mis pruebas"><option value="">Todas las pruebas</option><option value="interested">Me interesan</option><option value="registered">Inscrito</option></select>
+   <select id="availabilityFilter" aria-label="Estado de inscripción"><option value="">Cualquier estado</option><option value="Plazas disponibles">Con plazas</option><option value="Agotadas">Agotadas</option><option value="Lista de espera">Lista de espera</option><option value="Por verificar">Sin verificar</option></select>
+  </div>
+ </details>
  <div class="total-counter"><span><b>Total de pruebas en el listado</b><br><small id="filteredCountLabel">Mostrando todas las pruebas</small></span><strong id="eventCount">0</strong></div>
  <input id="search" placeholder="Buscar prueba, localidad o distancia…">
  <div id="eventList"></div>
@@ -569,9 +571,9 @@ function render(){
  document.getElementById('dateConfirmedCount').textContent=data.events.filter(e=>e.dateStatus==='Confirmada').length;
  document.getElementById('placesOpenCount').textContent=data.events.filter(e=>e.availability==='Plazas disponibles').length;
  document.getElementById('soldOutCount').textContent=data.events.filter(e=>e.availability==='Agotadas').length;
- let country=document.getElementById('countryFilter').value,type=document.getElementById('typeFilter').value,franchise=document.getElementById('franchiseFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase(),dist=document.getElementById('distanceFilter').value,region=document.getElementById('communityFilter').value;
+ let type=document.getElementById('typeFilter').value,franchise=document.getElementById('franchiseFilter').value,flt=document.getElementById('interestFilter').value,af=document.getElementById('availabilityFilter').value,q=document.getElementById('search').value.toLowerCase(),dist=document.getElementById('distanceFilter').value,region=document.getElementById('communityFilter').value;
  let month=document.getElementById('monthFilter').value;
- let ev=data.events.filter(e=>(!country||e.country===country)&&(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort(compareEventDate);
+ let ev=data.events.filter(e=>(!type||e.type===type)&&(!franchise||((e.franchise||(/challenge/i.test(e.name)?'Challenge':/ironman/i.test(e.name)?'IRONMAN':''))===franchise))&&(!flt||(flt==='interested'?e.interested:e.registered))&&(!af||e.availability===af)&&(!dist||distanceGroup(e)===dist)&&(!region||communityFor(e)===region)&&(!month||(e.date||'').slice(5,7)===month)&&(`${e.name} ${e.place} ${e.distance}`.toLowerCase().includes(q))).sort(compareEventDate);
  document.getElementById('eventCount').textContent=ev.length;document.getElementById('filteredCountLabel').textContent=ev.length===data.events.length?'Mostrando todas las pruebas ('+data.events.length+')':'De '+data.events.length+' pruebas coincidentes · '+data.events.length+' de '+data.events.length+' total';
  document.getElementById('eventList').innerHTML=ev.length?ev.map(e=>`<article class="card event-card ${e.availability==='Plazas disponibles'?'open':e.availability==='Agotadas'?'sold':e.availability==='Lista de espera'?'wait':''}">
  <div class="event-layout"><div><div class="event-head"><div><div class="event-title">${esc(e.name)}</div><div class="meta">📅 ${dateLabel(e.date)} · 📍 ${esc(e.place)}<br>${provinceBadge(e)} · ${esc(e.type)} · ${esc(e.distance)}</div></div>${e.registered?'<span class="pill green">✓ INSCRITO</span>':''}</div></div><div class="event-photo-wrap" data-photo-place="${esc(e.place)}" data-photo-type="${esc(e.type||"Triatlón")}" data-photo-id="${esc(e.id)}"><div class="event-photo-fallback" aria-label="Imagen de ${esc(e.place)}">📍</div></div></div>
@@ -832,7 +834,7 @@ document.getElementById('mapCountry').addEventListener('change',renderMap);docum
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));if(b.dataset.tab==='reminders')checkReminders();if(b.dataset.tab==='map')renderMap();if(b.dataset.tab==='workcalendar')renderWorkCalendar();window.scrollTo({top:0,behavior:'smooth'});}));
 
 
-['countryFilter','typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+['typeFilter','franchiseFilter','monthFilter','distanceFilter','communityFilter','interestFilter','availabilityFilter','search'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',render);el.addEventListener('change',render);}});
 document.addEventListener('change',e=>{if(e.target.dataset.mark){let x=data.events.find(x=>x.id===e.target.dataset.id);if(x){x[e.target.dataset.mark]=e.target.checked;if(e.target.dataset.mark==='registered'&&e.target.checked)x.interested=true;save()}}});
 document.addEventListener('click',e=>{
  let edit=e.target.closest('[data-edit]');if(edit)openEvent(edit.dataset.edit);
@@ -859,7 +861,7 @@ if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.s
 
 // V15.3: resaltar todos los filtros activos, incluidos los del mapa.
 (()=>{
- const ids=['countryFilter','typeFilter','distanceFilter','communityFilter','franchiseFilter','monthFilter','interestFilter','availabilityFilter','mapCountry','mapAvailability','search'];
+ const ids=['typeFilter','distanceFilter','communityFilter','franchiseFilter','monthFilter','interestFilter','availabilityFilter','mapCountry','mapAvailability','search'];
  const update=el=>{if(!el)return;const active=String(el.value||'').trim()!=='';el.classList.toggle('filter-active',active);};
  const bind=()=>ids.forEach(id=>{const el=document.getElementById(id);if(el&&!el.dataset.v153Bound){el.dataset.v153Bound='1';update(el);el.addEventListener('input',()=>update(el));el.addEventListener('change',()=>update(el));}});
  bind();
@@ -1108,6 +1110,37 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
  document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadFeed();});
 })();
 </script>
+
+<style id="v165-compact-race-filters">
+/* Filtros de pruebas: panel plegable para reducir la altura ocupada en móvil. */
+.race-filter-panel{
+ margin:7px 0 9px;
+ border:1px solid #29465f;
+ border-radius:12px;
+ background:linear-gradient(120deg,#10263a,#0b1a29);
+ overflow:hidden;
+}
+.race-filter-panel summary{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ min-height:39px;padding:8px 12px;cursor:pointer;list-style:none;
+ color:#eaf6ff;font-size:12px;font-weight:800;letter-spacing:.25px;
+}
+.race-filter-panel summary::-webkit-details-marker{display:none}
+.race-filter-panel summary::after{content:"＋";color:#00dce5;font-size:17px;line-height:1}
+.race-filter-panel[open] summary::after{content:"−"}
+.race-filter-panel .filter-summary-hint{margin-left:auto;color:#91aabe;font-size:10px;font-weight:650}
+.race-filter-grid{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:5px!important;padding:0 8px 8px!important;margin:0!important;
+}
+.race-filter-grid select{
+ width:100%!important;min-width:0!important;min-height:36px;
+ margin:0!important;padding:7px 24px 7px 9px!important;
+ border-radius:8px!important;font-size:11px!important;
+}
+@media(max-width:360px){.race-filter-grid{gap:4px!important;padding:0 6px 6px!important}.race-filter-grid select{font-size:10px!important;padding-left:7px!important}}
+</style>
+
 </body></html>
 
 <style id="v161-header-photo-panels">
