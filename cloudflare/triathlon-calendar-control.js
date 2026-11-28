@@ -77,7 +77,7 @@ export default {
           feed = { generatedAt: data.generatedAt || null, eventCount: Array.isArray(data.events) ? data.events.length : 0, failedSources: Number(data.failedSources || 0) };
         } catch {}
       }
-      return json({ run: run ? { id: run.id, status: run.status, conclusion: run.conclusion, updatedAt: run.updated_at, htmlUrl: run.html_url } : null, feed }, 200, origin);
+      return json({ run: run ? { id: run.id, status: run.status, conclusion: run.conclusion, updatedAt: run.updated_at, createdAt: run.created_at, htmlUrl: run.html_url } : null, feed }, 200, origin);
     }
     return json({ error: "Ruta no encontrada" }, 404, origin);
   }
