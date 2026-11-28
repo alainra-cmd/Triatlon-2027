@@ -11,8 +11,8 @@ La app estática de GitHub Pages no debe contener un token de GitHub. Este Worke
 ## 2. Crear el token de GitHub
 
 Crea un Fine-grained Personal Access Token limitado al repositorio `alainra-cmd/Triatlon-2027` con:
-- **Actions: Read and write** (para iniciar el workflow y consultar su estado).
-- **Contents: Read-only** (si se mantiene la lectura de datos del repositorio vía API; el feed público se lee sin token).
+- **Actions: Read and write** (para iniciar el workflow y consultar su estado). No hacen falta permisos de Contents.
+
 
 Guárdalo únicamente como secreto del Worker con el nombre `GH_TOKEN`. No lo pongas en el HTML, en GitHub Pages ni en mensajes.
 
