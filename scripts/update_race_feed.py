@@ -30,7 +30,7 @@ SOURCES = [
  {"id":"navarra","name":"Federación Navarra","country":"España","kind":"regional","url":"https://www.navarratriatlon.com/"},
  {"id":"rioja","name":"Federación Riojana","country":"España","kind":"regional","url":"https://fertriatlon.com/"},
  {"id":"valencia","name":"Federació Comunitat Valenciana","country":"España","kind":"regional","url":"https://www.triatlocv.org/"},
- {"id":"ceuta","name":"Federación de Ceuta","country":"España","kind":"regional","url":"https://fetriceuta.wixsite.com/fetriceuta"},
+ {"id":"ceuta","name":"Federación de Ceuta","country":"España","kind":"regional","url":"https://www.fetriceuta.org/"},
  {"id":"melilla","name":"Federación Melillense","country":"España","kind":"regional","url":"https://melillatriatlon.es/"},
  {"id":"portugal","name":"Federação de Triatlo de Portugal","country":"Portugal","kind":"federation","url":"https://www.federacao-triatlo.pt/"},
  {"id":"euskadi-entries","name":"Euskadi · Inscripciones federativas (RockTheSport)","country":"España","kind":"regional","url":"https://inscripciones.triatloi.org/es/events"},
@@ -74,9 +74,17 @@ def date_from(text):
  return ""
 
 def fetch(url):
- r=session.get(url,timeout=(5,12),allow_redirects=True)
- r.raise_for_status()
- return r.url,r.headers.get("content-type","").lower(),r.content
+ # Reintentos ante errores transitorios y esperas mayores para webs federativas lentas.
+ last_error=None
+ for attempt in range(3):
+  try:
+   r=session.get(url,timeout=(8,22),allow_redirects=True)
+   r.raise_for_status()
+   return r.url,r.headers.get("content-type","").lower(),r.content
+  except requests.RequestException as exc:
+   last_error=exc
+   if attempt<2:time.sleep(1.5*(attempt+1))
+ raise last_error
 
 def infer_country(text):
  t=norm(text)
@@ -391,17 +399,61 @@ def scan_source(source):
  if failed_links:message+=" Enlaces secundarios fallidos: "+"; ".join(failed_links[:3])
  return items,{"id":source["id"],"name":source["name"],"status":"ok" if items else "needs_review","message":message,"pages":len(pages),"events":len(items),"failedLinks":len(failed_links)}
 
+def discover_related_pages():
+ # Búsqueda diaria complementaria en motores y páginas de organizadores,
+ # clubes, circuitos y portales especializados. Solo acepta eventos de 2027.
+ queries=[
+  "triatlon 2027 calendario pruebas España Portugal",
+  "duatlon acuatlon 2027 calendario pruebas España",
+  "triathlon 2027 race calendar Spain Portugal",
+  "provas triatlo 2027 calendario Portugal",
+  "inscripciones triatlon 2027 España pruebas"
+ ]
+ results=[];seen=set();search_errors=[]
+ for query in queries:
+  try:
+   endpoint="https://www.bing.com/search?format=rss&q="+requests.utils.quote(query)
+   _,_,body=fetch(endpoint)
+   rss=BeautifulSoup(body,"xml")
+   for item in rss.find_all("item"):
+    node=item.find("link")
+    link=clean(node.get_text() if node else "")
+    if not link:continue
+    p=urlparse(link)
+    if p.scheme not in ("http","https") or not p.netloc:continue
+    link=link.split("#")[0]
+    if link not in seen:
+     seen.add(link);results.append((link,query))
+  except Exception as exc:
+   search_errors.append(str(exc)[:120])
+ discovered=[]
+ for url,query in results[:15]:
+  source={"id":"web-discovery","name":"Búsqueda web diaria · "+urlparse(url).netloc,"country":"Europe","kind":"supplemental","url":url}
+  items,report=scan_source(source)
+  for event in items:
+   event["sourceName"]="Búsqueda web diaria · "+urlparse(url).netloc
+   event["status"]="Detectada en página relacionada; pendiente de verificación"
+   event["notes"]="Hallazgo de búsqueda complementaria. Verificar fecha, organización e inscripción en la fuente enlazada."
+  discovered.extend(items)
+  print("web-discovery",url,report["status"],report["events"])
+  time.sleep(.25)
+ report={"id":"web-discovery","name":"Búsqueda diaria en páginas relacionadas con triatlón","status":"ok" if results and not search_errors else ("partial" if results else "error"),"message":str(len(queries))+" consultas; "+str(len(results))+" páginas candidatas; "+str(len(discovered))+" eventos detectados."+((" Errores: "+"; ".join(search_errors[:2])) if search_errors else ""),"pages":min(len(results),15),"events":len(discovered),"failedLinks":len(search_errors)}
+ return discovered,report
+
 def main():
  all_events=[];reports=[]
  for source in SOURCES:
   items,report=scan_source(source);all_events.extend(items);reports.append(report)
   print(source["id"],report["status"],report["events"])
   time.sleep(.4)
+ discovered,discovery_report=discover_related_pages()
+ all_events.extend(discovered);reports.append(discovery_report)
+ print(discovery_report["id"],discovery_report["status"],discovery_report["events"])
  unique={}
  for e in all_events:
   k=(norm(e["name"]),e["date"],norm(e["place"]))
   if k not in unique:unique[k]=e
- payload={"generatedAt":datetime.now(timezone.utc).isoformat(),"season":YEAR,"sourceCount":len(SOURCES),
+ payload={"generatedAt":datetime.now(timezone.utc).isoformat(),"season":YEAR,"sourceCount":len(reports),
  "successfulSources":sum(x["status"]=="ok" for x in reports),"failedSources":sum(x["status"]=="error" for x in reports),
  "events":sorted(unique.values(),key=lambda x:(x["date"],x["name"])),"sources":reports}
  with open("race-feed.json","w",encoding="utf-8") as f:json.dump(payload,f,ensure_ascii=False,indent=2)
