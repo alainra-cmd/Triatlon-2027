@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-28T02:26:17.946129+00:00",
+  "generatedAt": "2026-11-28T13:15:02.544759+00:00",
   "season": 2027,
   "sourceCount": 27,
   "successfulSources": 12,
@@ -3828,10 +3828,10 @@
       "id": "fetri",
       "name": "FETRI · España",
       "status": "needs_review",
-      "message": "Se han consultado 9 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión. Enlaces secundarios fallidos: /direccion-tecnica/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=22); /grupos-edad/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=22); /paratriatlon/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=22)",
-      "pages": 9,
+      "message": "Se han consultado 12 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión. Enlaces secundarios fallidos: /competiciones/liga-talento-de-triatlon/: 404 Client Error: Not Found for url: https://triatlon.org/competiciones/liga-talento-de-tr",
+      "pages": 12,
       "events": 0,
-      "failedLinks": 4
+      "failedLinks": 1
     },
     {
       "id": "fetri-2027-calendar",
