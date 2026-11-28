@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-28T01:44:14.473039+00:00",
+  "generatedAt": "2026-11-28T02:09:34.959381+00:00",
   "season": 2027,
-  "sourceCount": 26,
+  "sourceCount": 27,
   "successfulSources": 12,
-  "failedSources": 2,
+  "failedSources": 4,
   "events": [
     {
       "id": "challenge-europe-a59407935cc986",
@@ -3828,19 +3828,19 @@
       "id": "fetri",
       "name": "FETRI · España",
       "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 1,
+      "message": "Se han consultado 12 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión. Enlaces secundarios fallidos: /competiciones/liga-talento-de-triatlon/: 404 Client Error: Not Found for url: https://triatlon.org/competiciones/liga-talento-de-tr",
+      "pages": 12,
       "events": 0,
-      "failedLinks": 0
+      "failedLinks": 1
     },
     {
       "id": "fetri-2027-calendar",
       "name": "FETRI · Calendario nacional e internacional 2027",
       "status": "ok",
-      "message": "Extracción completada",
-      "pages": 1,
+      "message": "Extracción completada Enlaces secundarios fallidos: /paratriatlon/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=22)",
+      "pages": 12,
       "events": 28,
-      "failedLinks": 0
+      "failedLinks": 1
     },
     {
       "id": "andalucia",
@@ -3872,11 +3872,10 @@
     {
       "id": "baleares",
       "name": "Federació Balear",
-      "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 1,
-      "events": 0,
-      "failedLinks": 0
+      "status": "error",
+      "message": "500 Server Error: Internal Server Error for url: https://fetrib.com/",
+      "pages": 0,
+      "events": 0
     },
     {
       "id": "canarias",
@@ -3891,8 +3890,8 @@
       "id": "cantabria",
       "name": "Federación Cántabra",
       "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 1,
+      "message": "Se han consultado 5 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 5,
       "events": 0,
       "failedLinks": 0
     },
@@ -3909,7 +3908,7 @@
       "id": "cyl",
       "name": "Federación Castilla y León",
       "status": "error",
-      "message": "HTTPSConnectionPool(host='www.triatloncastillayleon.com', port=443): Read timed out. (read timeout=5)",
+      "message": "HTTPSConnectionPool(host='www.triatloncastillayleon.com', port=443): Read timed out. (read timeout=8)",
       "pages": 0,
       "events": 0
     },
@@ -3935,8 +3934,8 @@
       "id": "extremadura",
       "name": "Federación Extremeña",
       "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 1,
+      "message": "Se han consultado 4 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 4,
       "events": 0,
       "failedLinks": 0
     },
@@ -3953,8 +3952,8 @@
       "id": "madrid",
       "name": "Federación Madrileña · Calendario",
       "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 1,
+      "message": "Se han consultado 10 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 10,
       "events": 0,
       "failedLinks": 0
     },
@@ -3979,11 +3978,10 @@
     {
       "id": "rioja",
       "name": "Federación Riojana",
-      "status": "needs_review",
-      "message": "Se han consultado 8 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 8,
-      "events": 0,
-      "failedLinks": 0
+      "status": "error",
+      "message": "403 Client Error: Forbidden for url: https://fertriatlon.com/",
+      "pages": 0,
+      "events": 0
     },
     {
       "id": "valencia",
@@ -3997,17 +3995,18 @@
     {
       "id": "ceuta",
       "name": "Federación de Ceuta",
-      "status": "error",
-      "message": "404 Client Error: Not Found for url: https://fetriceuta.wixsite.com/fetriceuta",
-      "pages": 0,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 3 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 3,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "melilla",
       "name": "Federación Melillense",
       "status": "needs_review",
-      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 1,
+      "message": "Se han consultado 7 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 7,
       "events": 0,
       "failedLinks": 0
     },
@@ -4055,6 +4054,15 @@
       "pages": 13,
       "events": 12,
       "failedLinks": 0
+    },
+    {
+      "id": "web-discovery",
+      "name": "Búsqueda diaria en páginas relacionadas con triatlón",
+      "status": "error",
+      "message": "5 consultas; 0 páginas candidatas; 0 eventos detectados. Errores: Couldn't find a tree builder with the features you requested: xml. Do you need to install a parser library?; Couldn't find a tree builder with the features you requested: xml. Do you need to install a parser library?",
+      "pages": 0,
+      "events": 0,
+      "failedLinks": 5
     }
   ]
 }
