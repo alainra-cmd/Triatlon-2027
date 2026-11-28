@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T13:45:19.889967+00:00",
+  "generatedAt": "2026-11-28T01:44:14.473039+00:00",
   "season": 2027,
   "sourceCount": 26,
   "successfulSources": 12,
@@ -63,22 +63,6 @@
       "distance": "Por confirmar",
       "franchise": "",
       "url": "http://www.google.com/calendar/event?\n\n\t\taction=TEMPLATE\n\n\t\t&text=DUATLÓ CIRCUIT RICARDO TORMO CHESTE\n\t\t&dates=20270110T093000/20270110T113000\n\t\t&location=CIRCUIT RICARDO TORMO, CHESTE\n\t\t&trp=false\n\n\t\t&sprop=name:triatlocv.org",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
-      "id": "valencia-c5d3bdd5ad939b",
-      "name": "Lliga de Clubs Duatlón DUATLÓ CIRCUIT RICARDO TORMO CHESTE 10 de enero de 2027",
-      "date": "2027-01-10",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Duatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://www.rockthesport.com/es/evento/duatlon-cre-cheste-2027",
       "sourceUrl": "https://www.triatlocv.org/",
       "sourceName": "Federació Comunitat Valenciana",
       "dateStatus": "Pendiente de verificar",
@@ -1056,22 +1040,6 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
-      "id": "valencia-3151a5d3ab52bc",
-      "name": "Triatlón VIII TRIATLON OLÍMPICO NO DRAFTING CANET DE B… 17 de abril de 2027",
-      "date": "2027-04-17",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://www.rockthesport.com/es/evento/viii-triatlon-olimpico-no-drafting-canet-de-berenguer/inscripcion/selecciona-tarifa",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
       "id": "clm-cd7c4be661e8fa",
       "name": "XI Duatlon cross Escolar Jabaga_Escolar",
       "date": "2027-04-17",
@@ -1147,22 +1115,6 @@
       "url": "https://findmytris.com/events/im703-valencia",
       "sourceUrl": "https://findmytris.com/races/continent/europe",
       "sourceName": "IRONMAN · Directorio europeo de contraste",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
-      "id": "valencia-e490652966dcb4",
-      "name": "Triatlón IRONMAN 70.3 VALENCIA 18 de abril de 2027",
-      "date": "2027-04-18",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://www.ironman.com/races/im703-valencia/register",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -1248,22 +1200,6 @@
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios",
       "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
-    },
-    {
-      "id": "valencia-14e0b2397745d9",
-      "name": "Triatlón XV INTERNATIONAL INFINITRI 113 TRIATHLON PEÑÍ… 25 de abril de 2027",
-      "date": "2027-04-25",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://infinitri.es/peniscola/inscripciones/",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
       "id": "cataluna-deacc81b584764",
@@ -1521,22 +1457,6 @@
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios",
       "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
-    },
-    {
-      "id": "valencia-58fccaa0ad575f",
-      "name": "Triatlón TRIXILXES 09 de mayo de 2027",
-      "date": "2027-05-09",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://trixilxes.com/inscribete/",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
       "id": "fetri-2027-calendar-6400678aeb2225",
@@ -1846,22 +1766,6 @@
       "notes": "Calendario provisional FTRM 2027; sujeto a actualizaciones."
     },
     {
-      "id": "valencia-3d8df9cfc556df",
-      "name": "Triatlón SCOTT MEDITERRANEAN EPIC TRIATHLON / FULL, HA… 29 de mayo de 2027",
-      "date": "2027-05-29",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://mediterraneanepic.com/mediterranean-epic-triathlon-inscripciones/",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
       "id": "cataluna-42c0e5531608a5",
       "name": "VI AQUATLÓ DE VILANOVA TRANSTRIATLON",
       "date": "2027-05-29",
@@ -1905,22 +1809,6 @@
       "url": "https://findmytris.com/events/im703-alghero",
       "sourceUrl": "https://findmytris.com/races/continent/europe",
       "sourceName": "IRONMAN · Directorio europeo de contraste",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
-      "id": "valencia-e282305dbcb532",
-      "name": "Triatlón SCOTT MEDITERRANEAN EPIC TRIATHLON / SPRINT &… 30 de mayo de 2027",
-      "date": "2027-05-30",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://www.rockthesport.com/es/evento/scott-mediterranean-epic-triathlon-2027/inscripcion/selecciona-tarifa",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
       "dateStatus": "Pendiente de verificar",
       "availability": "Por verificar",
       "status": "Extraída de calendario oficial; revisar cambios"
@@ -3677,22 +3565,6 @@
       "status": "Extraída de calendario oficial; revisar cambios"
     },
     {
-      "id": "valencia-ec006b2b6d2106",
-      "name": "Triatlón ICAN TRIATHLON 16 de octubre de 2027",
-      "date": "2027-10-16",
-      "place": "Localidad por confirmar",
-      "country": "España",
-      "type": "Triatlón",
-      "distance": "Por confirmar",
-      "franchise": "",
-      "url": "https://www.rockthesport.com/es/evento/ican-triathlon-2027/inscripcion/selecciona-tarifa",
-      "sourceUrl": "https://www.triatlocv.org/",
-      "sourceName": "Federació Comunitat Valenciana",
-      "dateStatus": "Pendiente de verificar",
-      "availability": "Por verificar",
-      "status": "Extraída de calendario oficial; revisar cambios"
-    },
-    {
       "id": "ironman-directory-f7cc4390b671d1",
       "name": "IRONMAN 70.3 Poreč",
       "date": "2027-10-17",
@@ -3956,19 +3828,19 @@
       "id": "fetri",
       "name": "FETRI · España",
       "status": "needs_review",
-      "message": "Se han consultado 9 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión. Enlaces secundarios fallidos: /direccion-tecnica/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /grupos-edad/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /paratriatlon/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12)",
-      "pages": 9,
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
       "events": 0,
-      "failedLinks": 4
+      "failedLinks": 0
     },
     {
       "id": "fetri-2027-calendar",
       "name": "FETRI · Calendario nacional e internacional 2027",
       "status": "ok",
-      "message": "Extracción completada Enlaces secundarios fallidos: /direccion-tecnica/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /grupos-edad/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12); /paratriatlon/calendario/: HTTPSConnectionPool(host='triatlon.org', port=443): Read timed out. (read timeout=12)",
-      "pages": 10,
+      "message": "Extracción completada",
+      "pages": 1,
       "events": 28,
-      "failedLinks": 3
+      "failedLinks": 0
     },
     {
       "id": "andalucia",
@@ -4000,10 +3872,11 @@
     {
       "id": "baleares",
       "name": "Federació Balear",
-      "status": "error",
-      "message": "500 Server Error: Internal Server Error for url: https://fetrib.com/",
-      "pages": 0,
-      "events": 0
+      "status": "needs_review",
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
+      "events": 0,
+      "failedLinks": 0
     },
     {
       "id": "canarias",
@@ -4018,8 +3891,8 @@
       "id": "cantabria",
       "name": "Federación Cántabra",
       "status": "needs_review",
-      "message": "Se han consultado 5 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 5,
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
       "events": 0,
       "failedLinks": 0
     },
@@ -4035,11 +3908,10 @@
     {
       "id": "cyl",
       "name": "Federación Castilla y León",
-      "status": "needs_review",
-      "message": "Se han consultado 8 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 8,
-      "events": 0,
-      "failedLinks": 0
+      "status": "error",
+      "message": "HTTPSConnectionPool(host='www.triatloncastillayleon.com', port=443): Read timed out. (read timeout=5)",
+      "pages": 0,
+      "events": 0
     },
     {
       "id": "cataluna",
@@ -4063,8 +3935,8 @@
       "id": "extremadura",
       "name": "Federación Extremeña",
       "status": "needs_review",
-      "message": "Se han consultado 4 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 4,
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
       "events": 0,
       "failedLinks": 0
     },
@@ -4081,8 +3953,8 @@
       "id": "madrid",
       "name": "Federación Madrileña · Calendario",
       "status": "needs_review",
-      "message": "Se han consultado 10 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 10,
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
       "events": 0,
       "failedLinks": 0
     },
@@ -4119,7 +3991,7 @@
       "status": "ok",
       "message": "Extracción completada",
       "pages": 13,
-      "events": 11,
+      "events": 3,
       "failedLinks": 0
     },
     {
@@ -4134,8 +4006,8 @@
       "id": "melilla",
       "name": "Federación Melillense",
       "status": "needs_review",
-      "message": "Se han consultado 7 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
-      "pages": 7,
+      "message": "Se han consultado 1 páginas, pero no se han reconocido pruebas de 2027. Esto NO confirma que la federación carezca de calendario; requiere revisión.",
+      "pages": 1,
       "events": 0,
       "failedLinks": 0
     },
