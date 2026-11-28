@@ -1152,58 +1152,15 @@ render();checkReminders();{const prev=data.lastStatusAttemptAt;const label=docum
 </style>
 
 <script id="manual-feed-update-client">
-(()=>{
- const API_URL=""; // Configurar con la URL workers.dev tras desplegar el Worker.
- const TURNSTILE_SITE_KEY=""; // Site Key pública de Cloudflare Turnstile.
+(()=> {
  const button=document.getElementById("manualFeedUpdateBtn");
  const status=document.getElementById("manualUpdateStatus");
- const captcha=document.getElementById("manualUpdateCaptcha");
- if(!button||!status||!captcha)return;
- let busy=false,scriptPromise=null;
- const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
- async function loadTurnstile(){
-  if(window.turnstile)return;
-  if(!scriptPromise)scriptPromise=new Promise((resolve,reject)=>{
-   const script=document.createElement("script");script.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";script.async=true;script.defer=true;
-   script.onload=resolve;script.onerror=()=>reject(new Error("No se pudo cargar la verificación de seguridad."));document.head.appendChild(script);
-  });
-  await scriptPromise;
- }
- async function getStatus(){const r=await fetch(API_URL+"/status",{cache:"no-store"});if(!r.ok)throw new Error("No se pudo consultar el estado del servicio.");return r.json();}
- async function runSearch(token){
-  const before=await getStatus();
-  const response=await fetch(API_URL+"/run",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({turnstileToken:token})});
-  const payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||"No se pudo iniciar la búsqueda.");
-  status.textContent="Búsqueda aceptada. Esperando a que arranque el extractor…";
-  const oldId=before.run&&before.run.id;
-  const startedAt=Date.now();let started=false;
-  while(Date.now()-startedAt<300000){
-   await wait(7000);const state=await getStatus();const run=state.run;
-   if(run&&run.id!==oldId)started=true;
-   if(started&&run&&run.status==="completed"){
-    const feedTime=state.feed&&state.feed.generatedAt?new Date(state.feed.generatedAt).toLocaleString("es-ES"):"no disponible";
-    if(run.conclusion==="success")status.textContent="Búsqueda completada correctamente. Feed actualizado: "+feedTime+". Eventos detectados: "+(state.feed?state.feed.eventCount:"—")+". Recargando resultados…";
-    else status.textContent="La búsqueda ha terminado con resultado: "+(run.conclusion||"desconocido")+". Revisa los registros del workflow.";
-    if(run.conclusion==="success"){const feedStatus=document.getElementById("officialFeedStatus");if(feedStatus)feedStatus.textContent="Actualización manual completada. "+status.textContent;window.setTimeout(()=>location.reload(),1800);}
-    return;
-   }
-   status.textContent=started?"Búsqueda en curso en los calendarios. Esto puede tardar varios minutos…":"Solicitud recibida; esperando el inicio en GitHub…";
-  }
-  status.textContent="La búsqueda sigue en proceso. Puedes consultar de nuevo dentro de un minuto.";
- }
- button.addEventListener("click",async()=>{
-  if(busy)return;
-  if(!API_URL||!TURNSTILE_SITE_KEY){status.textContent="Falta terminar la configuración segura del servicio. La búsqueda manual todavía no está activa.";return;}
-  busy=true;button.disabled=true;button.textContent="Preparando búsqueda…";
-  try{
-   await loadTurnstile();captcha.replaceChildren();
-   window.turnstile.render(captcha,{sitekey:TURNSTILE_SITE_KEY,callback:async token=>{
-    try{button.textContent="Buscando pruebas…";await runSearch(token);}
-    catch(error){status.textContent=error.message||"Error al iniciar la búsqueda."}
-    finally{busy=false;button.disabled=false;button.textContent="↻ Buscar pruebas ahora";try{window.turnstile.reset();}catch{}}
-   },"error-callback":()=>{status.textContent="Falló la verificación de seguridad. Vuelve a intentarlo.";busy=false;button.disabled=false;button.textContent="↻ Buscar pruebas ahora";}});
-   status.textContent="Completa la verificación de seguridad para iniciar la búsqueda.";
-  }catch(error){status.textContent=error.message;busy=false;button.disabled=false;button.textContent="↻ Buscar pruebas ahora";}
+ if(!button)return;
+ const workflowUrl="https://github.com/alainra-cmd/Triatlon-2027/actions/workflows/update-race-calendar.yml";
+ button.textContent="↻ Buscar pruebas ahora";
+ button.addEventListener("click",()=>{
+  if(status)status.textContent="Abriendo GitHub. Inicia sesión si te lo solicita y pulsa «Run workflow» para lanzar la búsqueda manual.";
+  window.location.href=workflowUrl;
  });
 })();
 </script>
